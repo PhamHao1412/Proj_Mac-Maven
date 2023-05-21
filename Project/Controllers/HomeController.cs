@@ -10,7 +10,7 @@ namespace Project.Controllers
     public class HomeController : Controller
     {
         AppleDataDataContext db = new AppleDataDataContext();
-  
+
         private int CountProductIDs(int? makh)
         {
             int count = 0;
@@ -29,6 +29,16 @@ namespace Project.Controllers
             }
             return total;
         }
+        public decimal Sale(int masp)
+        {
+            decimal sale = 0;
+            var item = db.Items.FirstOrDefault(i => i.ma == masp);
+            if (item != null)
+            {
+                sale = (decimal)(item.giaban - (item.giaban * 0.09m));
+            }
+            return sale;
+        }
         public ActionResult Index()
         {
             ViewBag.iPhone = db.Items.Where(s => s.maloai == 1).Take(4).ToList();
@@ -38,6 +48,8 @@ namespace Project.Controllers
         }
         public ActionResult Store()
         {
+            int ma = 14;
+            ViewBag.Sale = Sale(ma);
             ViewBag.iPhone = db.Items.Where(s => s.maloai == 1).Take(4).ToList();
             ViewBag.mac = db.Items.Where(s => s.maloai == 2).Take(4).ToList();
             ViewBag.iPad = db.Items.Where(s => s.maloai == 3).Take(4).ToList();
@@ -69,7 +81,23 @@ namespace Project.Controllers
             }
             var item = db.Items.FirstOrDefault(d => d.ma == id);
             ViewBag.HinhAnh = db.HinhAnhs.Where(s => s.ma == id).ToList();
-            ViewBag.CountCart = CountProductIDs(kh?.makh); 
+            ViewBag.CountCart = CountProductIDs(kh?.makh);
+            var comments = (from d in db.DanhGias
+                            join k in db.KhachHangs on d.makh equals k.makh
+                            where d.masp == id && d.Trangthai == true
+                            select new DanhGiaModel
+                            {
+                                Id = d.id,
+                                NoiDung = d.NoiDung,
+                                NgayTao = (DateTime)d.NgayTao,
+                                NgaySua = (DateTime)d.NgaySua,
+                                khachhang = new KhachHangModel
+                                {
+                                    Ho = k.ho,
+                                    Ten = k.Ten
+                                },
+                            }).ToList();
+            ViewBag.Comments = comments;
 
             return View(item);
         }
@@ -92,7 +120,7 @@ namespace Project.Controllers
         public ActionResult MenuView()
         {
             KhachHang kh = (KhachHang)Session["TaiKhoan"];
-            if (kh != null) 
+            if (kh != null)
             {
                 ViewBag.CountCart = CountProductIDs(kh.makh);
                 ViewBag.TotalPrice = Total(kh.makh);

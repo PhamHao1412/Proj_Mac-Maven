@@ -10,6 +10,9 @@ namespace Project.Controllers
     public class UsersController : Controller
     {
        AppleDataDataContext data = new AppleDataDataContext();
+
+
+
         [HttpGet]
         public ActionResult Register()
         {
@@ -98,7 +101,6 @@ namespace Project.Controllers
             }
 
         }
-
         public ActionResult LogOff()
         {
             Session.Abandon();
