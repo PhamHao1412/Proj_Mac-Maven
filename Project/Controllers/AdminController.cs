@@ -287,8 +287,6 @@ namespace Project.Controllers
                                 Ten = g.Key.Ten,
                             }
                         };
-
-
             return View(query);
         }
         [HttpPost]
