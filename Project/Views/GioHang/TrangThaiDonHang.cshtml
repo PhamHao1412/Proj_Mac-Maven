@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Project.Models.Store_Category>
+@{
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Madon)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.TenSP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Hinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </th>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.GiaBan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TongTien)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Madon)
+            </td>
+            <td>
+
+                @Html.DisplayFor(modelItem => item.TenSP)
+            </td>
+            <td>
+                <img src="/@Html.DisplayFor(modelItem => item.Hinh)" style="width:80px;" />
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaBan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TongTien)
+            </td>
+            <td>
+                @if (Request.QueryString["trangthai"] == "Hoàn tất")
+                {
+                    if (item.XacNhan == false)
+                    {
+                        <button class="orange-button" onclick="updateStatus(@item.Madon)">Xác nhận</button>
+                    }
+                    else
+                    {
+                        <button onclick="updateStatus(@item.Madon)">Xác nhận</button>
+                    }
+                }
+            </td>
+
+        </tr>
+    }
+</table>
+<style>
+    .orange-button {
+        background-color: orange;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    function updateStatus(orderId) {
+        $.ajax({
+            type: "POST",
+            url: "/GioHang/ComfirmCart",
+            data: { orderId: orderId },
+            success: function () {
+                // Không làm gì trong trường hợp thành công
+            },
+            error: function () {
+                // Không làm gì trong trường hợp lỗi
+            }
+        });
+    }
+
+
+</script>

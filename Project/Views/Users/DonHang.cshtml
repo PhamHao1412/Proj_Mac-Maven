@@ -1,0 +1,49 @@
+﻿
+    <div class="card">
+        <div class="row">
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col"><h4><b>Giỏ hàng</b></h4></div>
+                        <div class="col align-self-center text-right text-muted">@ViewBag.CountCart sản phẩm</div>
+                    </div>
+                </div>
+                @foreach (var item in ViewBag.DonHang)
+                {
+                    <div class="row border-top border-bottom">
+                        <div class="row main align-items-center">
+                            <a href="/Home/Product_Details/@item.masp" class="col-2"><img class="img-fluid" src="/@item.hinh"></a>
+                            <div class="col">
+                                <div class="row text-muted">@item.ten</div>
+                                <div class="row"></div>
+                            </div>
+                            <div class="col">
+                                <div class="quantity">
+                                    <a href="#" class="minus-btn" data-id="@item.masp" onclick="if (@item.soluong > 1) updateStatus(@item.masp, @item.soluong - 1)">
+                                        <i class="fas fa-minus"></i>
+                                    </a>
+                                    <div class="qty">@item.soluong</div>
+                                    <a href="#" class="plus-btn" data-id="@item.masp" onclick="updateStatus(@item.masp, @item.soluong + 1)">
+                                        <i class="fas fa-plus"></i>
+
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="price">
+                                    @String.Format("{0:0,0}", item.giaban)&#8363
+                                </div>
+                            </div>
+                            <div class="col">
+                                @if (item.masp != null)
+                                {<a class="close" href="@Url.Action("XoaGioHang", "GioHang", new { masp = item.masp })">&#10005;</a>}
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="back-to-shop"><a class="back" href="/Home/Store">&leftarrow;</a>Mua thêm sản phẩm khác</div>
+            </div>
+        </div>
+    </div>
+
+ <bo

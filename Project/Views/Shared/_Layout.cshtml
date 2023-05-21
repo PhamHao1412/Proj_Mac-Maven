@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+      shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Apple Store</title>
+
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-4CfUPPxAiAjU/gxp6UPLp6mYJ6U0Onm1x5PRXJD5D5q5B5/5bupcOyP8KthtdNzDbOxyNawZUm/lDkMVxhZVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Dosis:400,600,700|Poppins:400,600,700&display=swap"
+          rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/Content/Style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="~/Content/reponsive.css" rel="stylesheet" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+          crossorigin="anonymous" />
+</head>
+
+<body class="sub_page">
+
+    @{ Html.RenderAction("MenuView", "Home"); }
+    @RenderBody()
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>About Us</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis hendrerit justo euismod, bibendum metus sed, imperdiet justo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In vitae aliquam nisi. </p>
+                </div>
+                <div class="col-md-4">
+                    <h3>Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fa fa-map-marker"></i>1234 Main St, San Francisco, CA 94111</li>
+                        <li><i class="fa fa-phone"></i>+1 (123) 456-7890</li>
+                        <li><i class="fa fa-envelope"></i><a href="mailto:info@yourdomain.com">info@yourdomain.com</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    @*<script type="text/javascript" src="~/Content/jquery-3.4.1.min.js"></script>*@
+    @*<script type="text/javascript" src="~/Content/bootstrap.js"></script>
+        <script type="text/javascript" src="~/Content/custom.js"></script>*@
+</body>
+</html>
+
+
+<style>
+    .collapse{
+        margin:-8px;
+    }
+    .site-footer {
+        background-color: #222;
+        padding: 45px 0 20px;
+        font-size: 15px;
+        line-height: 24px;
+        color: #737373;
+    }
+
+        .site-footer h3 {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.5em;
+            margin-bottom: 20px;
+        }
+
+    .footer-links li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+        .footer-links li:last-child {
+            margin-right: 0;
+        }
+
+    .footer-links a {
+        color: #737373;
+        text-decoration: none;
+    }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+    .contact-info {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .contact-info li {
+            margin-bottom: 10px;
+        }
+
+        .contact-info i {
+            font-size: 20px;
+            margin-right: 10px;
+            color: #fff;
+            vertical-align: middle;
+        }
+
+        .contact-info a {
+            color: #737373;
+            text-decoration: none;
+        }
+
+            .contact-info a:hover {
+                color: #fff;
+            }
+</style>

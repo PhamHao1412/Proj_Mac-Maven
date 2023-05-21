@@ -1,0 +1,52 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_LayoutGH.cshtml";
+
+}
+<div class="order-success">
+    <i class="fas fa-check-circle"></i>
+    <div class="title-text">
+        <p>Đơn hàng đã được xác nhận</p>
+        <p>Chúng tôi sẽ giao hàng cho bạn sớm nhất có thể !</p>
+    </div>
+
+    <div class="btn-back">
+        <a href="@Url.Action("Store", "Home")" class="back-to-home-button" style="color:white;">Về trang chủ</a>
+    </div>
+</div>
+
+
+
+<style>
+    .title-text{
+      font-size:30px;
+       padding:5px;
+    }
+    .order-success {
+        margin-top:10%;
+        text-align: center;
+        align-items: center;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+        .order-success i {
+            font-size: 100px;
+            color: #35bb35;
+            margin: 15px;
+        }
+    .btn-back {
+        margin-top:20px;
+        color: white;
+        margin: auto;
+        width: 200px;
+        height: 30px;
+        background-color: #35bb35;
+        border-radius: 10px;
+        box-shadow: 0 10px 13px rgba(0,0,0,0.25);
+    }
+    .btn-back a{
+        position:relative;
+        top:3px;
+        text-decoration:none;
+    }
+</style>

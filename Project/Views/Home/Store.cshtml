@@ -1,0 +1,185 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body style="background-color: #3e3e3f">
+    <section class="store_section layout_padding">
+
+        <div class="container-fluid">
+            <div>
+                <a href="#" class="logo-cate">
+                    <h2 class="title-text">iPhone</h2>
+                </a>
+            </div>
+            <div class="store_container">
+
+                @{
+                    if (ViewBag.mac != null)
+                    {
+                        foreach (var item in ViewBag.iPhone)
+                        {
+                            <a href="/Home/Product_Details/@item.ma">
+                                <div class="box">
+                                    <img src="/@item.hinh" class="image-item" />
+                                    <div class="link_box">
+                                        <h5>
+                                            @item.ten
+                                        </h5>
+                                        <span>Buy Now</span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div>
+                <a href="#" class="logo-cate">
+                    <h2 class="title-text">MacBook</h2>
+                </a>
+            </div>
+            <div class="store_container">
+
+                @{
+                    if (ViewBag.mac != null)
+                    {
+                        foreach (var item in ViewBag.mac)
+                        {
+                            <a href="/Home/Product_Details/@item.ma">
+                                <div class="box">
+                                    <img src="/@item.hinh" class="image-item" />
+                                    <div class="link_box">
+                                        <h5>
+                                            @item.ten
+                                        </h5>
+                                        <span>Buy Now</span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div>
+                <a href="#" class="logo-cate">
+                    <h2 class="title-text">iPad</h2>
+                </a>
+            </div>
+            <div class="store_container">
+
+                @{
+                    if (ViewBag.iPad != null)
+                    {
+                        foreach (var item in ViewBag.iPad)
+                        {
+                            <a href="/Home/Product_Details/@item.ma">
+                                <div class="box">
+                                    <img src="/@item.hinh" class="image-item" />
+                                    <div class="link_box">
+                                        <h5>
+                                            @item.ten
+                                        </h5>
+                                        <span>Buy Now</span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div>
+                <a href="#" class="logo-cate">
+                    <h2 class="title-text">Watch</h2>
+                </a>
+            </div>
+            <div class="store_container">
+
+                @{
+                    if (ViewBag.Watch != null)
+                    {
+                        foreach (var item in ViewBag.Watch)
+                        {
+                            <a href="/Home/Product_Details/@item.ma">
+                                <div class="box">
+                                    <img src="/@item.hinh" class="image-item" />
+                                    <div class="link_box">
+                                        <h5>
+                                            @item.ten
+                                        </h5>
+                                        <span>Buy Now</span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        @*<div class="container-fluid">
+            <div>
+                <a href="#" class="logo-cate">
+                    <h2 class="title-text">Airpods</h2>
+                </a>
+            </div>
+            <div class="store_container">
+
+                @{
+                    if (ViewBag.Airpods != null)
+                    {
+                        foreach (var item in ViewBag.Airpods)
+                        {
+                                    <div class="box">
+                                        <img src="/@item.hinh" class="image-item" />
+                                        <div class="link_box">
+                                            <h5>
+                                                @item.ten
+                                            </h5>
+                                            <a href="">
+                                                Buy Now
+                                            </a>
+                                        </div>
+                                    </div>
+                        }
+                    }
+                }
+            </div>
+        </div>*@
+    </section>
+
+
+    <!-- end info section -->
+    <!-- footer section -->
+    <!-- footer section -->
+
+
+</body>
+<style>
+    .logo-cate {
+        text-align: center;
+    }
+
+        .logo-cate:hover {
+            text-decoration: none;
+        }
+
+    .title-text {
+        margin: 40px 0 40px 0;
+        color: white;
+    }
+
+    .image-item {
+        width: 300px;
+        height: 200px;
+    }
+
+    .layout_padding {
+        padding: 50px 0;
+    }
+</style>

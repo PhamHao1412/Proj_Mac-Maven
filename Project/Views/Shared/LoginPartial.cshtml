@@ -1,0 +1,104 @@
+﻿
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-4CfUPPxAiAjU/gxp6UPLp6mYJ6U0Onm1x5PRXJD5D5q5B5/5bupcOyP8KthtdNzDbOxyNawZUm/lDkMVxhZVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@using Project.Models
+@{
+    KhachHang kh = (KhachHang)Session["TaiKhoan"];
+    NhanVien nv = (NhanVien)Session["NhanVien"];
+
+}
+@if (Session["TaiKhoan"] != null || Session["NhanVien"] != null)
+{
+    <div class="dropdown" id="myDropdown">
+        @if (nv != null && nv.MaCV == 1)
+        {
+            <a class="dropbtn"> Admin:@nv.Ten</a>
+        }
+        else if (nv != null && nv.MaCV == 2)
+        {
+            <a class="dropbtn"> Nhân viên:@nv.Ten</a>
+        }
+        else
+        {
+            <a class="dropbtn"> @kh.Ten</a>
+        }
+        <i class="fas fa-caret-down "></i>
+        <div class="dropdown-content">
+            <a href="@Url.Action("ThongTinKhachHang", "Users")">Thông tin cá nhân</a>
+            <a href="@Url.Action("LichSuMuaHang", "Users")">Lịch sử mua hàng</a>
+            <a href="@Url.Action("DonHang", "GioHang")">Đơn hàng của bạn</a>
+            <a href="@Url.Action("LogOff", "Users")">Đăng xuất</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="dropdown">
+        <a class="dropbtn" href="@Url.Action("Login", "Users")">Đăng nhập</a>
+    </div>
+}
+<script type="text/javascript" src="~/Content/jquery-3.4.1.min.js"></script>
+<script>
+    $(".dropdown").click(function () {
+        $(this).children(".dropdown-content").toggle();
+    });
+
+</script>
+
+<style>
+    .dropdown {
+        top: 25%;
+        left: 20%;
+    }
+
+    .dropbtn {
+        background-color: #212529;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+        .dropbtn:hover {
+            color: white;
+            text-decoration: none;
+        }
+
+    .dropdown-content {
+        top: 25px;
+        right: 0%;
+        background: #464b50;
+        display: none;
+        position: absolute;
+        border-radius: 8px;
+        text-align: center;
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: white;
+            width: 130px;
+            padding: 12px 16px;
+            font-size: 11px;
+            text-decoration: none;
+            display: block;
+        }
+
+
+
+    .dropbtn {
+        text-decoration: none;
+        color: white;
+    }
+
+    .fa-caret-down {
+        color: white;
+    }
+
+    .login a {
+        color: white;
+    }
+
+        .login a:hover {
+            color: white;
+        }
+</style>
