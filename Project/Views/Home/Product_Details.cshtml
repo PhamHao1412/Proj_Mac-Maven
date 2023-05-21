@@ -20,10 +20,10 @@
         {
             <div id="error-message" class="error-message">@ViewBag.ErrorMessage</div>
             @*<div class="message-box message-box-warn">
-                <i class="fa fa-warning fa-2x"></i>
-                <span class="message-text"><strong>Warning:</strong> User has to be admin</span>
-                <i class="fa fa-times fa-2x exit-button "></i>
-            </div>*@
+                    <i class="fa fa-warning fa-2x"></i>
+                    <span class="message-text"><strong>Warning:</strong> User has to be admin</span>
+                    <i class="fa fa-times fa-2x exit-button "></i>
+                </div>*@
 
         }
         <div class="heading-section">
@@ -113,68 +113,92 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            <div class="product-info-tabs">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
+        </div>
+    </div>
+
+</div>
+<div class="product-info-tabs">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Reviews (0)</a>
+        </li>
+    </ul>
+    @*<div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+        </div>*@
+
+    <div class="tab-pane fade active show" id="review" role="tabpanel" aria-labelledby="review-tab">
+        <div class="bg-review" style="background-color:white">
+
+            <div class="review-heading">REVIEWS</div>
+
+
+            <ul class="commnet-list">
+                @foreach (var item in ViewBag.Comments)
+                {
+                    <li>
+                        <div class="cmt-top">
+                            <p class="cmt-top-name">
+                                @item.khachhang.Ho @item.khachhang.Ten
+                            </p>
+                        </div>
+                        <div class="cmt-content">
+                            <p class="cmt-txt">@item.NoiDung</p>
+                        </div>
+                        <div class="cmt-command">
+                            <span class="cmtd dot-circle-ava">@item.NgayTao</span>
+                        </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Reviews (0)</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-                    </div>
-                    <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                        <div class="review-heading">REVIEWS</div>
-                        <p class="mb-20">There are no reviews yet.</p>
-                        <form class="review-form">
-                            <div class="form-group">
-                                <label>Your rating</label>
-                                <div class="reviews-counter">
-                                    <div class="rate">
-                                        <input type="radio" id="star5" name="rate" value="5" />
-                                        <label for="star5" title="text">5 stars</label>
-                                        <input type="radio" id="star4" name="rate" value="4" />
-                                        <label for="star4" title="text">4 stars</label>
-                                        <input type="radio" id="star3" name="rate" value="3" />
-                                        <label for="star3" title="text">3 stars</label>
-                                        <input type="radio" id="star2" name="rate" value="2" />
-                                        <label for="star2" title="text">2 stars</label>
-                                        <input type="radio" id="star1" name="rate" value="1" />
-                                        <label for="star1" title="text">1 star</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Your message</label>
-                                <textarea class="form-control" rows="10"></textarea>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="" class="form-control" placeholder="Name*">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="" class="form-control" placeholder="Email Id*">
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="round-black-btn">Submit Review</button>
-                        </form>
+                }
+            </ul>
+            <form class="review-form " method="post" action="/DanhGia/Create" autocomplete="off">
+                <div class="form-group">
+                    <label>Your rating</label>
+                    <div class="reviews-counter">
+                        <div class="rate">
+                            <input type="radio" id="star5" name="rate" value="5" checked />
+                            <label for="star5" title="text">5 stars</label>
+                            <input type="radio" id="star4" name="rate" value="4" checked />
+                            <label for="star4" title="text">4 stars</label>
+                            <input type="radio" id="star3" name="rate" value="3" checked />
+                            <label for="star3" title="text">3 stars</label>
+                            <input type="radio" id="star2" name="rate" value="2" />
+                            <label for="star2" title="text">2 stars</label>
+                            <input type="radio" id="star1" name="rate" value="1" />
+                            <label for="star1" title="text">1 star</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div style="text-align:center;font-size:14px;padding-bottom:20px;">Get free icon packs for your next project at <a href="http://iiicons.in/" target="_blank" style="color:#ff5e63;font-weight:bold;">www.iiicons.in</a></div>
+                <div class="form-group">
+                    <label>Your message</label>
+                    <input type="hidden" name="MaTinTuc" value="@Model.ma" hidden />
+                    <textarea name="cMessage" id="cMessage" class="full-width form-control" placeholder="Bình luận*" required></textarea>
+                </div>
+                @*<div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="" class="form-control" placeholder="Name*">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="" class="form-control" placeholder="Email Id*">
+                            </div>
+                        </div>
+                    </div>*@
+                <input name="submit" id="submit" class="btn btn--primary btn-wide btn--large full-width" value="Thêm bình luận" type="submit">
+            </form>
         </div>
     </div>
 </div>
+
+<div style="text-align:center;font-size:14px;padding-bottom:20px;">Get free icon packs for your next project at <a href="http://iiicons.in/" target="_blank" style="color:#ff5e63;font-weight:bold;">www.iiicons.in</a></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity=" sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -187,24 +211,69 @@
     }, 2000);
 </script>
 <style>
+    .cmt-command {
+        bottom: 15px;
+        position: relative
+    }
+
+    .cmtd {
+        color: #8f9bb3;
+        font-size: 12px;
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    .bg-review {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .cmt-top-name {
+        text-transform: capitalize;
+        color: #222b45;
+        display: inline;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 16px;
+        margin-right: 10px;
+    }
+
+    .commnet-list {
+        color: #222b45;
+        margin-top: 20px;
+        max-width: 680px;
+        text-align: left;
+    }
 
     .pd-wrap {
         padding: 5%;
         background-color: #3e3e3f;
         font-family: 'Poppins', sans-serif;
     }
+
     .error-message {
         background-color: #f8d7da;
         color: #721c24;
         padding: 10px;
-        margin:auto;
-        width:300px;
-
+        margin: auto;
+        width: 300px;
     }
+
     .heading-section {
         text-align: center;
         margin-bottom: 20px;
     }
+
+    a:not([href]):not([tabindex]) {
+        color: white;
+    }
+
+        a:not([href]):not([tabindex]):hover {
+            pointer-events: none;
+            cursor: default;
+        }
 
     .sub-heading {
         font-family: 'Poppins', sans-serif;
@@ -439,6 +508,7 @@
 
     .product-info-tabs {
         margin-top: 25px;
+        padding: 0 40px 0 40px;
     }
 
         .product-info-tabs .nav-tabs {

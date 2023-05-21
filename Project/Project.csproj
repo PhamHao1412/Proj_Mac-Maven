@@ -125,6 +125,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\DanhGiaController.cs" />
     <Compile Include="Controllers\DanhMucController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -137,6 +138,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppleData.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DanhGiaModel.cs" />
     <Compile Include="Models\Giohang.cs" />
     <Compile Include="Models\KhachHangModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
@@ -480,6 +482,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\DanhGia\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
