@@ -65,7 +65,7 @@
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="@Url.Action("ThongKe","Admin")">
+                                <a class="nav-link collapsed" href="@Url.Action("ThongKeSoLuongTon","Admin")">
                                     So Luong Ton
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
@@ -159,6 +159,9 @@
                                                     <td>@staff.TenCV</td>
                                                     <td>
                                                         @Html.ActionLink("Authorization", "PhanQuyenNhanVien", new { MaNV = staff.MaNV })
+                                                    </td>
+                                                    <td>
+                                                        @Html.ActionLink("Del", "Del_NhanVien", new { MaNV = staff.MaNV })
                                                     </td>
                                                 </tr>
                                                

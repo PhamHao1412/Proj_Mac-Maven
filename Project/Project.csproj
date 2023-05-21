@@ -476,6 +476,7 @@
     <Content Include="Views\GioHang\TrangThaiDonHang.cshtml" />
     <Content Include="Views\Shared\_LayoutDefault.cshtml" />
     <Content Include="Views\Admin\QuanLyDonHang.cshtml" />
+    <Content Include="Views\Admin\Del_NhanVien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

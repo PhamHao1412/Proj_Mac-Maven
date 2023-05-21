@@ -310,6 +310,25 @@ namespace Project.Controllers
                 return Json(new { success = false, message = "Không tìm thấy đơn hàng." });
             }
         }
+        public ActionResult Del_NhanVien(int MaNV)
+
+        {
+            var nhanVienList = db.NhanViens.ToList();
+            var selectList = new SelectList(nhanVienList, "MaNV", "Ten");
+            ViewBag.NhanVienList = selectList;
+
+            var D_nv = db.NhanViens.First(m => m.MaNV == MaNV);
+            return View(D_nv);
+
+        }
+        [HttpPost]
+        public ActionResult Del_NhanVien(int MaNV, FormCollection collection)
+        {
+            var D_nv = db.NhanViens.Where(m => m.MaNV == MaNV).First();
+                db.NhanViens.DeleteOnSubmit(D_nv);
+            db.SubmitChanges();
+            return RedirectToAction("Index");
+        }
 
     }
 }
