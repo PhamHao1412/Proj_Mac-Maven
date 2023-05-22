@@ -143,6 +143,7 @@
     <Compile Include="Models\KhachHangModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RevenueStatistics.cs" />
+    <Compile Include="Models\SanPham.cs" />
     <Compile Include="Models\StaffInfo.cs" />
     <Compile Include="Models\Store_Category.cs" />
     <Compile Include="Models\ThongKeDoanhThuViewModel.cs" />
@@ -463,7 +464,6 @@
     <Content Include="Views\Home\Product_Details.cshtml" />
     <Content Include="Views\DanhMuc\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Add_Products.cshtml" />
     <Content Include="Views\Shared\LoginPartial.cshtml" />
     <Content Include="Views\GioHang\GioHang.cshtml" />
     <Content Include="Views\GioHang\DatHang.cshtml" />
@@ -479,6 +479,8 @@
     <Content Include="Views\Shared\_LayoutDefault.cshtml" />
     <Content Include="Views\Admin\QuanLyDonHang.cshtml" />
     <Content Include="Views\Admin\Del_NhanVien.cshtml" />
+    <Content Include="Views\Admin\Create_SanPham.cshtml" />
+    <Content Include="Views\Admin\Create_DanhMuc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

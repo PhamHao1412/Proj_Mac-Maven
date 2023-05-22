@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "Thống kê doanh thu";
 }
+@{
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -127,7 +130,7 @@
                                 @Html.LabelFor(m => m.WeekNum)
                                 @Html.TextBoxFor(m => m.WeekNum, new { type = "number", min = "1", max = "53", value = Model.WeekNum, @class = "form-control" })
                             </div>
-                           
+
                             <button type="submit" class="btn btn-primary">Xem</button>
                         </div>
                     }

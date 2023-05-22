@@ -1,6 +1,7 @@
 ﻿using Project.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -22,13 +23,12 @@ namespace Project.Controllers
                           select new StaffInfo { MaNV = nv.MaNV, Ten = nv.Ten, Ho = nv.Ho, TenCV = cv.TenCV }).ToList();
 
             ViewBag.Staff = result;
+           
+           
             return View();
+           
         }
-        public ActionResult Add_Products()
-        {
-            return View();
-        }
-
+        
         // Hàm tính ngày đầu tiên trong tuần theo số tuần và năm
         public static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)
         {
@@ -38,7 +38,6 @@ namespace Project.Controllers
             DateTime firstMonday = jan1.AddDays(daysOffset);
             return firstMonday.AddDays(7 * (weekOfYear - 1));
         }
-
 
         public ActionResult ThongKeDoanhThu(int? year, int? weekNum)
         {
@@ -191,7 +190,7 @@ namespace Project.Controllers
                 UpdateModel(E_nhanvien);
                 db.SubmitChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("PhanQuyenNhanVien");
             }
 
             return this.PhanQuyenNhanVien(MaNV);
@@ -234,7 +233,7 @@ namespace Project.Controllers
                 nv.Hinh = E_hinh;
                 db.NhanViens.InsertOnSubmit(nv);
                 db.SubmitChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("CreateNhanVien");
             }
             return this.CreateNhanVien();
         }
@@ -287,8 +286,6 @@ namespace Project.Controllers
                                 Ten = g.Key.Ten,
                             }
                         };
-
-
             return View(query);
         }
         [HttpPost]
@@ -327,12 +324,89 @@ namespace Project.Controllers
             var D_nv = db.NhanViens.Where(m => m.MaNV == MaNV).First();
                 db.NhanViens.DeleteOnSubmit(D_nv);
             db.SubmitChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Del_NhanVien");
         }
+        public ActionResult Create_SanPham()
+        {
+            var all_product =db.Items.OrderBy(p=>p.maloai).ToList();
+            ViewBag.Product = all_product.ToList();
+            var danhMucList = db.Loais.ToList();
+            ViewBag.DanhMucList = new SelectList(danhMucList, "maloai", "tenloai");
+
+            return View();
+        }
+
+        [HttpPost]
+        
+        public ActionResult Create_SanPham(FormCollection collection, Item items)
+        {
+            var ma = Convert.ToInt32(collection["ma"]);
+            var maloai = Convert.ToInt32(collection["maloai"]);
+            var ten = collection["ten"];
+            var hinh = collection["hinh"];
+            var giaban = Convert.ToDecimal(collection["giaban"]);
+            var ngaycapnhat = Convert.ToDateTime(collection["ngaycapnhat"]);
+            var soluongton = Convert.ToInt32(collection["soluongton"]);
+            var giamgia = Convert.ToDecimal(collection["giamgia"]);
+           
+
+            if (string.IsNullOrEmpty(ten))
+            {
+                ViewData["Error"] = "Don't empty";
+            }
+            else
+            {
+                items.ma = ma;
+                items.maloai = maloai;
+                items.ten = ten;
+                items.hinh = hinh;
+                items.giaban = giaban;
+                items.ngaycapnhat=ngaycapnhat;
+                items.soluongton=soluongton;
+                items.giamgia=giamgia;
+               
+                // Thêm sản phẩm vào cơ sở dữ liệu
+                db.Items.InsertOnSubmit(items);
+                db.SubmitChanges();
+                return RedirectToAction("Create_SanPham");
+            }
+            return this.Create_SanPham();
+          
+        }
+        public ActionResult Create_DanhMuc()
+        {
+            var all_category = db.Loais.OrderBy(p=>p.maloai).ToList();
+            ViewBag.Category = all_category.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create_DanhMuc(FormCollection collection, Loai danhMuc)
+        {
+            var C_maloai = Convert.ToInt32(collection["maloai"]);
+            var C_tenloai = collection["tenloai"];
+
+            if ( string.IsNullOrEmpty(C_tenloai))
+            {
+                ViewData["Error"] = "Please enter both category code and name.";
+            }
+            else
+            {
+                danhMuc.maloai = C_maloai;
+                danhMuc.tenloai = C_tenloai;
+
+                db.Loais.InsertOnSubmit(danhMuc);
+                db.SubmitChanges();
+
+                return RedirectToAction("Create_DanhMuc");
+            }
+
+            return View();
+        }
+
+
 
     }
 }
 
     
-
-

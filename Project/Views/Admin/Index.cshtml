@@ -83,12 +83,12 @@
                             Quản lý đơn hàng
 
                         </a>
-                        <a class="nav-link" href="@Url.Action("Add_Products","Admin")">
+                        <a class="nav-link" href="@Url.Action("Create_SanPham","Admin")">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             them san pham
 
                         </a>
-                        <a class="nav-link" href="@Url.Action("Add_Products","Admin")">
+                        <a class="nav-link" href="@Url.Action("Create_DanhMuc","Admin")">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             them doanh muc san pham
                         </a>
@@ -232,7 +232,8 @@
                 passwordField.setAttribute("type", "text");
                 icon.classList.remove("fa-eye");
                 icon.classList.add("fa-eye-slash");
-            } else {
+            }
+            else {
                 passwordField.setAttribute("type", "password");
                 icon.classList.remove("fa-eye-slash");
                 icon.classList.add("fa-eye");
