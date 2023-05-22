@@ -104,14 +104,14 @@
         <elementListCompartment Id="41e3a49c-4cc3-439c-8e1a-8cd73d401f43" absoluteBounds="9.765, 4.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.25 : 7.625); (2.25 : 6.14505126953125); (8.32291666666667 : 6.14505126953125 : JumpStart); (8.48958333333333 : 6.14505126953125 : JumpEnd); (9.75 : 6.14505126953125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.25 : 7.625); (2.25 : 6.14505126953125); (5.79166666666667 : 6.14505126953125 : JumpStart); (5.95833333333333 : 6.14505126953125 : JumpEnd); (9.75 : 6.14505126953125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AppleDataDataContext/KhachHang/KhachHang_DanhGia" />
       <nodes>
         <classShapeMoniker Id="985926e3-d976-406f-bd7c-5565fdd33beb" />
         <classShapeMoniker Id="1b97cd48-3228-4288-826e-85bb3d530eaf" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.125 : 5.08255126953125); (8.32291666666667 : 5.08255126953125 : JumpStart); (8.48958333333333 : 5.08255126953125 : JumpEnd); (9.75 : 5.08255126953125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.125 : 5.08255126953125); (9.75 : 5.08255126953125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AppleDataDataContext/Item/Item_DanhGia" />
       <nodes>
         <classShapeMoniker Id="80d4c7fe-8949-4903-a6fd-f0da47dd7474" />
