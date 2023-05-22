@@ -42,7 +42,6 @@
                                     </a>
                                     <div class="sg-search">
                                         <ul class="list-sg-search" id="searchResults">
-                                            <!-- Kết quả tìm kiếm sẽ được hiển thị ở đây -->
                                         </ul>
                                     </div>
                                 </div>
@@ -63,31 +62,27 @@
     // Gắn sự kiện "keyup" cho ô input tìm kiếm
     $(document).ready(function () {
         $('input[name="search"]').keyup(function () {
-            var searchTerm = $(this).val(); // Lấy từ khóa tìm kiếm từ ô input
+            var searchTerm = $(this).val();
             if (searchTerm.length > 0) {
                 $('.sg-search').addClass('show');
             } else {
                 $('.sg-search').removeClass('show');
                 return;
             }
-            // Gửi yêu cầu Ajax để lấy kết quả tìm kiếm từ máy chủ
             $.ajax({
-                url: '/Home/Search', // Đường dẫn đến action xử lý tìm kiếm autocomplete trên máy chủ
+                url: '/Home/Search', 
                 type: 'POST',
-                data: { searchTerm: searchTerm }, // Gửi từ khóa tìm kiếm
+                data: { searchTerm: searchTerm }, 
                 success: function (data) {
-                    var resultsContainer = $('#searchResults'); // Phần tử chứa kết quả tìm kiếm
+                    var resultsContainer = $('#searchResults'); 
 
-                    // Xóa kết quả tìm kiếm cũ
                     resultsContainer.empty();
                     if (data.length === 0) {
                         $('.sg-search').removeClass('show');
                         return;
                     }
-                    // Thêm kết quả tìm kiếm mới vào phần tử chứa
                     for (var i = 0; i < data.length; i++) {
                         var item = data[i];
-                        //    resultsContainer.append('<li><a href="/Product_Details/' + item.id + '"><img src="/' + item.hinh + '" alt="' + item.name + '"><span>' + item.name + '</span></a></li>');
                         resultsContainer.append('<li><a href="/Home/Product_Details/' + item.id + '"><div class="img-search"><img src="/' + item.hinh + '" alt="' + item.name + '"></div> <div class="text-img"><span>' + item.name + '</span><p><b>' + formatCurrency(item.giaban) + '</b><strike> ' + formatCurrency(item.giamgia) + ' </strike> </p> </div></a></li>');
                         function formatCurrency(value) {
                             return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
@@ -211,7 +206,8 @@
     }
 
     .container-search {
-        margin: 3px -5px;
+        position:relative;
+        top:3px;
         z-index: 999;
         color: white;
     }
@@ -221,17 +217,21 @@
     }
 
     .container-search .input {
-        background: transparent;
+        visibility: hidden;
+        background: #e4e6eb;
         border: 0;
+        outline: none;
         width: 0px;
         font-weight: 500;
         font-size: 16px;
         transition: ease-in;
         border-radius: 15px;
-        color: white;
+        color: #312525;
     }
 
     .container-search.show .input {
+        visibility: unset;
+        padding-left: 20px;
         width: 500px;
     }
 

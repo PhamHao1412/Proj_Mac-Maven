@@ -19,11 +19,6 @@
         @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
         {
             <div id="error-message" class="error-message">@ViewBag.ErrorMessage</div>
-            @*<div class="message-box message-box-warn">
-                    <i class="fa fa-warning fa-2x"></i>
-                    <span class="message-text"><strong>Warning:</strong> User has to be admin</span>
-                    <i class="fa fa-times fa-2x exit-button "></i>
-                </div>*@
 
         }
         <div class="heading-section">
@@ -65,7 +60,7 @@
                                 <input type="radio" id="star1" name="rate" value="1" />
                                 <label for="star1" title="text">1 star</label>
                             </div>
-                            <span>3 Reviews</span>
+                            <span>@ViewBag.countReview Reviews</span>
                         </div>
                         <div class="product-price-discount title-name"><span>@String.Format("{0:0,0}", Model.giaban)VNĐ</span><span class="line-through title-name">@String.Format("{0:0,0}", Model.giamgia)VNĐ</span></div>
                     </div>
@@ -120,9 +115,6 @@
 </div>
 <div class="product-info-tabs">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
-        </li>
         <li class="nav-item">
             <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Reviews (0)</a>
         </li>
@@ -179,19 +171,7 @@
                     <input type="hidden" name="MaTinTuc" value="@Model.ma" hidden />
                     <textarea name="cMessage" id="cMessage" class="full-width form-control" placeholder="Bình luận*" required></textarea>
                 </div>
-                @*<div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" name="" class="form-control" placeholder="Name*">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" name="" class="form-control" placeholder="Email Id*">
-                            </div>
-                        </div>
-                    </div>*@
-                <input name="submit" id="submit" class="btn btn--primary btn-wide btn--large full-width" value="Thêm bình luận" type="submit">
+                <input name="submit" id="submit" class=" btn-wide btn--large" value="Thêm bình luận" type="submit">
             </form>
         </div>
     </div>
@@ -211,6 +191,15 @@
     }, 2000);
 </script>
 <style>
+    .btn-wide {
+        height:30px;
+        width:130px;    
+        border-radius: 7px;
+        color: white;
+        font-size:14px;
+        font-weight:700;
+        background-color: #0071e3;
+    }
     .cmt-command {
         bottom: 15px;
         position: relative
