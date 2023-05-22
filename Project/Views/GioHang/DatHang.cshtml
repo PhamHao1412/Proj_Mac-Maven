@@ -1,0 +1,237 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutGH.cshtml";
+}
+<body style="background-color: #3e3e3f">
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Thông tin đặt hàng</h4>
+            <form action="/GioHang/DatHang" method="post">
+                <h5 class="title-infor">Thông tin khách hàng</h5>
+                <div class="form-group sex-customer">
+                    <label>
+                        <input type="radio" name="gender" value="male">
+                        Anh
+                    </label>
+                    <label>
+                        <input type="radio" name="gender" value="female">
+                        Chị
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="name" placeholder="Họ và tên (bắt buộc)">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="phone" placeholder="Số điện thoại (bắt buộc)">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="email" placeholder="Email (Vui lòng điền email để nhận hóa đơn VAT)">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="address" placeholder="Địa chỉ giao hàng"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="note" placeholder="Nhập ghi chú (nếu có)">
+                </div>
+                <div class="form-group checkbox">
+                    <label for="option1">
+                        <input type="checkbox" id="option1" name="options[]" value="option1" onclick="showNameField()">
+                        Gọi người khác nhận hàng
+                    </label>
+                </div>
+                <div class="infuser" id="cb-infuser" style="display:none">
+                    <div class="form-group sex-infuser">
+                        <label>
+                            <input type="radio" name="gender" value="male">
+                            Anh
+                        </label>
+                        <label>
+                            <input type="radio" name="gender" value="female">
+                            Chị
+                        </label>
+                    </div>
+                    <input type="text" class="form-infuser" id="name" placeholder="Tên người nhận">
+                    <input type="text" class="form-infuser" id="name" placeholder="Số điện thoại">
+                </div>
+                <div class="form-group checkbox">
+                    <label for="option2">
+                        <input type="checkbox" id="option2" name="options[]" value="option2">
+                        Hướng dẫn sử dụng, giải đáp thắc mắc sản phẩm
+                    </label>
+                </div>
+                <div class="form-group checkbox">
+                    <label for="option3">
+                        <input type="checkbox" id="option3" name="options[]" value="option3" onclick="showNameField()">
+                        Xuất hóa đơn công ty
+                    </label>
+                </div>
+                <div class="infocompany" id="cb-company" style="display:none">
+                    <input type="text" class="form-infocompany" id="name" placeholder="Tên công ty">
+                    <input type="text" class="form-infocompany" id="name" placeholder="Địa chỉ công ty">
+                    <input type="text" class="form-infocompany" id="name" placeholder="Mã số thuế">
+                </div>
+
+                <div class="form-group">
+                    <strong>Tổng tiền:</strong>
+                    <strong class="total-price">@String.Format("{0:0,0}", ViewBag.TotalPrice)&#8363</strong>
+                </div>
+                <button type="submit" class="btn-order">Đặt hàng</button>
+
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    function showNameField() {
+        var nameField = document.getElementById("cb-infuser");
+        var optCompany = document.getElementById("cb-company");
+        var checkbox1 = document.getElementById("option1");
+        var checkbox3 = document.getElementById("option3");
+        if (checkbox1.checked || checkbox3.checked) {
+            if (checkbox1.checked) {
+                nameField.style.display = "block";
+            } else {
+                nameField.style.display = "none";
+            }
+            if (checkbox3.checked) {
+                optCompany.style.display = "block";
+            } else {
+                optCompany.style.display = "none";
+            }
+        } else {
+            nameField.style.display = "none";
+            optCompany.style.display = "none";
+        }
+    }
+
+
+</script>
+<style>
+    .infuser, .infocompany {
+        background-color: #e8e9ea;
+        border-radius: 6px;
+    }
+
+    .form-infuser {
+        width: 280px;
+        border-radius: 6px;
+        margin-left: 18px;
+        padding: 5px;
+    }
+
+    .form-infocompany {
+        width: 90%;
+        margin: 10px 30px;
+        border-radius: 6px;
+    }
+
+    .checkbox label {
+        display: inline-block;
+        width: 20px;
+        margin-bottom: -20px;
+    }
+
+    .total-price {
+        float: right;
+        color: red;
+        font-weight: 700;
+    }
+
+    .card-title {
+        text-align: center;
+        font-weight: 700
+    }
+
+    .sex-customer {
+        margin: 20px 0 0 -12px;
+    }
+
+    .title-infor {
+        margin: 10px 0 10px 0;
+    }
+
+    .form-group {
+        white-space: nowrap;
+    }
+
+    .sex-customer label {
+        display: inline-block;
+        font-size: 16px;
+        margin: 0 50px -10px 0;
+    }
+
+    .sex-infuser label {
+        display: inline-block;
+        font-size: 16px;
+        margin: 5px 50px -20px 0;
+    }
+
+    .title {
+        margin-bottom: 5vh;
+    }
+
+    .card {
+        margin: 5% auto;
+        width: 40%;
+        box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 1rem;
+        border: transparent;
+    }
+
+    .cart {
+        background-color: #fff;
+        padding: 4vh 5vh;
+        border-bottom-left-radius: 1rem;
+        border-top-left-radius: 1rem;
+    }
+
+    h5 {
+        margin-top: 4vh;
+    }
+
+    form {
+        padding: 2vh 0;
+    }
+
+    .form-group input {
+        border: 1px solid rgba(0, 0, 0, 0.137);
+        padding: 1vh;
+        margin-bottom: 4vh;
+        outline: none;
+        width: 100%;
+        background-color: rgb(247, 247, 247);
+    }
+
+    .infuser input {
+        border: 1px solid rgba(0, 0, 0, 0.137);
+        padding: 1vh;
+        margin-bottom: 4vh;
+        outline: none;
+        width: 95%;
+        background-color: rgb(247, 247, 247);
+    }
+
+    .infocompany input {
+        border: 1px solid rgba(0, 0, 0, 0.137);
+        padding: 1vh;
+        margin-bottom: 4vh;
+        outline: none;
+        width: 90%;
+        background-color: rgb(247, 247, 247);
+    }
+
+    .btn-order {
+        align-items: flex-start;
+        background-color: #0071e3;
+        border-radius: 12px;
+        color: #ffffff;
+        font-family: Helvetica Neue;
+        height: 40px;
+        width: 100%;
+    }
+
+    a:hover {
+        color: white;
+        text-decoration: none;
+    }
+</style>

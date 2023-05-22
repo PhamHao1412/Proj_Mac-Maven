@@ -1,0 +1,268 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<body style="background-color: #3e3e3f">
+    <section class="store_section layout_padding">
+
+        <div class="container-fluid">
+            <div>
+                <a href="#" class="logo-cate">
+                    <h2 class="title-text">iPhone</h2>
+                </a>
+            </div>
+            <div class="store_container">
+
+                @{
+                    if (ViewBag.mac != null)
+                    {
+                        foreach (var item in ViewBag.iPhone)
+                        {
+                            int masp = item.ma;
+                            <a href="/Home/Product_Details/@item.ma">
+                                <div class="box">
+                                    <img src="/@item.hinh" class="image-item" />
+                                    <h5 class="name-product">
+                                        @item.ten
+                                    </h5>
+                                    <div class="box-price">
+                                        <strong class="price">@String.Format("{0:0,0}", item.giaban)&#8363</strong>
+                                        <p class="price-old black"> @String.Format("{0:0,0}", item.giamgia)&#8363</p>
+                                    </div>
+                                    <div class="link_box">
+                                        <span class="btn-buy">Mua ngay</span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div>
+                <a href="#" class="logo-cate">
+                    <h2 class="title-text">iPhone</h2>
+                </a>
+            </div>
+            <div class="store_container">
+
+                @{
+                    if (ViewBag.mac != null)
+                    {
+                        foreach (var item in ViewBag.mac)
+                        {
+                            int masp = item.ma;
+                            <a href="/Home/Product_Details/@item.ma">
+                                <div class="box">
+                                    <img src="/@item.hinh" class="image-item" />
+                                    <h5 class="name-product">
+                                        @item.ten
+                                    </h5>
+                                    <div class="box-price">
+                                        <strong class="price">@String.Format("{0:0,0}", item.giaban)&#8363</strong>
+                                        <p class="price-old black"> @String.Format("{0:0,0}", item.giamgia)&#8363</p>
+                                    </div>
+                                    <div class="link_box">
+                                        <span class="btn-buy">Mua ngay</span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div>
+                <a href="#" class="logo-cate">
+                    <h2 class="title-text">iPhone</h2>
+                </a>
+            </div>
+            <div class="store_container">
+
+                @{
+                    if (ViewBag.mac != null)
+                    {
+                        foreach (var item in ViewBag.iPad)
+                        {
+                            int masp = item.ma;
+                            <a href="/Home/Product_Details/@item.ma">
+                                <div class="box">
+                                    <img src="/@item.hinh" class="image-item" />
+                                    <h5 class="name-product">
+                                        @item.ten
+                                    </h5>
+                                    <div class="box-price">
+                                        <strong class="price">@String.Format("{0:0,0}", item.giaban)&#8363</strong>
+                                        <p class="price-old black"> @String.Format("{0:0,0}", item.giamgia)&#8363</p>
+                                    </div>
+                                    <div class="link_box">
+                                        <span class="btn-buy">Mua ngay</span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div>
+                <a href="#" class="logo-cate">
+                    <h2 class="title-text">iPhone</h2>
+                </a>
+            </div>
+            <div class="store_container">
+
+                @{
+                    if (ViewBag.mac != null)
+                    {
+                        foreach (var item in ViewBag.Watch)
+                        {
+                            int masp = item.ma;
+                            <a href="/Home/Product_Details/@item.ma">
+                                <div class="box">
+                                    <img src="/@item.hinh" class="image-item" />
+                                    <h5 class="name-product">
+                                        @item.ten
+                                    </h5>
+                                    <div class="box-price">
+                                        <strong class="price">@String.Format("{0:0,0}", item.giaban)&#8363</strong>
+                                        <p class="price-old black"> @String.Format("{0:0,0}", item.giamgia)&#8363</p>
+                                    </div>
+                                    <div class="link_box">
+                                        <span class="btn-buy">Mua ngay</span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div>
+                <a href="#" class="logo-cate">
+                    <h2 class="title-text">iPhone</h2>
+                </a>
+            </div>
+            <div class="store_container">
+
+                @{
+                    if (ViewBag.mac != null)
+                    {
+                        foreach (var item in ViewBag.Airpods)
+                        {
+                            int masp = item.ma;
+                            <a href="/Home/Product_Details/@item.ma">
+                                <div class="box">
+                                    <img src="/@item.hinh" class="image-item" />
+                                    <h5 class="name-product">
+                                        @item.ten
+                                    </h5>
+                                    <div class="box-price">
+                                        <strong class="price">@String.Format("{0:0,0}", item.giaban)&#8363</strong>
+                                        <p class="price-old black"> @String.Format("{0:0,0}", item.giamgia)&#8363</p>
+                                    </div>
+                                    <div class="link_box">
+                                        <span class="btn-buy">Mua ngay</span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </section>
+
+
+    <!-- end info section -->
+    <!-- footer section -->
+    <!-- footer section -->
+
+
+</body>
+<style>
+    .btn-buy {
+        display: flex;
+        height: 40px;
+        width: 100px;
+        border-radius: 10px;
+        font-weight: 600;
+        background-color: #7d7d84;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .store_container a {
+        text-decoration: none;
+    }
+
+    .name-product {
+        height: 40px;
+        display: -webkit-box;
+        padding: 0 10px;
+        margin: 12px 0;
+        text-align: center;
+        font-size: 17px;
+        line-height: 20px;
+        color: #fff;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        -webkit-line-clamp: 2;
+    }
+
+    .box-price {
+        display: flex;
+        color: #fff;
+        flex-flow: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .price {
+        color: #fff;
+        text-align: center;
+        display: block;
+        font-size: 18px;
+    }
+
+    .price-old {
+        text-decoration: line-through;
+        margin: 2px 0 0 10px;
+        font-size: 15px;
+    }
+
+    .box {
+        text-align: center;
+        width: 250px;
+        height: 400px;
+    }
+
+    .logo-cate {
+        text-align: center;
+    }
+
+        .logo-cate:hover {
+            text-decoration: none;
+        }
+
+    .title-text {
+        margin: 40px 0 40px 0;
+        color: white;
+    }
+
+    .image-item {
+        width: 300px;
+        height: 200px;
+    }
+
+    .layout_padding {
+        padding: 50px 0;
+    }
+</style>

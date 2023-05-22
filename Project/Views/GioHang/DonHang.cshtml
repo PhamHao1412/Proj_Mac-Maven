@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Trang Đơn hàng</title>
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="title">
+            <h1>Đơn hàng</h1>
+        </div>
+        <div class="cart">
+            @if (ViewBag.CountChoXacNhan > 0 && Session["TaiKhoan"] != null)
+            {
+                <span class="number-status">@ViewBag.CountChoXacNhan</span>
+            }
+            <h2>Chờ xác nhận</h2>
+            <div class="status">
+                <a href="/GioHang/TrangThaiDonHang?trangthai=Đơn%20hàng%20mới">Xem đơn hàng</a>
+            </div>
+            <ul id="chờ xác nhận"></ul>
+        </div>
+
+        <!-- Cart đang giao hàng -->
+        <div class="cart">
+            @if (ViewBag.CountDangGiaoHang > 0 && Session["TaiKhoan"] != null)
+            {
+
+                <span class="number-status">@ViewBag.CountDangGiaoHang</span>
+            }
+            <h2>Đang giao hàng</h2>
+            <div class="status">
+                <a href="/GioHang/TrangThaiDonHang?trangthai=Đang%20xử%20lý">Xem đơn hàng</a>
+            </div>
+            <ul id="đang giao hàng"></ul>
+        </div>
+
+        <!-- Cart hoàn tất -->
+        <div class="cart">
+            @if (ViewBag.CountHoanTat > 0 && Session["TaiKhoan"] != null)
+            {
+                <span class="number-status">@ViewBag.CountHoanTat</span>
+            }
+            <h2>Đã giao</h2>
+            <div class="status">
+                <a href="/GioHang/TrangThaiDonHang?trangthai=Hoàn%20tất">Xem đơn hàng</a>
+            </div>
+            <ul id="hoàn tất"></ul>
+        </div>
+    </div>
+    <style>
+        .number-status {
+            background-color: #f80909;
+            border-radius: 50%;
+            color: #fff;
+            float: right;
+            display: block;
+            font-size: 14px;
+            line-height: 15px;
+            font-weight: 600;
+            width: 16px;
+            height: 16px;
+            text-align: center;
+        }
+
+        .container {
+            text-align: center
+        }
+
+        .cart {
+            width: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: inline-block;
+            margin: 0 auto;
+        }
+
+        .status {
+            margin-bottom: 5px;
+        }
+
+            .status button {
+                margin-right: 5px;
+            }
+    </style>
+</body>
+</html>
+
