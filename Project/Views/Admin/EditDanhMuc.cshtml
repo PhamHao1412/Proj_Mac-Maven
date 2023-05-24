@@ -3,49 +3,25 @@
 @{
     Layout = null;
 }
-@{
-    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
-}
+
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Create_DanhMuc</title>
+    <title>EditDanhMuc</title>
 </head>
 <body>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        if (ViewBag.Category != null)
-        {
-            <table class="table">
-                <thead>
-                    <tr>
-                        
-                        <th>Tên</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in ViewBag.Category)
-                    {
-                        <tr>
-                           
-                            <td>@item.tenloai</td>
-                            <td>
-                                @Html.ActionLink("Edit", "EditDanhMuc", new { maloai = item.maloai })
-                                @Html.ActionLink("Delete", "DeleteDanhMuc", new { maloai = item.maloai })
-                            </td>
-                            
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
+        
         <div class="form-horizontal">
             <h4>Loai</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.maloai)
+    
             <div class="form-group">
                 @Html.LabelFor(model => model.tenloai, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -53,15 +29,15 @@
                     @Html.ValidationMessageFor(model => model.tenloai, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+    
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Save" class="btn btn-default" />
                 </div>
             </div>
         </div>
     }
-
+    
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>

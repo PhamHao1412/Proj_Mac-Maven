@@ -24,7 +24,8 @@ namespace Project.Controllers
 
             ViewBag.Staff = result;
            
-           
+            ThongKeSoLuongTon();
+
             return View();
            
         }
@@ -48,7 +49,6 @@ namespace Project.Controllers
             int selectedWeekNum = weekNum ?? currentWeekNum;
 
             DateTime selectedDate = FirstDateOfWeekISO8601(selectedYear, selectedWeekNum);
-
             // Lấy danh sách doanh thu của các ngày trong tuần
             DateTime monday = selectedDate.AddDays(-(int)selectedDate.DayOfWeek + (int)DayOfWeek.Monday);
             DateTime sunday = monday.AddDays(6);
@@ -78,7 +78,7 @@ namespace Project.Controllers
             ViewBag.TongDoanhThuTuan = tongDoanhThuTuan;
             ViewBag.SelectedYear = selectedYear;
             ViewBag.SelectedWeekNum = selectedWeekNum;
-
+            ThongKeSoLuongTon();
             return View(viewModel);
         }
 
@@ -149,7 +149,7 @@ namespace Project.Controllers
             }
             return this.EditKhachHang(makh);
         }
-        public ActionResult PhanQuyenNhanVien(int MaNV)
+        public ActionResult PhanQuyenNhanVien(int? MaNV)
         {
 
             var E_nhanvien = db.NhanViens.FirstOrDefault(m => m.MaNV == MaNV);
@@ -190,7 +190,7 @@ namespace Project.Controllers
                 UpdateModel(E_nhanvien);
                 db.SubmitChanges();
 
-                return RedirectToAction("PhanQuyenNhanVien");
+                return RedirectToAction("Index");
             }
 
             return this.PhanQuyenNhanVien(MaNV);
@@ -237,6 +237,25 @@ namespace Project.Controllers
             }
             return this.CreateNhanVien();
         }
+         public ActionResult Del_NhanVien(int MaNV)
+
+        {
+            var nhanVienList = db.NhanViens.ToList();
+            var selectList = new SelectList(nhanVienList, "MaNV", "Ten");
+            ViewBag.NhanVienList = selectList;
+
+            var D_nv = db.NhanViens.First(m => m.MaNV == MaNV);
+            return View(D_nv);
+
+        }
+        [HttpPost]
+        public ActionResult Del_NhanVien(int MaNV, FormCollection collection)
+        {
+            var D_nv = db.NhanViens.Where(m => m.MaNV == MaNV).First();
+            db.NhanViens.DeleteOnSubmit(D_nv);
+            db.SubmitChanges();
+            return RedirectToAction("Del_NhanVien");
+        }
         public ActionResult ThongKeSoLuongTon()
         {
             var viewModel = new ThongKeSoLuongTonViewModel();
@@ -265,8 +284,12 @@ namespace Project.Controllers
             ViewBag.ProductInventoryList = productList;
             ViewBag.TotalInventory = totalInventory;
 
+            // Truyền số loại sản phẩm có số lượng dưới 15 vào view
+            ViewBag.LowInventoryProductCount = lowInventoryProducts.Count;
+
             return View(viewModel);
         }
+
         public ActionResult QuanLyDonHang()
         {
             var query = from d in db.DonHangs
@@ -307,72 +330,8 @@ namespace Project.Controllers
                 return Json(new { success = false, message = "Không tìm thấy đơn hàng." });
             }
         }
-        public ActionResult Del_NhanVien(int MaNV)
-
-        {
-            var nhanVienList = db.NhanViens.ToList();
-            var selectList = new SelectList(nhanVienList, "MaNV", "Ten");
-            ViewBag.NhanVienList = selectList;
-
-            var D_nv = db.NhanViens.First(m => m.MaNV == MaNV);
-            return View(D_nv);
-
-        }
-        [HttpPost]
-        public ActionResult Del_NhanVien(int MaNV, FormCollection collection)
-        {
-            var D_nv = db.NhanViens.Where(m => m.MaNV == MaNV).First();
-                db.NhanViens.DeleteOnSubmit(D_nv);
-            db.SubmitChanges();
-            return RedirectToAction("Del_NhanVien");
-        }
-        public ActionResult Create_SanPham()
-        {
-            var all_product =db.Items.OrderBy(p=>p.maloai).ToList();
-            ViewBag.Product = all_product.ToList();
-            var danhMucList = db.Loais.ToList();
-            ViewBag.DanhMucList = new SelectList(danhMucList, "maloai", "tenloai");
-
-            return View();
-        }
-
-        [HttpPost]
-        
-        public ActionResult Create_SanPham(FormCollection collection, Item items)
-        {
-            var ma = Convert.ToInt32(collection["ma"]);
-            var maloai = Convert.ToInt32(collection["maloai"]);
-            var ten = collection["ten"];
-            var hinh = collection["hinh"];
-            var giaban = Convert.ToDecimal(collection["giaban"]);
-            var ngaycapnhat = Convert.ToDateTime(collection["ngaycapnhat"]);
-            var soluongton = Convert.ToInt32(collection["soluongton"]);
-            var giamgia = Convert.ToDecimal(collection["giamgia"]);
-           
-
-            if (string.IsNullOrEmpty(ten))
-            {
-                ViewData["Error"] = "Don't empty";
-            }
-            else
-            {
-                items.ma = ma;
-                items.maloai = maloai;
-                items.ten = ten;
-                items.hinh = hinh;
-                items.giaban = giaban;
-                items.ngaycapnhat=ngaycapnhat;
-                items.soluongton=soluongton;
-                items.giamgia=giamgia;
-               
-                // Thêm sản phẩm vào cơ sở dữ liệu
-                db.Items.InsertOnSubmit(items);
-                db.SubmitChanges();
-                return RedirectToAction("Create_SanPham");
-            }
-            return this.Create_SanPham();
-          
-        }
+       
+       
         public ActionResult Create_DanhMuc()
         {
             var all_category = db.Loais.OrderBy(p=>p.maloai).ToList();
@@ -403,7 +362,137 @@ namespace Project.Controllers
 
             return View();
         }
+        public ActionResult EditDanhMuc(int maloai)
+        {
 
+            var E_loai = db.Loais.First(m => m.maloai == maloai);
+
+            return View(E_loai);
+        }
+        [HttpPost]
+        public ActionResult EditDanhMuc(int maloai, FormCollection collection)
+        {
+            var E_loai = db.Loais.First(m => m.maloai == maloai);
+            var E_tenloai = collection["tenloai"];
+
+            E_loai.maloai = maloai;
+            if (string.IsNullOrEmpty(E_tenloai))
+            {
+                ViewData["Error"] = "Don't empty";
+            }
+            else
+            {
+                E_loai.tenloai = E_tenloai.ToString();
+
+              
+                UpdateModel(E_loai);
+                db.SubmitChanges();
+                return RedirectToAction("Create_DanhMuc");
+            }
+            return this.EditKhachHang(maloai);
+        }
+
+        public ActionResult DeleteDanhMuc(int maloai)
+        {
+            Loai loai = db.Loais.FirstOrDefault(g => g.maloai == maloai);
+            if (loai != null)
+            {
+                db.Loais.DeleteOnSubmit(loai);
+                db.SubmitChanges();
+            }
+
+            return RedirectToAction("Create_DanhMuc", "Admin");
+        }
+        public ActionResult Edit_SanPham(int ma)
+        {
+          
+            var E_sanpham = db.Items.First(m => m.ma == ma);
+            return View(E_sanpham);
+        }
+        [HttpPost]
+        public ActionResult Edit_SanPham(int ma, FormCollection collection)
+        {
+            var E_sanpham = db.Items.First(m => m.ma == ma);
+            var ten = collection["ten"];
+            var hinh = collection["hinh"];
+            var giaban = Convert.ToDecimal(collection["giaban"]);
+            var ngaycapnhat = Convert.ToDateTime(collection["ngaycapnhat"]);
+            var soluongton = Convert.ToInt32(collection["soluongton"]);
+            var giamgia = Convert.ToDecimal(collection["giamgia"]);
+
+            if (string.IsNullOrEmpty(ten))
+            {
+                ViewData["Error"] = "Don't empty";
+            }
+            else
+            {
+                
+                E_sanpham.ten = ten;
+                E_sanpham.hinh = hinh;
+                E_sanpham.giaban = giaban;
+                E_sanpham.ngaycapnhat = ngaycapnhat;
+                E_sanpham.soluongton = soluongton;
+                if (giamgia != 0)
+                {
+                    E_sanpham.giamgia = E_sanpham.giaban - (E_sanpham.giaban * giamgia / 100);
+                   
+                }
+                 
+            //khong dung updateModel vi se bi loi
+                db.SubmitChanges();
+                return RedirectToAction("Create_SanPham");
+            }
+            return this.Edit_SanPham(ma);
+        }
+        public ActionResult Create_SanPham()
+        {
+            var all_product = db.Items.OrderBy(p => p.maloai).ToList();
+            ViewBag.Product = all_product.ToList();
+            var danhMucList = db.Loais.ToList();
+            ViewBag.DanhMucList = new SelectList(danhMucList, "maloai", "tenloai");
+            
+
+            return View();
+        }
+
+        [HttpPost]
+
+        public ActionResult Create_SanPham(FormCollection collection, Item items)
+        {
+            var ma = Convert.ToInt32(collection["ma"]);
+            var maloai = Convert.ToInt32(collection["maloai"]);
+            var ten = collection["ten"];
+            var hinh = collection["hinh"];
+            var giaban = Convert.ToDecimal(collection["giaban"]);
+            var ngaycapnhat = DateTime.Now;
+            var soluongton = Convert.ToInt32(collection["soluongton"]);
+            var giamgia = Convert.ToDecimal(collection["giamgia"]);
+            if (string.IsNullOrEmpty(ten))
+            {
+                ViewData["Error"] = "Don't empty";
+            }
+            else
+            {
+                items.ma = ma;
+                items.maloai = maloai;
+                items.ten = ten;
+                items.hinh = hinh;
+                items.giaban = giaban;
+                items.ngaycapnhat = ngaycapnhat;
+                items.soluongton = soluongton;
+                if (giamgia != 0)
+                {
+                    items.giamgia = giaban - (giaban * giamgia / 100);
+                }
+
+                // Thêm sản phẩm vào cơ sở dữ liệu
+                db.Items.InsertOnSubmit(items);
+                db.SubmitChanges();
+                return RedirectToAction("Create_SanPham");
+            }
+            return this.Create_SanPham();
+
+        }
 
 
     }

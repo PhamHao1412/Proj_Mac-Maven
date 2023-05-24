@@ -32,7 +32,7 @@ namespace Project.Controllers
             cmt.Trangthai = true;
             db.DanhGias.InsertOnSubmit(cmt);
             db.SubmitChanges();
-            return Redirect("/Home/Store/" + MaTinTuc);
+            return Redirect("/Home/Product_Details/" + MaTinTuc);
         }
     }
 }
