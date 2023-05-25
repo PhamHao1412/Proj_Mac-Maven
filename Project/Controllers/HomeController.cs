@@ -112,7 +112,18 @@ namespace Project.Controllers
             var menu = db.Loais.ToList();
             return PartialView(menu);
         }
+        public ActionResult MenuViewAdmin()
+        {
+            KhachHang kh = (KhachHang)Session["TaiKhoan"];
+            if (kh != null)
+            {
+                ViewBag.TotalPrice = Total(kh.makh);
+                ViewBag.CountCart = db.GioHangs.Where(k => k.makh == kh.makh).Count();
 
+            }
+            var menu = db.Loais.ToList();
+            return PartialView(menu);
+        }
 
 
     }

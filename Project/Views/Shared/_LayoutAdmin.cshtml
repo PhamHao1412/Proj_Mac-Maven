@@ -42,47 +42,22 @@
 </head>
 
 <body class="sub_page">
+   
+                                @{ Html.RenderAction("MenuViewAdmin", "Home");
+                                }
 
-    @{ Html.RenderAction("MenuView", "Home"); }
-    @RenderBody()
+                                @RenderBody()
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h3>About Us</h3>
-                </div>
-                <div class="col-md-4">
-                    <h3>Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Products</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h3>Contact Us</h3>
-                    <ul class="contact-info">
-                        <li><i class="fa fa-map-marker"></i>1234 Main St, San Francisco, CA 94111</li>
-                        <li><i class="fa fa-phone"></i>+1 (123) 456-7890</li>
-                        <li><i class="fa fa-envelope"></i><a href="mailto:info@yourdomain.com">info@yourdomain.com</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-    @*<script type="text/javascript" src="~/Content/jquery-3.4.1.min.js"></script>*@
-    @*<script type="text/javascript" src="~/Content/bootstrap.js"></script>
-        <script type="text/javascript" src="~/Content/custom.js"></script>*@
+                              
 </body>
 </html>
 
 
 <style>
-    .collapse{
-        margin:-8px;
+    .collapse {
+        margin: -8px;
     }
+
     .site-footer {
         background-color: #222;
         padding: 45px 0 20px;

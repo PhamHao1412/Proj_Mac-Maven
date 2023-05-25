@@ -17,6 +17,7 @@
                             <li class="nav-item menu">
                                 <a class="nav-link" href="/Home/Store">Store</a>
                             </li>
+
                             @foreach (var item in Model)
                             {
                                 <li class="nav-item menu">
@@ -26,7 +27,7 @@
 
                             }
 
-                          
+
                             <li class="nav-item menu">
                                 <a class="nav-link shopping-cart" href="/GioHang/GioHang">
                                     <i class="fa fa-shopping-bag shoppingbag"></i>
@@ -55,9 +56,14 @@
                             <li class="nav-item menu">
                                 @Html.Partial("LoginPartial")
 
-                               
+
                             </li>
 
+                        </ul>
+                        <ul>
+                            <li>
+                                <a href="  @Url.Action("Index","Admin")">Back Admin</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -77,11 +83,11 @@
                 return;
             }
             $.ajax({
-                url: '/Home/Search', 
+                url: '/Home/Search',
                 type: 'POST',
-                data: { searchTerm: searchTerm }, 
+                data: { searchTerm: searchTerm },
                 success: function (data) {
-                    var resultsContainer = $('#searchResults'); 
+                    var resultsContainer = $('#searchResults');
 
                     resultsContainer.empty();
                     if (data.length === 0) {
@@ -213,8 +219,8 @@
     }
 
     .container-search {
-        position:relative;
-        top:3px;
+        position: relative;
+        top: 3px;
         z-index: 999;
         color: white;
     }
