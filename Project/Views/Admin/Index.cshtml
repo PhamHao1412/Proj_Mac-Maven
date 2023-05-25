@@ -1,6 +1,4 @@
-﻿@{
-    Layout = null;
-}
+﻿
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -21,9 +19,9 @@
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             @*<div class="input-group">
-                <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Tìm kiếm..." aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-            </div>*@
+                    <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Tìm kiếm..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                </div>*@
         </form>
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
@@ -32,7 +30,7 @@
                     <li><a class="dropdown-item" href="#!">Cài đặt</a></li>
                     <li><a class="dropdown-item" href="#!">Nhật ký hoạt động</a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                    <li><a class="dropdown-item" href="@Url.Action("LogOff","Users")">Đăng xuất</a></li>
                 </ul>
             </li>
         </ul>
@@ -50,47 +48,52 @@
                         <div class="sb-sidenav-menu-heading">Interface</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Account Manament
+                            Account Management
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="@Url.Action("CreateNhanVien","Admin")">Nhan Vien</a>
+                                <a class="nav-link" href="@Url.Action("CreateNhanVien","Admin")">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
+                                    Add Employee
+                                </a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Thong Ke
+                            Store Management
+
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="@Url.Action("ThongKeSoLuongTon","Admin")">
-                                    So Luong Ton
+                                <a class="nav-link collapsed soluongton" href="@Url.Action("ThongKeSoLuongTon","Admin")">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-box"></i></div>
+                                    Inventory
+                                    @if (ViewBag.LowInventoryProductCount > 0)
+                                    {
+                                        <span class="badge badge-danger" style="color:red">@ViewBag.LowInventoryProductCount</span>
+                                    }
+
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-
                                 <a class="nav-link collapsed" href="@Url.Action("ThongKeDoanhThu","Admin")">
-                                    Doanh Thu
+                                    <div class="sb-nav-link-icon"> <i class="fa-solid fa-landmark"></i></div>
+                                    Revenue
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading">Addons</div>
-                        <a class="nav-link" href="@Url.Action("QuanLyDonHang","Admin")">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Quản lý đơn hàng
-
-                        </a>
+                    
                         <a class="nav-link" href="@Url.Action("Create_SanPham","Admin")">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            them san pham
-
+                            Add Products
                         </a>
                         <a class="nav-link" href="@Url.Action("Create_DanhMuc","Admin")">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            them doanh muc san pham
+                            Add Categorys
                         </a>
                     </div>
                 </div>
@@ -110,27 +113,39 @@
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Thẻ chính</div>
+                                <div class="card-body">
+                                    Đơn Hàng Mới
+                                        <span class="badge badge-danger" style="color:red;">@ViewBag.InventoryCount</span>
+                                </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                    <a class="small text-white stretched-link" href="@Url.Action("Show_DonHangMoi","Admin")">Xem chi tiết</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Thẻ cảnh báo</div>
+                                <div class="card-body">
+                                    Đang xử lý
+                                    <span class="badge badge-danger" style="color:red;">@ViewBag.InventoryCount2</span>
+
+                                </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                    <a class="small text-white stretched-link" href="@Url.Action("Show_DonHangDangXuLy","Admin")">Xem chi tiết</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-success text-white mb-4">
-                                <div class="card-body">Thẻ thành công</div>
+                                <div class="card-body">
+                                    Hoàn tất
+                                    <span class="badge badge-danger" style="color:red;">@ViewBag.InventoryCount3</span>
+
+                                </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                    <a class="small text-white stretched-link" href="@Url.Action("Show_DonHangHoanTat","Admin")">Xem chi tiết</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
@@ -158,16 +173,16 @@
                                                     <td>@(staff.Ho + " " + staff.Ten)</td>
                                                     <td>@staff.TenCV</td>
                                                     <td>
-                                                        @Html.ActionLink("Authorization", "PhanQuyenNhanVien", new { MaNV = staff.MaNV })
+                                                        @Html.ActionLink("Manage", "PhanQuyenNhanVien", new { MaNV = staff.MaNV })
                                                     </td>
                                                     <td>
                                                         @Html.ActionLink("Del", "Del_NhanVien", new { MaNV = staff.MaNV })
                                                     </td>
                                                 </tr>
-                                               
-                                        }
-                                            </tbody>
-                                        </table>
+
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -241,5 +256,17 @@
         }
     </script>
 
+
+
 </body>
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var warningBadge = document.getElementById("warning-badge");
+        if (warningBadge) {
+            warningBadge.addEventListener("click", function () {
+                alert("Warning: Low inventory!");
+            });
+        }
+    });
+</script>

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<System.Linq.IGrouping<int, Project.Models.LichSuMuaHangModel>>
+@{
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+<style>
+    .order-details {
+        margin-bottom: 20px;
+    }
+
+        .order-details h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .order-details p {
+            margin: 5px 0;
+        }
+
+    .product-table {
+        margin-top: 20px;
+    }
+
+        .product-table th {
+            font-weight: bold;
+        }
+
+        .product-table td {
+            padding: 5px;
+        }
+</style>
+
+<h2>Chi tiết đơn hàng</h2>
+
+@foreach (var order in Model)
+{
+    <div class="order-details">
+        <h3>Thông tin đơn hàng:</h3>
+        <p>Mã đơn: @order.Key</p>
+        <p>Ngày đặt: @order.First().NgayDat.ToString("dd/MM/yyyy")</p>
+        <p>Tổng Tiền: @String.Format("{0:0,0}", @order.Sum(o=>o.TongTien))</p>
+    </div>
+    <table class="table product-table">
+        <thead>
+            <tr>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in order)
+            {
+                <tr>
+                    <td>@item.TenSP</td>
+                    <td>@item.SoLuong</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="order-details">
+        <h3>Thông tin khách hàng:</h3>
+        <p>Họ và tên: @order.First().khachhang.Ho @order.First().khachhang.Ten</p>
+        <p>Ngày sinh: @order.First().khachhang.NgaySinh.ToString("dd/MM/yyyy")</p>
+        <p>Email: @order.First().khachhang.Email</p>
+        <p>Số điện thoại: @order.First().khachhang.Sdt</p>
+        <p>Địa chỉ: @order.First().khachhang.Diachi</p>
+    </div>
+
+
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

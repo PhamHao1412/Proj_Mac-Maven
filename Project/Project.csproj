@@ -141,6 +141,7 @@
     <Compile Include="Models\DanhGiaModel.cs" />
     <Compile Include="Models\Giohang.cs" />
     <Compile Include="Models\KhachHangModel.cs" />
+    <Compile Include="Models\LichSuMuaHangModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RevenueStatistics.cs" />
     <Compile Include="Models\SanPham.cs" />
@@ -338,11 +339,6 @@
     <Content Include="Content\images\iphone-14-pro-gold-thumb-1-650x650.webp" />
     <Content Include="Content\images\iphone-14-pro-max-128gb-tim-thumb-650x650.webp" />
     <Content Include="Content\images\macbook-pro-14-inch-m2-pro-thumb-xam-1-650x650.webp" />
-    <Content Include="Models\AppleData.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>AppleData.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Content\style.scss" />
     <Content Include="Content\login\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\login\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
@@ -428,6 +424,11 @@
     <Content Include="Content\register\vendor\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
     <Content Include="Content\register\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
     <Content Include="Content\register\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="Models\AppleData.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>AppleData.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Models\AppleData.dbml.layout">
       <DependentUpon>AppleData.dbml</DependentUpon>
     </None>
@@ -473,7 +474,6 @@
     <Content Include="Views\Admin\EditKhachHang.cshtml" />
     <Content Include="Views\Admin\PhanQuyenNhanVien.cshtml" />
     <Content Include="Views\Admin\CreateNhanVien.cshtml" />
-    <Content Include="Views\Admin\ThongKeSoLuongTon.cshtml" />
     <Content Include="Views\GioHang\DonHang.cshtml" />
     <Content Include="Views\GioHang\TrangThaiDonHang.cshtml" />
     <Content Include="Views\Shared\_LayoutDefault.cshtml" />
@@ -483,6 +483,13 @@
     <Content Include="Views\Admin\Create_DanhMuc.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\SearchResult.cshtml" />
+    <Content Include="Views\Admin\EditDanhMuc.cshtml" />
+    <Content Include="Views\Admin\Edit_SanPham.cshtml" />
+    <Content Include="Views\Admin\ThongKeSoLuongTon.cshtml" />
+    <Content Include="Views\Admin\Show_DonHangMoi.cshtml" />
+    <Content Include="Views\Admin\Show_DonHangDangXuLy.cshtml" />
+    <Content Include="Views\Admin\Show_DonHangHoanTat.cshtml" />
+    <Content Include="Views\Admin\ChiTietDonHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

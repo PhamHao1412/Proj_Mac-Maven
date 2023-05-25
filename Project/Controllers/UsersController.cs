@@ -89,7 +89,7 @@ namespace Project.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Store", "Home");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
