@@ -2374,6 +2374,8 @@ namespace Project.Models
 		
 		private System.Nullable<bool> _Trangthai;
 		
+		private System.Nullable<int> _XepHang;
+		
 		private EntityRef<KhachHang> _KhachHang;
 		
 		private EntityRef<Item> _Item;
@@ -2396,6 +2398,8 @@ namespace Project.Models
     partial void OnNgaySuaChanged();
     partial void OnTrangthaiChanging(System.Nullable<bool> value);
     partial void OnTrangthaiChanged();
+    partial void OnXepHangChanging(System.Nullable<int> value);
+    partial void OnXepHangChanged();
     #endregion
 		
 		public DanhGia()
@@ -2549,6 +2553,26 @@ namespace Project.Models
 					this._Trangthai = value;
 					this.SendPropertyChanged("Trangthai");
 					this.OnTrangthaiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_XepHang", DbType="Int")]
+		public System.Nullable<int> XepHang
+		{
+			get
+			{
+				return this._XepHang;
+			}
+			set
+			{
+				if ((this._XepHang != value))
+				{
+					this.OnXepHangChanging(value);
+					this.SendPropertyChanging();
+					this._XepHang = value;
+					this.SendPropertyChanged("XepHang");
+					this.OnXepHangChanged();
 				}
 			}
 		}

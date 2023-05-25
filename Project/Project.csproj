@@ -481,6 +481,8 @@
     <Content Include="Views\Admin\Del_NhanVien.cshtml" />
     <Content Include="Views\Admin\Create_SanPham.cshtml" />
     <Content Include="Views\Admin\Create_DanhMuc.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Home\SearchResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

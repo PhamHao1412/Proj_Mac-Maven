@@ -15,32 +15,32 @@
             <div class="store_container">
 
                 @{
-                    if (ViewBag.mac != null)
+                    if (ViewBag.iPhone != null)
                     {
                         foreach (var item in ViewBag.iPhone)
                         {
-                            int masp = item.ma;
-                            <a href="/Home/Product_Details/@item.ma">
+                            <a href="/Home/Product_Details/@item.MaSP">
                                 <div class="box">
-                                    <img src="/@item.hinh" class="image-item" />
+                                    <img src="/@item.Hinh" class="image-item" />
                                     <h5 class="name-product">
-                                        @item.ten
+                                        @item.TenSP
                                     </h5>
                                     <div class="box-price">
-                                        <strong class="price">@String.Format("{0:0,0}", item.giaban)&#8363</strong>
-                                        <p class="price-old black"> @String.Format("{0:0,0}", item.giamgia)&#8363</p>
+                                        <strong class="price">@String.Format("{0:0,0}", item.GiaBan)&#8363</strong>
+                                        <p class="price-old black"> @String.Format("{0:0,0}", item.GiamGia)&#8363</p>
                                     </div>
                                     <div class="link_box">
                                         <span class="btn-buy">Mua ngay</span>
                                     </div>
                                 </div>
                             </a>
+
                         }
                     }
                 }
             </div>
-        </div>
 
+        </div>
         <div class="container-fluid">
             <div>
                 <a href="#" class="logo-cate">
@@ -54,16 +54,15 @@
                     {
                         foreach (var item in ViewBag.mac)
                         {
-                            int masp = item.ma;
-                            <a href="/Home/Product_Details/@item.ma">
+                            <a href="/Home/Product_Details/@item.MaSP">
                                 <div class="box">
-                                    <img src="/@item.hinh" class="image-item" />
+                                    <img src="/@item.Hinh" class="image-item" />
                                     <h5 class="name-product">
-                                        @item.ten
+                                        @item.TenSP
                                     </h5>
                                     <div class="box-price">
-                                        <strong class="price">@String.Format("{0:0,0}", item.giaban)&#8363</strong>
-                                        <p class="price-old black"> @String.Format("{0:0,0}", item.giamgia)&#8363</p>
+                                        <strong class="price">@String.Format("{0:0,0}", item.GiaBan)&#8363</strong>
+                                        <p class="price-old black"> @String.Format("{0:0,0}", item.GiamGia)&#8363</p>
                                     </div>
                                     <div class="link_box">
                                         <span class="btn-buy">Mua ngay</span>
@@ -84,26 +83,26 @@
             <div class="store_container">
 
                 @{
-                    if (ViewBag.mac != null)
+                    if (ViewBag.iPad != null)
                     {
                         foreach (var item in ViewBag.iPad)
                         {
-                            int masp = item.ma;
-                            <a href="/Home/Product_Details/@item.ma">
+                            <a href="/Home/Product_Details/@item.MaSP">
                                 <div class="box">
-                                    <img src="/@item.hinh" class="image-item" />
+                                    <img src="/@item.Hinh" class="image-item" />
                                     <h5 class="name-product">
-                                        @item.ten
+                                        @item.TenSP
                                     </h5>
                                     <div class="box-price">
-                                        <strong class="price">@String.Format("{0:0,0}", item.giaban)&#8363</strong>
-                                        <p class="price-old black"> @String.Format("{0:0,0}", item.giamgia)&#8363</p>
+                                        <strong class="price">@String.Format("{0:0,0}", item.GiaBan)&#8363</strong>
+                                        <p class="price-old black"> @String.Format("{0:0,0}", item.GiamGia)&#8363</p>
                                     </div>
                                     <div class="link_box">
                                         <span class="btn-buy">Mua ngay</span>
                                     </div>
                                 </div>
                             </a>
+
                         }
                     }
                 }
@@ -118,26 +117,26 @@
             <div class="store_container">
 
                 @{
-                    if (ViewBag.mac != null)
+                    if (ViewBag.Watch != null)
                     {
                         foreach (var item in ViewBag.Watch)
                         {
-                            int masp = item.ma;
-                            <a href="/Home/Product_Details/@item.ma">
+                            <a href="/Home/Product_Details/@item.MaSP">
                                 <div class="box">
-                                    <img src="/@item.hinh" class="image-item" />
+                                    <img src="/@item.Hinh" class="image-item" />
                                     <h5 class="name-product">
-                                        @item.ten
+                                        @item.TenSP
                                     </h5>
                                     <div class="box-price">
-                                        <strong class="price">@String.Format("{0:0,0}", item.giaban)&#8363</strong>
-                                        <p class="price-old black"> @String.Format("{0:0,0}", item.giamgia)&#8363</p>
+                                        <strong class="price">@String.Format("{0:0,0}", item.GiaBan)&#8363</strong>
+                                        <p class="price-old black"> @String.Format("{0:0,0}", item.GiamGia)&#8363</p>
                                     </div>
                                     <div class="link_box">
                                         <span class="btn-buy">Mua ngay</span>
                                     </div>
                                 </div>
                             </a>
+
                         }
                     }
                 }
@@ -152,20 +151,19 @@
             <div class="store_container">
 
                 @{
-                    if (ViewBag.mac != null)
+                    if (ViewBag.Airpods != null)
                     {
                         foreach (var item in ViewBag.Airpods)
                         {
-                            int masp = item.ma;
-                            <a href="/Home/Product_Details/@item.ma">
+                            <a href="/Home/Product_Details/@item.MaSP">
                                 <div class="box">
-                                    <img src="/@item.hinh" class="image-item" />
+                                    <img src="/@item.Hinh" class="image-item" />
                                     <h5 class="name-product">
-                                        @item.ten
+                                        @item.TenSP
                                     </h5>
                                     <div class="box-price">
-                                        <strong class="price">@String.Format("{0:0,0}", item.giaban)&#8363</strong>
-                                        <p class="price-old black"> @String.Format("{0:0,0}", item.giamgia)&#8363</p>
+                                        <strong class="price">@String.Format("{0:0,0}", item.GiaBan)&#8363</strong>
+                                        <p class="price-old black"> @String.Format("{0:0,0}", item.GiamGia)&#8363</p>
                                     </div>
                                     <div class="link_box">
                                         <span class="btn-buy">Mua ngay</span>
@@ -176,14 +174,8 @@
                     }
                 }
             </div>
-        </div>
+           </div>
     </section>
-
-
-    <!-- end info section -->
-    <!-- footer section -->
-    <!-- footer section -->
-
 
 </body>
 <style>

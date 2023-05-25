@@ -116,6 +116,7 @@
       <Column Name="NgayTao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="NgaySua" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Trangthai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="XepHang" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="KhachHang_DanhGia" Member="KhachHang" ThisKey="makh" OtherKey="makh" Type="KhachHang" IsForeignKey="true" />
       <Association Name="Item_DanhGia" Member="Item" ThisKey="masp" OtherKey="ma" Type="Item" IsForeignKey="true" />
     </Type>

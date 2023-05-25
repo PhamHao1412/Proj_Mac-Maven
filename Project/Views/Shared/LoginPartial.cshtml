@@ -26,7 +26,12 @@
             <a href="@Url.Action("ThongTinKhachHang", "Users")">Thông tin cá nhân</a>
             <a href="@Url.Action("LichSuMuaHang", "Users")">Lịch sử mua hàng</a>
             <a href="@Url.Action("DonHang", "GioHang")">Đơn hàng của bạn</a>
+            @if (Session["NhanVien"] != null)
+            {
+                <a href="@Url.Action("Index", "Admin")">Trở về Admin</a>
+            }
             <a href="@Url.Action("LogOff", "Users")">Đăng xuất</a>
+
         </div>
     </div>
 }
