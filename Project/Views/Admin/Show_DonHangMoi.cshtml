@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Project.Models.Store_Category>
+@{
+    ViewBag.Title = "QuanLyDonHang";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+
+}
+
+
+<h2>Danh sách đơn hàng</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã đơn hàng</th>
+            <th>Họ tên</th>
+            <th>Trạng thái</th>
+            <th>Tổng tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+
+            <tr style="border-radius: 15px; border: 1px solid gray; margin-bottom: 10px;">
+                <td>
+                    <a href="@Url.Action("ChiTietDonHang", "Admin", new { maDonHang = item.Madon })">@item.Madon</a>
+                </td>
+
+                <td>@item.khachhang.Ho @item.khachhang.Ten</td>
+                <td>
+                    <select class="form-control" onchange="updateStatus(this.value, @item.Madon)">
+                        <option value="Đơn hàng mới" @(item.TrangThai == "Đơn hàng mới" ? "selected" : "")>Đơn hàng mới</option>
+                        <option value="Đang xử lý" @(item.TrangThai == "Đang xử lý" ? "selected" : "")>Đang xử lý</option>
+                        <option value="Hoàn tất" @(item.TrangThai == "Hoàn tất" ? "selected" : "")>Hoàn tất</option>
+                    </select>
+                </td>
+                <td style="color:red;font-weight:bold;">@String.Format("{0:0,0}", @item.TongTien)VNĐ</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    function updateStatus(status, orderId) {
+        $.ajax({
+            type: "POST",
+            url: "/Admin/UpdateStatus",
+            data: { status: status, orderId: orderId },
+            success: function () {
+                alert("Đã cập nhật trạng thái đơn hàng thành công!");
+            },
+            error: function () {
+                alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
+            }
+        });
+    }
+
+</script>
+
+

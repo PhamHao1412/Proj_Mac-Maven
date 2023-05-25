@@ -60,7 +60,7 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="@Url.Action("CreateNhanVien","Admin")">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
-                                    Nhan Vien
+                                    Add Employee
                                 </a>
                             </nav>
                         </div>
@@ -68,18 +68,18 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Store Management
 
-
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                 <a class="nav-link collapsed soluongton" href="@Url.Action("ThongKeSoLuongTon","Admin")">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-box"></i></div>
                                     Inventory
                                     @if (ViewBag.LowInventoryProductCount > 0)
                                     {
-                                        <span class="badge badge-danger" id="warning-badge">@ViewBag.LowInventoryProductCount</span>
+                                        <span class="badge badge-danger">@ViewBag.LowInventoryProductCount</span>
                                     }
+
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
                                 <a class="nav-link collapsed" href="@Url.Action("ThongKeDoanhThu","Admin")">
@@ -90,17 +90,17 @@
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading">Addons</div>
-                        <a class="nav-link" href="@Url.Action("QuanLyDonHang","Admin")">
+                        @*<a class="nav-link" href="@Url.Action("QuanLyDonHang","Admin")">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Quản lý đơn hàng
-                        </a>
+                            Order Management
+                        </a>*@
                         <a class="nav-link" href="@Url.Action("Create_SanPham","Admin")">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Thêm sản phẩm
+                            Add Products
                         </a>
                         <a class="nav-link" href="@Url.Action("Create_DanhMuc","Admin")">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Thêm danh mục sản phẩm
+                            Add Categorys
                         </a>
                     </div>
                 </div>

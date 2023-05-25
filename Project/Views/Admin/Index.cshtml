@@ -1,4 +1,4 @@
-﻿@model Project.Models.ThongKeSoLuongTonViewModel
+﻿
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -30,7 +30,7 @@
                     <li><a class="dropdown-item" href="#!">Cài đặt</a></li>
                     <li><a class="dropdown-item" href="#!">Nhật ký hoạt động</a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                    <li><a class="dropdown-item" href="@Url.Action("LogOff","Users")">Đăng xuất</a></li>
                 </ul>
             </li>
         </ul>
@@ -56,7 +56,7 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="@Url.Action("CreateNhanVien","Admin")">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
-                                    Nhan Vien
+                                    Add Employee
                                 </a>
                             </nav>
                         </div>
@@ -64,18 +64,18 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Store Management
 
-
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                 <a class="nav-link collapsed soluongton" href="@Url.Action("ThongKeSoLuongTon","Admin")">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-box"></i></div>
                                     Inventory
                                     @if (ViewBag.LowInventoryProductCount > 0)
                                     {
-                                        <span class="badge badge-danger">@ViewBag.LowInventoryProductCount</span>
+                                        <span class="badge badge-danger" style="color:red">@ViewBag.LowInventoryProductCount</span>
                                     }
+
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
                                 <a class="nav-link collapsed" href="@Url.Action("ThongKeDoanhThu","Admin")">
@@ -86,17 +86,14 @@
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading">Addons</div>
-                        <a class="nav-link" href="@Url.Action("QuanLyDonHang","Admin")">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Quản lý đơn hàng
-                        </a>
+                    
                         <a class="nav-link" href="@Url.Action("Create_SanPham","Admin")">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Thêm sản phẩm
+                            Add Products
                         </a>
                         <a class="nav-link" href="@Url.Action("Create_DanhMuc","Admin")">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Thêm danh mục sản phẩm
+                            Add Categorys
                         </a>
                     </div>
                 </div>
@@ -116,27 +113,39 @@
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Thẻ chính</div>
+                                <div class="card-body">
+                                    Đơn Hàng Mới
+                                        <span class="badge badge-danger" style="color:red;">@ViewBag.InventoryCount</span>
+                                </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                    <a class="small text-white stretched-link" href="@Url.Action("Show_DonHangMoi","Admin")">Xem chi tiết</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Thẻ cảnh báo</div>
+                                <div class="card-body">
+                                    Đang xử lý
+                                    <span class="badge badge-danger" style="color:red;">@ViewBag.InventoryCount2</span>
+
+                                </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                    <a class="small text-white stretched-link" href="@Url.Action("Show_DonHangDangXuLy","Admin")">Xem chi tiết</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-success text-white mb-4">
-                                <div class="card-body">Thẻ thành công</div>
+                                <div class="card-body">
+                                    Hoàn tất
+                                    <span class="badge badge-danger" style="color:red;">@ViewBag.InventoryCount3</span>
+
+                                </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                    <a class="small text-white stretched-link" href="@Url.Action("Show_DonHangHoanTat","Admin")">Xem chi tiết</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>

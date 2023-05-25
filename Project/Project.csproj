@@ -141,6 +141,7 @@
     <Compile Include="Models\DanhGiaModel.cs" />
     <Compile Include="Models\Giohang.cs" />
     <Compile Include="Models\KhachHangModel.cs" />
+    <Compile Include="Models\LichSuMuaHangModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RevenueStatistics.cs" />
     <Compile Include="Models\SanPham.cs" />
@@ -483,6 +484,10 @@
     <Content Include="Views\Admin\EditDanhMuc.cshtml" />
     <Content Include="Views\Admin\Edit_SanPham.cshtml" />
     <Content Include="Views\Admin\ThongKeSoLuongTon.cshtml" />
+    <Content Include="Views\Admin\Show_DonHangMoi.cshtml" />
+    <Content Include="Views\Admin\Show_DonHangDangXuLy.cshtml" />
+    <Content Include="Views\Admin\Show_DonHangHoanTat.cshtml" />
+    <Content Include="Views\Admin\ChiTietDonHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

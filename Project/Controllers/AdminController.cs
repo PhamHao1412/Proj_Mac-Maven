@@ -1,5 +1,6 @@
 ﻿using Project.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -23,9 +24,10 @@ namespace Project.Controllers
                           select new StaffInfo { MaNV = nv.MaNV, Ten = nv.Ten, Ho = nv.Ho, TenCV = cv.TenCV }).ToList();
 
             ViewBag.Staff = result;
-           
-            ThongKeSoLuongTon();
-
+            ThongKeSoLuongTon();//gọi hàm để hiển thị sl sản phẩm có slton duoi 10
+            Show_DonHangMoi();
+            Show_DonHangDangXuLy();
+            Show_DonHangHoanTat();
             return View();
            
         }
@@ -233,7 +235,7 @@ namespace Project.Controllers
                 nv.Hinh = E_hinh;
                 db.NhanViens.InsertOnSubmit(nv);
                 db.SubmitChanges();
-                return RedirectToAction("CreateNhanVien");
+                return RedirectToAction("Index");
             }
             return this.CreateNhanVien();
         }
@@ -290,27 +292,6 @@ namespace Project.Controllers
             return View(viewModel);
         }
 
-        public ActionResult QuanLyDonHang()
-        {
-            var query = from d in db.DonHangs
-                        join c in db.ChiTietDonHangs on d.madon equals c.madon
-                        join k in db.KhachHangs on d.makh equals k.makh
-                        group c by new { d.madon, k.ho, k.Ten, d.trangthai } into g
-                        orderby g.Key.madon descending
-                        select new Store_Category
-                        {
-                            Madon = g.Key.madon,
-
-                            TrangThai = g.Key.trangthai,
-                            TongTien = (int)g.Sum(c => c.tongtien),
-                            khachhang = new KhachHangModel
-                            {
-                                Ho = g.Key.ho,
-                                Ten = g.Key.Ten,
-                            }
-                        };
-            return View(query);
-        }
         [HttpPost]
         public ActionResult UpdateStatus(string status, int orderId)
         {
@@ -450,8 +431,6 @@ namespace Project.Controllers
             ViewBag.Product = all_product.ToList();
             var danhMucList = db.Loais.ToList();
             ViewBag.DanhMucList = new SelectList(danhMucList, "maloai", "tenloai");
-            
-
             return View();
         }
 
@@ -493,9 +472,122 @@ namespace Project.Controllers
             return this.Create_SanPham();
 
         }
+        public ActionResult Show_DonHangMoi()
+        {
 
+            var query = from d in db.DonHangs
+                        join c in db.ChiTietDonHangs on d.madon equals c.madon
+                        join k in db.KhachHangs on d.makh equals k.makh
+                        where d.trangthai == "Đơn hàng mới" // Thêm điều kiện trạng thái
+                        group c by new { d.madon, k.ho, k.Ten, d.trangthai } into g
+                        orderby g.Key.madon descending
+                        select new Store_Category
+                        {
+                            Madon = g.Key.madon,
+                            TrangThai = g.Key.trangthai,
+                            TongTien = (int)g.Sum(c => c.tongtien),
+                            khachhang = new KhachHangModel
+                            {
+                                Ho = g.Key.ho,
+                                Ten = g.Key.Ten,
+                            }
+                        };
+            ViewBag.Query = query.ToList();
+            ViewBag.InventoryCount = db.DonHangs.Where(d => d.trangthai == "Đơn hàng mới").Count(); // Đếm số lượng đơn hàng có trạng thái "Chờ xác nhận"
+            return View("Show_DonHangMoi", query.ToList());
+        }
+
+        public ActionResult Show_DonHangDangXuLy()
+        {
+            var query = from d in db.DonHangs
+                        join c in db.ChiTietDonHangs on d.madon equals c.madon
+                        join k in db.KhachHangs on d.makh equals k.makh
+                        where d.trangthai == "Đang xử lý" // Thêm điều kiện trạng thái
+                        group c by new { d.madon, k.ho, k.Ten, d.trangthai } into g
+                        orderby g.Key.madon descending
+                        select new Store_Category
+                        {
+                            Madon = g.Key.madon,
+                            TrangThai = g.Key.trangthai,
+                            TongTien = (int)g.Sum(c => c.tongtien),
+                            khachhang = new KhachHangModel
+                            {
+                                Ho = g.Key.ho,
+                                Ten = g.Key.Ten,
+                            }
+                        };
+            ViewBag.Query = query;
+            ViewBag.InventoryCount2 = query.Count(d => d.TrangThai == "Đang xử lý"); // Đếm số lượng đơn hàng có trạng thái
+
+            return View("Show_DonHangDangXuLy", query.ToList());
+        }
+        public ActionResult Show_DonHangHoanTat()
+        {
+            var query = from d in db.DonHangs
+                        join c in db.ChiTietDonHangs on d.madon equals c.madon
+                        join k in db.KhachHangs on d.makh equals k.makh
+                        where d.trangthai == "Hoàn tất" // Thêm điều kiện trạng thái
+                        group c by new { d.madon, k.ho, k.Ten, d.trangthai } into g
+                        orderby g.Key.madon descending
+                        select new Store_Category
+                        {
+                            Madon = g.Key.madon,
+                            TrangThai = g.Key.trangthai,
+                            TongTien = (int)g.Sum(c => c.tongtien),
+                            khachhang = new KhachHangModel
+                            {
+                                Ho = g.Key.ho,
+                                Ten = g.Key.Ten,
+                            }
+                        };
+            ViewBag.Query = query;
+            ViewBag.InventoryCount3 = query.Count(d => d.TrangThai == "Hoàn tất"); // Đếm số lượng đơn hàng có trạng thái 
+            return View("Show_DonHangHoanTat", query.ToList());
+        }
+        public ActionResult ChiTietDonHang(int maDonHang)
+        {
+            var query = from d in db.DonHangs
+                        join c in db.ChiTietDonHangs on d.madon equals c.madon
+                        join k in db.KhachHangs on d.makh equals k.makh
+                        join i in db.Items on c.ma equals i.ma
+                        where d.madon == maDonHang
+                        group new { c, i } by new { d.madon, k.ho, k.Ten, d.ngaydat, k.diachi, k.ngaysinh, k.email, k.dienthoai, i.ten } into g
+                        select new LichSuMuaHangModel
+                        {
+                            MaDon = g.Key.madon,
+                            NgayDat = (DateTime)g.Key.ngaydat,
+                            TongTien = (int)g.Sum(x => x.c.soluong * x.c.gia),
+                            TenSP = g.Key.ten,
+                            SoLuong = (int)g.Sum(x => x.c.soluong),
+                            khachhang = new KhachHangModel
+                            {
+                                Ho = g.Key.ho,
+                                Ten = g.Key.Ten,
+                                NgaySinh = (DateTime)g.Key.ngaysinh,
+                                Email = g.Key.email,
+                                Sdt = g.Key.dienthoai,
+                                Diachi = g.Key.diachi
+                            }
+                        };
+           
+            //nếu không nhóm theo madon thì view sẽ bị lặp thông tin
+            // ta sử dụng kiểu IEnumerable<System.Linq.IGrouping<int, Project.Models.LichSuMuaHangModel>> làm kiểu mô hình (model type) cho view
+            // vì dữ liệu trả về từ truy vấn được nhóm theo một trường (MaDon) và có thể có nhiều đơn hàng có cùng MaDon.
+            var result = query.ToList().GroupBy(m => m.MaDon); 
+            ViewBag.result = result;
+            return View(ViewBag.result); // Pass ViewBag.result to the view
+        }
+        
 
     }
+
 }
+
+
+
+
+
+
+
 
     
