@@ -35,6 +35,9 @@
                             <td>
                                 @Html.ActionLink("Edit", "Edit_SanPham", new { ma = item.ma })
                             </td>
+                            <td>
+                                @Html.ActionLink("Del", "DeleteSanPham", new { ma = item.ma })
+                            </td>
                         </tr>
                     }
                 </tbody>

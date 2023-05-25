@@ -477,7 +477,6 @@
     <Content Include="Views\GioHang\DonHang.cshtml" />
     <Content Include="Views\GioHang\TrangThaiDonHang.cshtml" />
     <Content Include="Views\Shared\_LayoutDefault.cshtml" />
-    <Content Include="Views\Admin\QuanLyDonHang.cshtml" />
     <Content Include="Views\Admin\Del_NhanVien.cshtml" />
     <Content Include="Views\Admin\Create_SanPham.cshtml" />
     <Content Include="Views\Admin\Create_DanhMuc.cshtml" />
@@ -489,7 +488,6 @@
     <Content Include="Views\Admin\Show_DonHangHoanTat.cshtml" />
     <Content Include="Views\Admin\ChiTietDonHang.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
-    <Content Include="Views\Shared\MenuViewAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
