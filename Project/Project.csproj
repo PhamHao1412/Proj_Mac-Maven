@@ -266,7 +266,6 @@
     <Content Include="Content\image\iphone14pro-yellow.png" />
     <Content Include="Content\image\iphone14promax-purple.png" />
     <Content Include="Content\image\iphone_14_pro_purple_position-1.jpg" />
-    <Content Include="Content\image\iphone_14_pro_purple_position-1b.jpg" />
     <Content Include="Content\image\iphone_14_pro_purple_position-2.jpg" />
     <Content Include="Content\image\iphone_14_pro_purple_position-3.jpg" />
     <Content Include="Content\image\iphone_14_pro_purple_position-4.jpg" />
@@ -307,8 +306,8 @@
     <Content Include="Content\login\vendor\select2\select2.min.js" />
     <Content Include="Content\login\vendor\tilt\tilt.jquery.min.js" />
     <Content Include="Content\register\css\main.min.css" />
-    <Content Include="Content\register\css\Register.css" />
     <Content Include="Content\register\js\global.js" />
+    <Content Include="Content\register\css\register_main.css" />
     <Content Include="Content\register\vendor\datepicker\daterangepicker.css" />
     <Content Include="Content\register\vendor\datepicker\daterangepicker.js" />
     <Content Include="Content\register\vendor\datepicker\moment.min.js" />
@@ -323,7 +322,7 @@
     <Content Include="Content\register\vendor\mdi-font\fonts\Material-Design-Iconic-Font.svg" />
     <Content Include="Content\register\vendor\select2\select2.min.css" />
     <Content Include="Content\register\vendor\select2\select2.min.js" />
-    <Content Include="Content\reponsive.css" />
+    <Content Include="Content\ReponsiveSty.css" />
     <Content Include="Content\Style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
