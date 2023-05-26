@@ -76,11 +76,11 @@
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                 <a class="nav-link collapsed soluongton" href="@Url.Action("ThongKeSoLuongTon","Admin")">
-                                    <   <div class="sb-nav-link-icon"><i class="fa-solid fa-box"></i></div>
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-box"></i></div>
                                     Inventory
                                     @if (ViewBag.LowInventoryProductCount > 0)
                                     {
-                                        <span class="badge badge-danger">@ViewBag.LowInventoryProductCount</span>
+                                        <span class="badge badge-danger" style="color:red">@ViewBag.LowInventoryProductCount</span>
                                     }
 
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>

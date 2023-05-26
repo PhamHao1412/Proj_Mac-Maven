@@ -8,10 +8,22 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+
     <title>Create_SanPham</title>
+
+    <style>
+        .input-container {
+            display: flex;
+            align-items: center;
+        }
+
+            .input-container input {
+                width: 50px;
+                margin-right: 5px; /* Khoảng cách giữa input và ký hiệu "%" */
+            }
+    </style>
 </head>
 <body>
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -20,7 +32,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                       
                         <th>Loại</th>
                         <th>Tên</th>
                     </tr>
@@ -29,104 +40,104 @@
                     @foreach (var item in ViewBag.Product)
                     {
                         <tr>
-
                             <td>@item.maloai</td>
                             <td>@item.ten</td>
                             <td>
                                 @Html.ActionLink("Edit", "Edit_SanPham", new { ma = item.ma })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Del", "DeleteSanPham", new { ma = item.ma })
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
         }
-<div class="form-horizontal">
-    <h4>Item</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.maloai, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("maloai", ViewBag.DanhMucList as SelectList, "Select a category", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.maloai, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ten, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ten, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ten, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.hinh, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.hinh, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.hinh, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.giaban, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.giaban, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.giaban, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ngaycapnhat, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.ngaycapnhat, new { @class = "form-control", @Value = DateTime.Now.ToString("dd-MM-yyyy") })
-            @Html.ValidationMessageFor(model => model.ngaycapnhat, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.soluongton, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.soluongton, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.soluongton, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.giamgia, "Giảm Giá", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="input-container">
-                @Html.EditorFor(model => model.giamgia, new { htmlAttributes = new { @class = "form-control" } })
-                <p>%</p>
+        <div class="form-horizontal">
+            <h4>Item</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.maloai, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("maloai", ViewBag.DanhMucList as SelectList, "Select a category", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.maloai, "", new { @class = "text-danger" })
+                </div>
             </div>
-            @Html.ValidationMessageFor(model => model.giamgia, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ten, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ten, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ten, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.hinh, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.hinh, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.hinh, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.giaban, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.giaban, new { @class = "form-control giaban-input", @type = "text" })
+                    @Html.ValidationMessageFor(model => model.giaban, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ngaycapnhat, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ngaycapnhat, new { @class = "form-control", @Value = DateTime.Now.ToString("dd-MM-yyyy") })
+                    @Html.ValidationMessageFor(model => model.ngaycapnhat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.soluongton, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.soluongton, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.soluongton, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.giamgia, "Giảm Giá", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="input-container">
+                        @Html.EditorFor(model => model.giamgia, new { htmlAttributes = new { @class = "form-control" } })
+                        <p>%</p>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.giamgia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-success" />
+                </div>
+            </div>
         </div>
-    </div>
-
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-success" />
-        </div>
-    </div>
-</div>
     }
 
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autoNumeric/4.1.0/autoNumeric.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.giaban-input').autoNumeric('init', {
+                aSep: '.', // Dấu phân cách hàng nghìn
+                aDec: ',', // Dấu phân cách thập phân
+                aForm: false // Không gửi dữ liệu số định dạng
+            });
+        });
+    </script>
 </body>
 </html>
-<style>
-    .input-container {
-        display: flex;
-        align-items: center;
-    }
-
-        .input-container input {
-            width: 50px;
-            margin-right: 5px; /* Khoảng cách giữa input và ký hiệu "%" */
-        }
-</style>

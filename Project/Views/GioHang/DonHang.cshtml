@@ -2,53 +2,10 @@
 <html>
 <head>
     <title>Trang Đơn hàng</title>
-
-</head>
-<body>
-
-    <div class="container">
-        <div class="title">
-            <h1>Đơn hàng</h1>
-        </div>
-        <div class="cart">
-            @if (ViewBag.CountChoXacNhan > 0 && Session["TaiKhoan"] != null)
-            {
-                <span class="number-status">@ViewBag.CountChoXacNhan</span>
-            }
-            <h2>Chờ xác nhận</h2>
-            <div class="status">
-                <a href="/GioHang/TrangThaiDonHang?trangthai=Đơn%20hàng%20mới">Xem đơn hàng</a>
-            </div>
-            <ul id="chờ xác nhận"></ul>
-        </div>
-
-        <!-- Cart đang giao hàng -->
-        <div class="cart">
-            @if (ViewBag.CountDangGiaoHang > 0 && Session["TaiKhoan"] != null)
-            {
-
-                <span class="number-status">@ViewBag.CountDangGiaoHang</span>
-            }
-            <h2>Đang giao hàng</h2>
-            <div class="status">
-                <a href="/GioHang/TrangThaiDonHang?trangthai=Đang%20xử%20lý">Xem đơn hàng</a>
-            </div>
-            <ul id="đang giao hàng"></ul>
-        </div>
-
-        <!-- Cart hoàn tất -->
-        <div class="cart">
-            @if (ViewBag.CountHoanTat > 0 && Session["TaiKhoan"] != null)
-            {
-                <span class="number-status">@ViewBag.CountHoanTat</span>
-            }
-            <h2>Đã giao</h2>
-            <div class="status">
-                <a href="/GioHang/TrangThaiDonHang?trangthai=Hoàn%20tất">Xem đơn hàng</a>
-            </div>
-            <ul id="hoàn tất"></ul>
-        </div>
-    </div>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="~/Content/css_admin/style.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         .number-status {
             background-color: #f80909;
@@ -65,7 +22,7 @@
         }
 
         .container {
-            text-align: center
+            text-align: center;
         }
 
         .cart {
@@ -83,7 +40,81 @@
             .status button {
                 margin-right: 5px;
             }
+
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+        .title {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+            .title h1 {
+                font-size: 28px;
+                color: #333;
+            }
+
     </style>
+</head>
+<body>
+    <div class="container-fluid px-4">
+        <div class="title">
+            <h1>Đơn hàng của bạn</h1>
+        </div>
+
+        <div class="row">
+           
+               
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-primary text-white mb-4">
+                        <div class="card-body">
+                            Đơn Hàng Mới
+                            @if (ViewBag.CountChoXacNhan > 0 && Session["TaiKhoan"] != null)
+                            {
+                                <span class="number-status">@ViewBag.CountChoXacNhan</span>
+                            }
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="/GioHang/TrangThaiDonHang?trangthai=Đơn%20hàng%20mới">Xem chi tiết</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-warning text-white mb-4">
+                        <div class="card-body">
+                            Đang Giao Hàng
+                            @if (ViewBag.CountDangGiaoHang > 0 && Session["TaiKhoan"] != null)
+                            {
+                                <span class="number-status">@ViewBag.CountDangGiaoHang</span>
+                            }
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="/GioHang/TrangThaiDonHang?trangthai=Đang%20xử%20lý">Xem chi tiết</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">
+                            Hoàn tất
+                            @if (ViewBag.CountHoanTat > 0 && Session["TaiKhoan"] != null)
+                            {
+                                <span class="number-status">@ViewBag.CountHoanTat</span>
+                            }
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="/GioHang/TrangThaiDonHang?trangthai=Hoàn%20tất">Xem chi tiết</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 </html>
-

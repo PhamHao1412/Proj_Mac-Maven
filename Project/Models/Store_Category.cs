@@ -8,7 +8,8 @@ namespace Project.Models
 {
     public class Store_Category
     {
-      
+        
+        public decimal SoLuongSanPhamGiongNhau { get; set; }
         public int MaSP { get; set; }
         public int Madon { get; set; }
         public int MaLoai { get; set; }

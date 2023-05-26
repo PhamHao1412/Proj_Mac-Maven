@@ -98,24 +98,24 @@
         <classShapeMoniker Id="b1603f9b-a060-4453-8cdd-18c27c07c3ab" />
       </nodes>
     </associationConnector>
-    <classShape Id="3d52b6e5-15fe-497c-868c-a447f3c44dab" absoluteBounds="9.875, 3.25, 2, 2.3478011067708335">
+    <classShape Id="87b860c8-9daf-4f3c-996a-ddf9fcdd929a" absoluteBounds="10.75, 3.625, 2, 2.3478011067708335">
       <DataClassMoniker Name="/AppleDataDataContext/DanhGia" />
       <nestedChildShapes>
-        <elementListCompartment Id="9ca01893-7ee4-4d66-8336-f03d73692035" absoluteBounds="9.89, 3.71, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="8ba58d1d-4255-429e-9f96-edefffd1bc3a" absoluteBounds="10.765, 4.085, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.25 : 7.625); (2.25 : 6.14505126953125); (5.79166666666667 : 6.14505126953125 : JumpStart); (5.95833333333333 : 6.14505126953125 : JumpEnd); (9.75 : 6.14505126953125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(3.25 : 8.9319477421875); (6.375 : 8.9319477421875); (6.375 : 6.5); (11.75 : 6.5); (11.75 : 5.97280110677083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AppleDataDataContext/KhachHang/KhachHang_DanhGia" />
       <nodes>
         <classShapeMoniker Id="985926e3-d976-406f-bd7c-5565fdd33beb" />
-        <classShapeMoniker Id="3d52b6e5-15fe-497c-868c-a447f3c44dab" />
+        <classShapeMoniker Id="87b860c8-9daf-4f3c-996a-ddf9fcdd929a" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.125 : 4.54890055338542); (8.32291666666667 : 4.54890055338542 : JumpStart); (8.48958333333333 : 4.54890055338542 : JumpEnd); (9.875 : 4.54890055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.125 : 4.79890055338542); (10.75 : 4.79890055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AppleDataDataContext/Item/Item_DanhGia" />
       <nodes>
         <classShapeMoniker Id="80d4c7fe-8949-4903-a6fd-f0da47dd7474" />
-        <classShapeMoniker Id="3d52b6e5-15fe-497c-868c-a447f3c44dab" />
+        <classShapeMoniker Id="87b860c8-9daf-4f3c-996a-ddf9fcdd929a" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

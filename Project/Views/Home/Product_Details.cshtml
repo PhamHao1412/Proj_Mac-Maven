@@ -13,7 +13,6 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
@@ -71,34 +70,89 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="capacity">
-                                <span>Dung lượng</span>
-                                <ul>
-                                    <li>
-                                        <a href="#">128GB</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">256GB</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">512GB</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="color-sp">
-                                <span>Màu</span>
-                                <ul>
-                                    <li>
-                                        <a class="ab" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="bb" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="cb" href="#"></a>
-                                    </li>
-                                </ul>
-                            </div>
+                            @if (Model.ten.Contains("iPhone") || Model.ten.Contains("Mac") || Model.ten.Contains("iPad")) // Kiểm tra nếu tên sản phẩm chứa chuỗi "iPhone"
+                            {
+                                <div class="capacity">
+                                    <span>Dung lượng</span>
+                                    <ul>
+                                        <li>
+                                            <a href="#">128GB</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">256GB</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">512GB</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (Model.ten.Contains("iPhone") || Model.ten.Contains("Mac") || Model.ten.Contains("iPad")) // Kiểm tra nếu tên sản phẩm chứa chuỗi "iPhone"
+                            {
+                                <div class="color-sp">
+                                    <span>Màu</span>
+                                    <ul>
+                                        <li>
+                                            <a class="ab" href="#"></a>
+                                        </li>
+                                        <li>
+                                            <a class="bb" href="#"></a>
+                                        </li>
+                                        <li>
+                                            <a class="cb" href="#"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (Model.ten.Contains("Mac"))
+                            {
+                                <div class="capacity">
+                                    <span>Ram</span>
+                                    <ul>
+                                        <li>
+                                            <a href="#">8GB</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">16GB</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">32GB</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (Model.ten.Contains("Watch"))
+                            {
+                                <div class="capacity">
+                                    <span>Phiên Bản</span>
+                                    <ul>
+                                        <li>
+                                            <a href="#">38mn</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">40mn</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">44mn</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (Model.ten.Contains("Airpod"))
+                            {
+                                <div class="capacity">
+                                    <span>Phiên Bản</span>
+                                    <ul>
+                                        <li>
+                                            <a href="#">MagSafe</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">No-MagSafe</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            }
 
                             <div class="product-count title-name">
                                 <label for="size">Quantity</label>
@@ -194,7 +248,6 @@
     </div>
 </div>
 
-<div style="text-align:center;font-size:14px;padding-bottom:20px;">Get free icon packs for your next project at <a href="http://iiicons.in/" target="_blank" style="color:#ff5e63;font-weight:bold;">www.iiicons.in</a></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

@@ -151,6 +151,17 @@ namespace Project.Controllers
             }
             return this.EditKhachHang(makh);
         }
+        public ActionResult DeleteKhachHang(int makh)
+        {
+            KhachHang khachhang = db.KhachHangs.FirstOrDefault(g => g.makh == makh);
+            if (khachhang != null)
+            {
+                db.KhachHangs.DeleteOnSubmit(khachhang);
+                db.SubmitChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
         public ActionResult PhanQuyenNhanVien(int? MaNV)
         {
 
@@ -256,7 +267,7 @@ namespace Project.Controllers
             var D_nv = db.NhanViens.Where(m => m.MaNV == MaNV).First();
             db.NhanViens.DeleteOnSubmit(D_nv);
             db.SubmitChanges();
-            return RedirectToAction("Del_NhanVien");
+            return RedirectToAction("Index");
         }
         public ActionResult ThongKeSoLuongTon()
         {
@@ -384,6 +395,7 @@ namespace Project.Controllers
 
             return RedirectToAction("Create_DanhMuc", "Admin");
         }
+
         public ActionResult Edit_SanPham(int ma)
         {
           
@@ -472,6 +484,18 @@ namespace Project.Controllers
             return this.Create_SanPham();
 
         }
+        public ActionResult DeleteSanPham(int ma)
+        {
+            Item item = db.Items.FirstOrDefault(g => g.ma == ma);
+            if (item != null)
+            {
+                db.Items.DeleteOnSubmit(item);
+                db.SubmitChanges();
+            }
+
+            return RedirectToAction("Create_SanPham");
+        }
+
         public ActionResult Show_DonHangMoi()
         {
 

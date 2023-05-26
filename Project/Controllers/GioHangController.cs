@@ -196,19 +196,23 @@ namespace AppleZone.Controllers
                          join c in data.ChiTietDonHangs on i.ma equals c.ma
                          join d in data.DonHangs on c.madon equals d.madon
                          where d.makh == kh.makh && d.trangthai == trangthai
-                         group new { d, i, c } by new { d.madon, i.ten, i.hinh, i.giaban, c.soluong, d.xacnhan } into g
+                         group new { d, i, c } by new { d.madon, i.ten, i.hinh, i.giaban, d.xacnhan, i.ma } into g
                          select new Store_Category
                          {
                              Madon = g.Key.madon,
+                             MaSP = g.Key.ma,
                              TenSP = g.Key.ten,
                              Hinh = g.Key.hinh,
                              GiaBan = (int)g.Key.giaban,
-                             SoLuong = (int)g.Key.soluong,
+                             SoLuong = g.Count(), // Đếm số lượng sản phẩm trong mỗi nhóm
                              XacNhan = g.Key.xacnhan ?? false,
                              TongTien = (decimal)g.Sum(x => x.i.giaban * x.c.soluong)
                          };
-            return View(result);
+
+            var groupedResult = result.OrderBy(m => m.Madon).GroupBy(m => m.Madon).ToList();
+            return View(groupedResult);
         }
+
         [HttpPost]
         public ActionResult ComfirmCart(int orderId)
         {

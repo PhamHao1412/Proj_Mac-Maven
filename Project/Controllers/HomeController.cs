@@ -40,11 +40,15 @@ namespace Project.Controllers
         }
         public ActionResult Index()
         {
+            // Set the cookie
+           
+            // Retrieve and set other view data
             ViewBag.iPhone = db.Items.Where(s => s.maloai == 1).Take(4).ToList();
             ViewBag.mac = db.Items.Where(s => s.maloai == 2).Take(4).ToList();
 
             return View(db.Items.ToList());
         }
+
         public ActionResult Store()
         {
             var query = (from l in db.Loais

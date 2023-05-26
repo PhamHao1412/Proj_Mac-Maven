@@ -38,7 +38,7 @@
         <h3>Thông tin đơn hàng:</h3>
         <p>Mã đơn: @order.Key</p>
         <p>Ngày đặt: @order.First().NgayDat.ToString("dd/MM/yyyy")</p>
-        <p>Tổng Tiền: @String.Format("{0:0,0}", @order.Sum(o=>o.TongTien))</p>
+        <p>Tổng Tiền: @String.Format("{0:0,0}", @order.Sum(o => o.TongTien))</p>
     </div>
     <table class="table product-table">
         <thead>
@@ -68,6 +68,16 @@
 
 
 }
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@if (Session["NhanVien"] != null)
+{
+    <div>
+        @Html.ActionLink("Back to List", "Index","Admin")
+    </div>
+}
+else
+{
+    <div>
+
+        @Html.ActionLink("Back to List", "DonHang","GioHang")
+    </div>
+}
