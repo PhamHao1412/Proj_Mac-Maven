@@ -75,6 +75,7 @@ namespace AppleZone.Controllers
 
         public ActionResult GioHang()
         {
+
             KhachHang kh = (KhachHang)Session["TaiKhoan"];
             if (kh != null)
             {

@@ -62,59 +62,65 @@
     <div class="container-fluid px-4">
         <div class="title">
             <h1>Đơn hàng của bạn</h1>
+
         </div>
 
         <div class="row">
-           
-               
-                <div class="col-xl-3 col-md-6">
-                    <div class="card bg-primary text-white mb-4">
-                        <div class="card-body">
-                            Đơn Hàng Mới
-                            @if (ViewBag.CountChoXacNhan > 0 && Session["TaiKhoan"] != null)
-                            {
-                                <span class="number-status">@ViewBag.CountChoXacNhan</span>
-                            }
-                        </div>
-                        <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="/GioHang/TrangThaiDonHang?trangthai=Đơn%20hàng%20mới">Xem chi tiết</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                        </div>
+
+            <div class="back-to-shop"><a class="back" href="/Home/Store">&leftarrow;Mua thêm sản phẩm khác</a></div>
+            <div class="col-xl-3 col-md-6">
+
+                <div class="card bg-primary text-white mb-4">
+                    <div class="card-body">
+                        Đơn Hàng Mới
+                        @if (ViewBag.CountChoXacNhan > 0 && Session["TaiKhoan"] != null)
+                        {
+                            <span class="number-status">@ViewBag.CountChoXacNhan</span>
+                        }
                     </div>
-                </div>
-               
-                <div class="col-xl-3 col-md-6">
-                    <div class="card bg-warning text-white mb-4">
-                        <div class="card-body">
-                            Đang Giao Hàng
-                            @if (ViewBag.CountDangGiaoHang > 0 && Session["TaiKhoan"] != null)
-                            {
-                                <span class="number-status">@ViewBag.CountDangGiaoHang</span>
-                            }
-                        </div>
-                        <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="/GioHang/TrangThaiDonHang?trangthai=Đang%20xử%20lý">Xem chi tiết</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                        </div>
-                    </div>
-                </div>
-              
-                <div class="col-xl-3 col-md-6">
-                    <div class="card bg-success text-white mb-4">
-                        <div class="card-body">
-                            Hoàn tất
-                            @if (ViewBag.CountHoanTat > 0 && Session["TaiKhoan"] != null)
-                            {
-                                <span class="number-status">@ViewBag.CountHoanTat</span>
-                            }
-                        </div>
-                        <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="/GioHang/TrangThaiDonHang?trangthai=Hoàn%20tất">Xem chi tiết</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                        </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" href="/GioHang/TrangThaiDonHang?trangthai=Đơn%20hàng%20mới">Xem chi tiết</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-warning text-white mb-4">
+                    <div class="card-body">
+                        Đang Giao Hàng
+                        @if (ViewBag.CountDangGiaoHang > 0 && Session["TaiKhoan"] != null)
+                        {
+                            <span class="number-status">@ViewBag.CountDangGiaoHang</span>
+                        }
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" href="/GioHang/TrangThaiDonHang?trangthai=Đang%20xử%20lý">Xem chi tiết</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-success text-white mb-4">
+                    <div class="card-body">
+                        Hoàn tất
+                        @if (ViewBag.CountHoanTat > 0 && Session["TaiKhoan"] != null)
+                        {
+                            <span class="number-status">@ViewBag.CountHoanTat</span>
+                        }
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" href="/GioHang/TrangThaiDonHang?trangthai=Hoàn%20tất">Xem chi tiết</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+
+
+    </div>
 </body>
 </html>

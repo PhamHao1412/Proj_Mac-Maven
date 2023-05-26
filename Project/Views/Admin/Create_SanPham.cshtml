@@ -54,11 +54,11 @@
             </table>
         }
         <div class="form-horizontal">
-            <h4>Item</h4>
+            <h4>Thêm Sản Phẩm</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.maloai, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.maloai,"Mã Loại", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("maloai", ViewBag.DanhMucList as SelectList, "Select a category", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.maloai, "", new { @class = "text-danger" })
@@ -66,7 +66,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.ten, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.ten, "Tên Sản Phẩm",htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.ten, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.ten, "", new { @class = "text-danger" })
@@ -74,7 +74,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.hinh, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.hinh, "Hỉnh Ảnh",htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.hinh, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.hinh, "", new { @class = "text-danger" })
@@ -82,7 +82,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.giaban, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.giaban,"Giá Bán", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(model => model.giaban, new { @class = "form-control giaban-input", @type = "text" })
                     @Html.ValidationMessageFor(model => model.giaban, "", new { @class = "text-danger" })
@@ -90,7 +90,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.ngaycapnhat, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.ngaycapnhat,"Ngày Cập Nhật", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(model => model.ngaycapnhat, new { @class = "form-control", @Value = DateTime.Now.ToString("dd-MM-yyyy") })
                     @Html.ValidationMessageFor(model => model.ngaycapnhat, "", new { @class = "text-danger" })
@@ -98,7 +98,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.soluongton, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.soluongton,"Số Lượng Tồn", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.soluongton, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.soluongton, "", new { @class = "text-danger" })

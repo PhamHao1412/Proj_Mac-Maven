@@ -223,6 +223,10 @@
     <Content Include="Content\images\linkedin.png" />
     <Content Include="Content\images\lionbackground.jpg" />
     <Content Include="Content\images\location.png" />
+    <Content Include="Content\images\logo_promo_pride23__cnampkeybsty_large.png" />
+    <Content Include="Content\images\logo_promo_pride23__cnampkeybsty_small.png" />
+    <Content Include="Content\images\logo_tradein__d1fpktgipvki_large.png" />
+    <Content Include="Content\images\logo_tradein__d1fpktgipvki_small.png" />
     <Content Include="Content\images\macbookpro13inchm2.jpg" />
     <Content Include="Content\images\macminim1mgnr3saathumb600x600-16524332710.jpg" />
     <Content Include="Content\images\mac_mini__d3310qb7lt6q_small_2x.jpg" />
