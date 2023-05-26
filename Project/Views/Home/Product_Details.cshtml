@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+@using Project.Models
+@{
+    KhachHang kh = (KhachHang)Session["TaiKhoan"];
+
+}
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -66,34 +71,89 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="capacity">
-                                <span>Dung lượng</span>
-                                <ul>
-                                    <li>
-                                        <a href="#">128GB</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">256GB</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">512GB</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="color-sp">
-                                <span>Màu</span>
-                                <ul>
-                                    <li>
-                                        <a class="ab" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="bb" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="cb" href="#"></a>
-                                    </li>
-                                </ul>
-                            </div>
+                            @if (Model.ten.Contains("iPhone") || Model.ten.Contains("Mac") || Model.ten.Contains("iPad")) // Kiểm tra nếu tên sản phẩm chứa chuỗi "iPhone"
+                            {
+                                <div class="capacity">
+                                    <span>Dung lượng</span>
+                                    <ul>
+                                        <li>
+                                            <a href="#">128GB</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">256GB</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">512GB</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (Model.ten.Contains("iPhone") || Model.ten.Contains("Mac") || Model.ten.Contains("iPad")) // Kiểm tra nếu tên sản phẩm chứa chuỗi "iPhone"
+                            {
+                                <div class="color-sp">
+                                    <span>Màu</span>
+                                    <ul>
+                                        <li>
+                                            <a class="ab" href="#"></a>
+                                        </li>
+                                        <li>
+                                            <a class="bb" href="#"></a>
+                                        </li>
+                                        <li>
+                                            <a class="cb" href="#"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (Model.ten.Contains("Mac"))
+                            {
+                                <div class="capacity">
+                                    <span>Ram</span>
+                                    <ul>
+                                        <li>
+                                            <a href="#">8GB</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">16GB</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">32GB</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (Model.ten.Contains("Watch"))
+                            {
+                                <div class="capacity">
+                                    <span>Phiên Bản</span>
+                                    <ul>
+                                        <li>
+                                            <a href="#">38mn</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">40mn</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">44mn</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (Model.ten.Contains("Airpod"))
+                            {
+                                <div class="capacity">
+                                    <span>Phiên Bản</span>
+                                    <ul>
+                                        <li>
+                                            <a href="#">MagSafe</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">No-MagSafe</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            }
 
                             <div class="product-count title-name">
                                 <label for="size">Quantity</label>
@@ -126,24 +186,42 @@
     <div class="tab-pane fade active show" id="review" role="tabpanel" aria-labelledby="review-tab">
         <div class="bg-review" style="background-color:white">
 
-            <div class="review-heading">REVIEWS</div>
-
+            <div class="review-heading">Đánh giá & nhận xét @Model.ten</div>
 
             <ul class="commnet-list">
                 @foreach (var item in ViewBag.Comments)
                 {
                     <li>
                         <div class="cmt-top">
-                            <p class="cmt-top-name">
-                                @item.khachhang.Ho @item.khachhang.Ten
-                            </p>
+                            @if (item.khachhang.Id == kh?.makh)
+                            {
+                                <p class="cmt-top-name">
+                                    Bạn
+                                </p>
+                            }
+                            else
+                            {
+                                <p class="cmt-top-name">
+                                    @item.khachhang.Ho @item.khachhang.Ten
+
+                                </p>
+                            }
+                            <p class="date-rating">@item.NgayTao</p>
                         </div>
                         <div class="cmt-content">
-                            <p class="cmt-txt">@item.NoiDung</p>
+                            <strong class="cmt-txt">
+                                Đánh giá:
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <i class="fas fa-star rating-custom @((i <= item.XepHang) ? "custom-star" : "")"></i>
+                                }
+                            </strong>
+                            <p class="cmt-txt"><strong>Nhận xét:</strong> @item.NoiDung</p>
+
                         </div>
-                        <div class="cmt-command">
-                            <span class="cmtd dot-circle-ava">@item.NgayTao</span>
-                        </div>
+
+
+
                     </li>
                 }
             </ul>
@@ -152,22 +230,17 @@
                     <label>Your rating</label>
                     <div class="reviews-counter">
                         <div class="rate">
-                            <input type="radio" id="star5" name="rate" value="5" checked />
-                            <label for="star5" title="text">5 stars</label>
-                            <input type="radio" id="star4" name="rate" value="4" checked />
-                            <label for="star4" title="text">4 stars</label>
-                            <input type="radio" id="star3" name="rate" value="3" checked />
-                            <label for="star3" title="text">3 stars</label>
-                            <input type="radio" id="star2" name="rate" value="2" />
-                            <label for="star2" title="text">2 stars</label>
-                            <input type="radio" id="star1" name="rate" value="1" />
-                            <label for="star1" title="text">1 star</label>
+                            <input type="radio" name="xephang" value="1" required> <i class="fas fa-star rating-star"></i>
+                            <input type="radio" name="xephang" value="2" required> <i class="fas fa-star rating-star"></i>
+                            <input type="radio" name="xephang" value="3" required><i class="fas fa-star rating-star"></i>
+                            <input type="radio" name="xephang" value="4" required> <i class="fas fa-star rating-star"></i>
+                            <input type="radio" name="xephang" value="5" required> <i class="fas fa-star rating-star"></i>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Your message</label>
-                    <input type="hidden" name="MaTinTuc" value="@Model.ma" hidden />
+                    <input type="hidden" name="MaSP" value="@Model.ma" hidden />
                     <textarea name="cMessage" id="cMessage" class="full-width form-control" placeholder="Bình luận*" required></textarea>
                 </div>
                 <input name="submit" id="submit" class=" btn-wide btn--large" value="Thêm bình luận" type="submit">
@@ -189,16 +262,73 @@
         }
     }, 2000);
 </script>
+<script>
+    var stars = document.querySelectorAll('.rating-star');
+    var ratingInputs = document.querySelectorAll('input[name="xephang"]');
+
+    stars.forEach(function (star, index) {
+        star.addEventListener('click', function () {
+            resetStars(); // Đặt lại trạng thái sáng tất cả các ngôi sao
+
+            for (var i = 0; i <= index; i++) {
+                stars[i].classList.add('selected'); // Sáng lên các ngôi sao từ 0 đến ngôi sao được chọn
+                ratingInputs[i].checked = true; // Đánh dấu các ngôi sao từ 0 đến ngôi sao được chọn
+            }
+        });
+    });
+
+    function resetStars() {
+        stars.forEach(function (star) {
+            star.classList.remove('selected'); // Tắt sáng tất cả các ngôi sao
+        });
+    }
+</script>
 <style>
+    .date-rating {
+        float: right;
+        font-size: 13px;
+        color: #545e72;
+    }
+
+    .rating-star.selected {
+        color: #f59e0b;
+        font-size: 10px;
+    }
+
+    .rating-star, .rating-custom {
+        color: grey;
+        font-size: 10px;
+    }
+
+    .custom-star {
+        color: #f59e0b;
+        font-size: 10px;
+    }
+
+    .cmt-content {
+        /*padding: 10px 10px 2px 10px;*/
+        height: 80px;
+        font-size: 13px;
+        background-color: #eceef1;
+        border-radius: 16px;
+    }
+
+    .cmt-txt {
+        position: relative;
+        top: 20%;
+        left: 2%;
+    }
+
     .btn-wide {
-        height:30px;
-        width:130px;    
+        height: 30px;
+        width: 130px;
         border-radius: 7px;
         color: white;
-        font-size:14px;
-        font-weight:700;
+        font-size: 14px;
+        font-weight: 700;
         background-color: #0071e3;
     }
+
     .cmt-command {
         bottom: 15px;
         position: relative
@@ -221,9 +351,9 @@
     .cmt-top-name {
         text-transform: capitalize;
         color: #222b45;
+        font-size: 15px;
         display: inline;
         font-weight: bold;
-        font-size: 14px;
         line-height: 16px;
         margin-right: 10px;
     }
@@ -244,6 +374,8 @@
     .error-message {
         background-color: #f8d7da;
         color: #721c24;
+        position: fixed;
+        z-index: 9999;
         padding: 10px;
         margin: auto;
         width: 300px;
@@ -546,7 +678,7 @@
     }
 
     .review-heading {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
         line-height: 24px;
         margin-bottom: 6px;

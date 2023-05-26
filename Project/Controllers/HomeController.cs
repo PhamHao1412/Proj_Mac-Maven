@@ -21,53 +21,88 @@ namespace Project.Controllers
             }
             return total;
         }
+        public IEnumerable<object> GetItemsByLoai(string loai)
+        {
+            var query = (from l in db.Loais
+                        join i in db.Items on l.maloai equals i.maloai
+                        where l.tenloai == loai
+                        select new Store_Category
+                        {
+                           MaSP = i.ma,
+                           TenSP= i.ten,
+                           Hinh =i.hinh,
+                           GiaBan=(int) i.giaban,
+                           GiamGia=(int) i.giamgia,
+                           MaLoai =l.maloai
+                        }).Take(4);
+
+            return query;
+        }
         public ActionResult Index()
         {
+            // Set the cookie
+           
+            // Retrieve and set other view data
             ViewBag.iPhone = db.Items.Where(s => s.maloai == 1).Take(4).ToList();
             ViewBag.mac = db.Items.Where(s => s.maloai == 2).Take(4).ToList();
 
             return View(db.Items.ToList());
         }
+
         public ActionResult Store()
         {
-            ViewBag.iPhone = db.Items.Where(s => s.maloai == 1).Take(4).ToList();
-            ViewBag.mac = db.Items.Where(s => s.maloai == 2).Take(4).ToList();
-            ViewBag.iPad = db.Items.Where(s => s.maloai == 3).Take(4).ToList();
-            ViewBag.Watch = db.Items.Where(s => s.maloai == 4).Take(4).ToList();
-            ViewBag.Airpods = db.Items.Where(s => s.maloai == 5).Take(4).ToList();
+            var query = (from l in db.Loais
+                         join i in db.Items on l.maloai equals i.maloai
+                         where i.maloai == 1
+                         select l.tenloai).Distinct();
+
+            ViewBag.iPhone = GetItemsByLoai("iPhone");
+            ViewBag.mac = GetItemsByLoai("mac");
+            ViewBag.iPad = GetItemsByLoai("iPad");
+            ViewBag.Watch = GetItemsByLoai("Watch");
+            ViewBag.Airpods = GetItemsByLoai("Airpods");
+
             return View();
         }
-        [HttpPost]
-        public JsonResult Search(string searchTerm)
+        public ActionResult Search(string searchTerm)
         {
             // Loại bỏ khoảng trắng ở đầu và cuối chuỗi tìm kiếm
             searchTerm = searchTerm.Trim();
 
-            // Tìm vị trí của khoảng trắng đầu tiên trong chuỗi tìm kiếm
-            int firstSpaceIndex = searchTerm.IndexOf(' ');
+            // Tách các từ khóa từ chuỗi tìm kiếm
+            string[] keywords = searchTerm.Split(' ');
 
-            // Lấy từ khóa đầu tiên từ đầu chuỗi tới vị trí khoảng trắng đầu tiên (nếu có)
-            string firstKeyword = firstSpaceIndex >= 0 ? searchTerm.Substring(0, firstSpaceIndex) : searchTerm;
+            // Lấy từ khóa đầu tiên
+            string firstKeyword = keywords[0];
 
-            // Thực hiện tìm kiếm trong cơ sở dữ liệu dựa trên từ khóa đầu tiên
+            // Lấy từ khóa thứ hai (nếu có)
+            string secondKeyword = keywords.Length > 1 ? keywords[1] : "";
+
+            // Thực hiện tìm kiếm trong cơ sở dữ liệu dựa trên từ khóa đầu tiên và thứ hai
             var results = db.Items
-                .Where(item => item.ten.Contains(firstKeyword))
-                .Select(item => new
+                .Where(item => item.ten.Contains(firstKeyword) && item.ten.Contains(secondKeyword))
+                .Select(item => new Store_Category
                 {
-                    id = item.ma,
-                    name = item.ten,
-                    hinh = item.hinh,
-                    giaban = item.giaban,
-                    giamgia = item.giamgia
+                    MaSP = item.ma,
+                    TenSP = item.ten,
+                    Hinh = item.hinh,
+                    GiaBan = (int)item.giaban,
+                    GiamGia = (int)item.giamgia
                 })
-                .ToList()
-                .Take(4);
+                .Take(4)
+                .ToList();
 
-            return Json(results, JsonRequestBehavior.AllowGet);
+            ViewBag.SearchTerm = searchTerm; // Gửi searchTerm để hiển thị trong view
+
+            if (Request.IsAjaxRequest())
+            {
+                return Json(results, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return View(results);
+            }
         }
-
-
-
 
         public ActionResult Product_Details(int id)
         {
@@ -87,14 +122,17 @@ namespace Project.Controllers
                                 NoiDung = d.NoiDung,
                                 NgayTao = (DateTime)d.NgayTao,
                                 NgaySua = (DateTime)d.NgaySua,
+                                XepHang = (int)d.XepHang,
                                 khachhang = new KhachHangModel
                                 {
+                                    Id = (int)d.makh,
                                     Ho = k.ho,
                                     Ten = k.Ten
                                 },
                             }).ToList();
             ViewBag.Comments = comments;
             ViewBag.countReview = db.DanhGias.Where(i => i.masp == id).Count();
+         
             return View(item);
         }
 

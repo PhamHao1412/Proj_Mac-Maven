@@ -15,7 +15,7 @@
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand ps-3" href="@Url.Action("Index","Home")">Start</a>
+        <a class="navbar-brand ps-3" href="@Url.Action("Index","Home")">Back To Home</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             @*<div class="input-group">
@@ -27,8 +27,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Cài đặt</a></li>
-                    <li><a class="dropdown-item" href="#!">Nhật ký hoạt động</a></li>
+                   
                     <li><hr class="dropdown-divider" /></li>
                     <li><a class="dropdown-item" href="@Url.Action("LogOff","Users")">Đăng xuất</a></li>
                 </ul>
@@ -85,7 +84,7 @@
                                 </a>
                             </nav>
                         </div>
-                        <div class="sb-sidenav-menu-heading">Addons</div>
+                        <div class="sb-sidenav-menu-heading">Add</div>
                     
                         <a class="nav-link" href="@Url.Action("Create_SanPham","Admin")">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -108,7 +107,6 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Bảng điều khiển</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Bảng điều khiển</li>
                     </ol>
                     <div class="row">
                         <div class="col-xl-3 col-md-6">

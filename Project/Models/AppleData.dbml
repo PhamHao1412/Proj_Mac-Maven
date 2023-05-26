@@ -7,8 +7,8 @@
       <Column Name="soluong" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="gia" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
       <Column Name="tongtien" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Association Name="Item_ChiTietDonHang" Member="Item" ThisKey="ma" OtherKey="ma" Type="Item" IsForeignKey="true" />
       <Association Name="DonHang_ChiTietDonHang" Member="DonHang" ThisKey="madon" OtherKey="madon" Type="DonHang" IsForeignKey="true" />
+      <Association Name="Item_ChiTietDonHang" Member="Item" ThisKey="ma" OtherKey="ma" Type="Item" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.NhanVien" Member="NhanViens">
@@ -32,6 +32,40 @@
       <Column Name="MaCV" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="TenCV" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="ChucVu_NhanVien" Member="NhanViens" ThisKey="MaCV" OtherKey="MaCV" Type="NhanVien" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DonHang" Member="DonHangs">
+    <Type Name="DonHang">
+      <Column Name="madon" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="thanhtoan" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="giaohang" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ngaydat" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ngaygiao" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="makh" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="trangthai" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="xacnhan" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="DonHang_ChiTietDonHang" Member="ChiTietDonHangs" ThisKey="madon" OtherKey="madon" Type="ChiTietDonHang" />
+      <Association Name="KhachHang_DonHang" Member="KhachHang" ThisKey="makh" OtherKey="makh" Type="KhachHang" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GioHang" Member="GioHangs">
+    <Type Name="GioHang">
+      <Column Name="magh" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="masp" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="makh" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="hinh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="soluong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="giaban" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="tongtien" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HinhAnh" Member="HinhAnhs">
+    <Type Name="HinhAnh">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ma" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="duongdan" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="Item_HinhAnh" Member="Item" ThisKey="ma" OtherKey="ma" Type="Item" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Items" Member="Items">
@@ -73,40 +107,6 @@
       <Association Name="Loai_Item" Member="Items" ThisKey="maloai" OtherKey="maloai" Type="Item" />
     </Type>
   </Table>
-  <Table Name="dbo.HinhAnh" Member="HinhAnhs">
-    <Type Name="HinhAnh">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ma" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="duongdan" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Association Name="Item_HinhAnh" Member="Item" ThisKey="ma" OtherKey="ma" Type="Item" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.GioHang" Member="GioHangs">
-    <Type Name="GioHang">
-      <Column Name="magh" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="masp" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="makh" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="hinh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="soluong" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="giaban" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="tongtien" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.DonHang" Member="DonHangs">
-    <Type Name="DonHang">
-      <Column Name="madon" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="thanhtoan" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="giaohang" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ngaydat" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="ngaygiao" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="makh" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="trangthai" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
-      <Column Name="xacnhan" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="DonHang_ChiTietDonHang" Member="ChiTietDonHangs" ThisKey="madon" OtherKey="madon" Type="ChiTietDonHang" />
-      <Association Name="KhachHang_DonHang" Member="KhachHang" ThisKey="makh" OtherKey="makh" Type="KhachHang" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.DanhGia" Member="DanhGias">
     <Type Name="DanhGia">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -116,6 +116,7 @@
       <Column Name="NgayTao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="NgaySua" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Trangthai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="XepHang" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="KhachHang_DanhGia" Member="KhachHang" ThisKey="makh" OtherKey="makh" Type="KhachHang" IsForeignKey="true" />
       <Association Name="Item_DanhGia" Member="Item" ThisKey="masp" OtherKey="ma" Type="Item" IsForeignKey="true" />
     </Type>

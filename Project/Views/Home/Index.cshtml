@@ -1,21 +1,10 @@
-﻿
-@if (Session["NhanVien"]!=null)
-{
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-}
-
-else
-{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <div class="hero_area">
     <!-- header section strats -->
-    <div class="brand_box">
-        <a class="navbar-brand" href="index.html">
-
-        </a>
-    </div>
     <!-- end header section -->
     <!-- slider section -->
     <section class=" slider_section position-relative">
@@ -24,19 +13,19 @@ else
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="img-box">
-                        <img src="~/Content/images/hero_iphone14__fjmsqstr1ceq_medium_2x.jpg"
+                        <img src="~/Content/images/hero_iphone14__fjmsqstr1ceq_small_2x.jpg"
                              alt="">
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="img-box">
-                        <img src="~/Content/images/promo_apple_watch_se__f9702l6odgi2_small_2x.jpg"
+                        <img src="~/Content/images/hero_stainless__ycqwtfnl1wyq_small_2x.jpg"
                              alt="">
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="img-box">
-                        <img src="~/Content/images/promo_ipadpro__ch217v9v7no2_small_2x.jpg"
+                        <img src="~/Content/images/mac_mini__d3310qb7lt6q_small_2x.jpg"
                              alt="">
                     </div>
                 </div>
@@ -53,6 +42,31 @@ else
     </section>
     <!-- end slider section -->
 </div>
+<div>
+    <div class="dd-container">
+        <div class="dd-hello-video">
+            <div class="dd-video">
+                <video role="img" playsinline="true" preload="metadata" class="" muted="false" poster="" aria-label="Chào mừng tời Apple Store" autoplay="autoplay" height="500" loop style="width: 100%;">
+                    <source src="~/Content/video_intro/hello-video-202305.mp4" type="video/mp4">
+
+                    <param name="src" value="#">
+                    <param name="scale" value="aspect">
+                    <param name="showlogo" value="false">
+                    <param name="bgcolor" value="white">
+                    <param name="autoplay" value="true">
+                    <param name="controller" value="false">
+                    <param name="loop" value="false">
+                    <param name="postdomevents" value="true">
+                    <param name="enablejavascript" value="true">
+                    <param name="wmode" value="transparent">
+                    <param name="kioskmode" value="true">
+                    <param name="saveembedtags" value="true" />
+                </video>
+
+            </div>
+        </div>
+    </div>
+</div>
 <section class="shop_section layout_padding">
     <div class="container">
         <div class="box">
@@ -68,8 +82,8 @@ else
                      alt="">
             </div>
             <div class="btn-box">
-                <a href="">
-                    Buy Now
+                <a href="@Url.Action("Store","Home")">
+                    Shop Now
                 </a>
             </div>
         </div>
@@ -102,67 +116,113 @@ else
     </div>
 </section>
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="gifts">
+                <div class="titleGifts">
+                    <h4>
+                        It's treat yourself
+                        <br />season.
+                    </h4>
+                    
+                </div>
+                <img src="~/Content/images/gifts.jpg" alt="Gifts">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="iPadAir">
+                <div class="titleIpadAir">
+                    <h4>
+                        iPad Air
+                    </h4>
+                    <h5>
+                        Powerful. Colorful. Wonderful.
+                    </h5>
+                   
+                </div>
+                <img src="~/Content/images/ipadair.jpg" alt="iPadAir">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="appleWatch">
+                <div class="titleAppleWatch">
+                    <img src="~/Content/images/logo_promo_pride23__cnampkeybsty_small.png"
+                         alt="appleWatch" />
+                    <h5>
+                        The future of health is on your wrist
+                    </h5>
+
+                </div>
+                <img class="aws6" src="~/Content/images/aws6.jpg"
+                     alt="AWS6">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="appleOne">
+                <div class="titleAppleOne">
+                    <img src="~/Content/images/appleone.png"
+                         alt="AppleOne" />
+                    <h5>
+                        Bundle up to six Apple services.
+                        <br />And enjoy more for less.
+                    </h5>
+                    
+                </div>
+                <img class="services"
+                     src="~/Content/images/services.jpg" alt="Services">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="appleCard">
+                <div class="titleCard">
+                    <img src="~/Content/images/applecard.png"
+                         alt="AppleCard" />
+                    <h5>
+                        <br />
+                        Get 3% Daily Cash back on
+                        <br />purchases from Apple when
+                        <br />you use Apple Card.
+                    </h5>
+                    
+                </div>
+                <img class="imgCard"
+                     src="~/Content/images/applecard.jpg"
+                     alt="AppleCard" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="appleCard">
+                <div class="titleCard">
+                    <img class="tvplusLogo"
+                         src="~/Content/images/logo_tradein__d1fpktgipvki_small.png"
+                         alt="AppleTVPlus" />
+                   
+                    <div class="titleCard">
+                        <h5>
+
+                            <br />Upgrade and save. It’s that easy
+
+                        </h5>
+                       
+                    </div>
+                    
+                </div>
+                <img class="tvplus"
+                     src="~/Content/images/iphone_tradein_promo__d5au3rkw5kuq_small_2x.jpg"
+                     alt="LionBackground">
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- end about section -->
 <!-- store section -->
 
-<section class="store_section layout_padding">
-    <div class="container">
-        <div class="heading_container">
-            <hr>
-            <h2>
-                Store
-            </h2>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="store_container">
-            @{
-                if (ViewBag.iPhone != null)
-                {
-                    foreach (var item in ViewBag.iPhone)
-                    {
-                        <div class="box">
-                            <img src="/@item.hinh" style="width:200px" />
-                            <div class="link_box">
-                                <h5>
-                                    @item.ten
-                                </h5>
-                                <a href="">
-                                    Buy Now
-                                </a>
-                            </div>
-                        </div>
-                    }
-                }
-            }
-        </div>
-    </div>
-    <h2></h2>
-    <div class="container-fluid">
-        <div class="store_container">
-            @{
-                if (ViewBag.mac != null)
-                {
-                    foreach (var item in ViewBag.mac)
-                    {
-                        <div class="box">
-                            <img src="/@item.hinh" style="width:200px" />
-                            <div class="link_box">
-                                <h5>
-                                    @item.ten
-                                </h5>
-                                <a href="">
-                                    Buy Now
-                                </a>
-                            </div>
-                        </div>
-                    }
-                }
-            }
-        </div>
-    </div>
-</section>
 
 <!-- end store section -->
 <!-- client section -->
@@ -186,14 +246,7 @@ else
                             <h5>
                                 Khải Lê
                             </h5>
-                            <p>
-                                <img src="~/Content/images/left-quote.png" alt="">
-                                <span>
 
-                                </span>
-                                <img src="~/Content/images/right-quote.png" alt=""> <br>
-
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -206,14 +259,7 @@ else
                             <h5>
                                 Hào Phạm
                             </h5>
-                            <p>
-                                <img src="~/Content/images/left-quote.png" alt="">
-                                <span>
 
-                                </span>
-                                <img src="~/Content/images/right-quote.png" alt=""> <br>
-
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -226,14 +272,7 @@ else
                             <h5>
                                 Phương Nam
                             </h5>
-                            <p>
-                                <img src="~/Content/images/left-quote.png" alt="">
-                                <span>
 
-                                </span>
-                                <img src="~/Content/images/right-quote.png" alt=""> <br>
-
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -308,87 +347,167 @@ else
     </div>
 </section>
 <!-- end contact section -->
-<!-- info section -->
+<style>
+   
 
-<section class="info_section layout_padding">
-    <div class="container">
-        <div class="info_logo">
+    .macOS {
+        color: white;
+    }
 
-        </div>
-        <div class="info_contact">
-            <div class="row">
-                <div class="col-md-4">
-                    <a href="">
-                        <img src="~/Content/images/location.png" alt="">
-                        <span>
-                            Hutech University
-                        </span>
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a href="">
-                        <img src="~/Content/images/call.png" alt="">
-                        <span>
-                            Call : 0901057398
-                        </span>
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a href="">
-                        <img src="~/Content/images/mail.png" alt="">
-                        <span>
-                            khaile.huynhduy@gmail.com
+    body {
+        padding-top: 40px;
+        width: 100%;
+    }
+    /* Shop Online */
+    .introShopOnline {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px 0;
+        margin-left: 0;
+        margin-right: 0;
+        text-align: center;
+        background-color: #F5F5F7;
+    }
 
-                        </span>
+        .iPhone12 .titleIphone12, .iPhone12Pro .titleIphone12Pro, .titleGifts, .titleIPadAir, .titleAppleWatch, .titleAppleOne, .titleCard, .titleTVPlus {
+            padding-top: 20px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            text-align: center;
+           
+        }
 
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-lg-9">
-                <div class="info_form">
-                    <form action="">
-                        <input type="text" placeholder="Enter your email">
-                        <button>
-                            subscribe
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3">
-                <div class="info_social">
-                    <div>
-                        <a href="">
-                            <img src="~/Content/images/facebook-logo-button.png" alt="">
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            <img src="~/Content/images/twitter-logo-button.png" alt="">
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            <img src="~/Content/images/linkedin.png" alt="">
-                        </a>
-                    </div>
-                    <div>
-                        <a href="">
-                            <img src="~/Content/images/instagram.png" alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        .iPhone12 .imgIphone12 {
+            background-color: #FBFBFD;
+        }
 
-    </div>
-</section>
-<!-- end info section -->
-<!-- footer section -->
-<section class="container-fluid footer_section ">
-</section>
-<!-- footer section -->
+        .iPhone12Pro .imgIphone12Pro {
+            background-color: #000000;
+        }
+
+    .titleContent {
+        color: #707070;
+    }
+
+    .titleIphone12Pro {
+        color: white;
+    }
+
+    .rs1 {
+        line-height: 12px;
+    }
+
+    .Fitnessplus {
+        padding-top: 40px;
+        text-align: center;
+        background-color: #FBFBFD;
+    }
+
+    .titleFitnessPlus {
+        padding-bottom: 25px;
+    }
+
+    .Fitnessplus .macOSLogo {
+        color: black;
+    }
+
+    .gifts .links, .iPadAir .links, .links, .appleOne .links, .appleCard .links {
+        font-size: 17px;
+    }
+  
+
+    .gifts, .iPadAir {
+        height: 534px;
+        padding-top: 40px;
+        margin: 10px 0px 10px -10px;
+        text-align: center;
+    }
+
+        .gifts h4, .iPadAir h4 {
+            font-size: 40px;
+        }
+
+    .gifts, .iPadAir {
+        background-color: #FBFBFD;
+    }
+
+    .appleWatch, .appleOne {
+        height: 534px;
+        margin: 0px 0px 10px -10px;
+        padding-top: 40px;
+        text-align: center;
+    }
+
+    .appleWatch {
+        background-color: black;
+    }
+
+        .appleWatch h5 {
+            color: white;
+        }
+
+    .appleOne {
+        background-color: #FBFBFD;
+    }
+
+    .gifts img, .iPadAir img, appleOne .services, .appleCard .card {
+        height: 493px;
+        width: 577px;
+    }
+
+    .appleWatch .aws6, .appleOne .services {
+        padding-top: 152px;
+    }
+
+    .appleCard, .appleTVPlus {
+        height: 545px;
+        margin: 0px 0px 10px -10px;
+        text-align: center;
+       
+    }
+    .appleTVPlus {
+        background-color: #FBFBFD;
+    }
+
+    .appleCard {
+        background-color: #FBFBFD;
+    }
+
+    .titleCard {
+        color: black;
+    }
+
+    .card {
+        text-align: center;
+    }
+
+    .titleCard {
+        color: black;
+    }
+
+    .tvplus {
+        height: 100%;
+        width: 100%;
+    }
+   
+    .imgCard {
+        height: 100%;
+        width: 100%;
+    }
+
+    .footerImg {
+        position: relative;
+        top: 245px;
+        color: white;
+    }
+
+        .footerImg .links a {
+            color: white;
+        }
+</style>
+
+
 
 <script type="text/javascript" src="~/Content/bootstrap.js"></script>
 <script type="text/javascript" src="~/Content/custom.js"></script>

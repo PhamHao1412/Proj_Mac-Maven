@@ -66,9 +66,9 @@
     </div>
 </section>
 <script>
-    // Gắn sự kiện "keyup" cho ô input tìm kiếm
     $(document).ready(function () {
-        $('input[name="search"]').keyup(function () {
+        // Gắn sự kiện "keyup" cho ô input tìm kiếm
+        $('input[name="search"]').keyup(function (e) {
             var searchTerm = $(this).val();
             if (searchTerm.length > 0) {
                 $('.sg-search').addClass('show');
@@ -77,12 +77,11 @@
                 return;
             }
             $.ajax({
-                url: '/Home/Search', 
-                type: 'POST',
-                data: { searchTerm: searchTerm }, 
+                url: '/Home/Search',
+                type: 'GET',
+                data: { searchTerm: searchTerm },
                 success: function (data) {
-                    var resultsContainer = $('#searchResults'); 
-
+                    var resultsContainer = $('#searchResults');
                     resultsContainer.empty();
                     if (data.length === 0) {
                         $('.sg-search').removeClass('show');
@@ -90,19 +89,34 @@
                     }
                     for (var i = 0; i < data.length; i++) {
                         var item = data[i];
-                        resultsContainer.append('<li><a href="/Home/Product_Details/' + item.id + '"><div class="img-search"><img src="/' + item.hinh + '" alt="' + item.name + '"></div> <div class="text-img"><span>' + item.name + '</span><p><b>' + formatCurrency(item.giaban) + '</b><strike> ' + formatCurrency(item.giamgia) + ' </strike> </p> </div></a></li>');
-                        function formatCurrency(value) {
-                            return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-                        }
+                        resultsContainer.append('<li><a href="/Home/Product_Details/' + item.MaSP + '"><div class="img-search"><img src="/' + item.Hinh + '" alt="' + item.TenSP + '"></div> <div class="text-img"><span>' + item.TenSP + '</span><p><b>' + formatCurrency(item.GiaBan) + '</b><strike> ' + formatCurrency(item.GiamGia) + ' </strike> </p> </div></a></li>');
+                    }
+                    function formatCurrency(value) {
+                        return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
                     }
                 }
             });
         });
+
+        // Gắn sự kiện "keypress" cho ô input tìm kiếm
+        $('input[name="search"]').keypress(function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { // Kiểm tra nếu là phím Enter
+                e.preventDefault(); // Ngăn chặn hành vi mặc định của phím Enter
+                var searchTerm = $(this).val();
+                if (searchTerm.length > 0) {
+                    // Chuyển hướng đến trang kết quả tìm kiếm
+                    window.location.href = '/Home/Search?searchTerm=' + searchTerm;
+                }
+            }
+        });
     });
 </script>
+
 <script>
     const searchContainer = document.getElementById('searchContainer');
-    const input = searchContainer.querySelector('.input');
+    var searchInput = document.querySelector(".input");
+
     const navitems = document.querySelectorAll('.menu');
     const search = document.querySelector(".search-sp")
     const sgSearch = document.querySelector('.sg-search');
@@ -115,7 +129,7 @@
         search.classList.toggle("fa-times");
         searchContainer.classList.toggle('show')
         sgSearch.classList.remove('show');
-
+        searchInput.focus();
 
     });
 </script>
@@ -213,8 +227,8 @@
     }
 
     .container-search {
-        position:relative;
-        top:3px;
+        position: relative;
+        top: 3px;
         z-index: 999;
         color: white;
     }

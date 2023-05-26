@@ -13,6 +13,8 @@ namespace Project.Models
         public string TaiKhoan { get; set; }
         public DateTime NgayTao { get; set; }
         public DateTime NgaySua { get; set; }
+        public int XepHang { get; set; }
+
         public bool TrangThai { get; set; }
         public KhachHangModel khachhang { get; set; }
     }
