@@ -251,7 +251,6 @@ namespace Project.Controllers
             return this.CreateNhanVien();
         }
          public ActionResult Del_NhanVien(int MaNV)
-
         {
             var nhanVienList = db.NhanViens.ToList();
             var selectList = new SelectList(nhanVienList, "MaNV", "Ten");
@@ -431,7 +430,7 @@ namespace Project.Controllers
                    
                 }
                  
-            //khong dung updateModel vi se bi loi
+            //khong dung updateModel vi se bi loi làm thay doi du lieu giam gia
                 db.SubmitChanges();
                 return RedirectToAction("Create_SanPham");
             }
