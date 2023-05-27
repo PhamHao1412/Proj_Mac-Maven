@@ -24,6 +24,7 @@
         {
             <div id="error-message" class="error-message">@ViewBag.ErrorMessage</div>
 
+
         }
         <div class="heading-section">
         </div>
@@ -52,19 +53,23 @@
                     <div class="product-info">
                         <div class="product-name title-name">@Model.ten</div>
                         <div class="reviews-counter">
-                            <div class="rate">
-                                <input type="radio" id="star5" name="rate" value="5" checked />
-                                <label for="star5" title="text">5 stars</label>
-                                <input type="radio" id="star4" name="rate" value="4" checked />
-                                <label for="star4" title="text">4 stars</label>
-                                <input type="radio" id="star3" name="rate" value="3" checked />
-                                <label for="star3" title="text">3 stars</label>
-                                <input type="radio" id="star2" name="rate" value="2" />
-                                <label for="star2" title="text">2 stars</label>
-                                <input type="radio" id="star1" name="rate" value="1" />
-                                <label for="star1" title="text">1 star</label>
-                            </div>
-                            <span>@ViewBag.countReview Reviews</span>
+                            @*<div class="rate">
+            <input type="radio" id="star5" name="rate" value="5" checked />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" checked />
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="rate" value="3" checked />
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="rate" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" />
+            <label for="star1" title="text">1 star</label>
+        </div>*@
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <i class="fas fa-star rating-custom @((i <= @ViewBag.recentReview) ? "custom-star" : "")" style="font-size:13px;"></i>
+                            }
+                            <span> @ViewBag.countReview Reviews </span>
                         </div>
                         <div class="product-price-discount title-name"><span>@String.Format("{0:0,0}", Model.giamgia)VNĐ</span><span class="line-through title-name">@String.Format("{0:0,0}", Model.giaban)VNĐ</span></div>
                     </div>
@@ -158,10 +163,10 @@
                                 <label for="size">Quantity</label>
                                 <form action="#" class="display-flex">
                                     <div class="qtyminus">-</div>
-                                    <input type="text" name="quantity" value="1" class="qty">
+                                    <input type="text" name="quantity" id="quantity" value="1" class="qty">
                                     <div class="qtyplus">+</div>
                                 </form>
-                                <a href="/GioHang/ThemGioHang/@Model.ma" class="round-black-btn">Add to Cart</a>
+                                <a href="/GioHang/ThemGioHang/@Model.ma" class="round-black-btn" id="addToCartBtn">Mua ngay</a>
                             </div>
                         </div>
                     </div>
@@ -174,14 +179,9 @@
 <div class="product-info-tabs">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Reviews (0)</a>
+            <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Reviews (@ViewBag.countReview)</a>
         </li>
     </ul>
-    @*<div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-        </div>*@
-
     <div class="tab-pane fade active show" id="review" role="tabpanel" aria-labelledby="review-tab">
         <div class="bg-review" style="background-color:white">
 
@@ -266,21 +266,33 @@
 
     stars.forEach(function (star, index) {
         star.addEventListener('click', function () {
-            resetStars(); // Đặt lại trạng thái sáng tất cả các ngôi sao
+            resetStars(); 
 
             for (var i = 0; i <= index; i++) {
-                stars[i].classList.add('selected'); // Sáng lên các ngôi sao từ 0 đến ngôi sao được chọn
-                ratingInputs[i].checked = true; // Đánh dấu các ngôi sao từ 0 đến ngôi sao được chọn
+                stars[i].classList.add('selected'); 
+                ratingInputs[i].checked = true; 
             }
         });
     });
 
     function resetStars() {
         stars.forEach(function (star) {
-            star.classList.remove('selected'); // Tắt sáng tất cả các ngôi sao
+            star.classList.remove('selected'); 
         });
     }
 </script>
+<script>
+    document.getElementById("addToCartBtn").addEventListener("click", function (e) {
+        e.preventDefault(); 
+
+        var quantity = parseInt(document.getElementById("quantity").value); // Lấy giá trị số lượng hiện tại
+        var addToCartUrl = this.href + "?quantity=" + quantity; // Thêm thông tin số lượng vào URL
+
+        window.location.href = addToCartUrl;
+    });
+</script>
+
+
 <style>
     .date-rating {
         float: right;
@@ -375,8 +387,12 @@
         position: fixed;
         z-index: 9999;
         padding: 10px;
-        margin: auto;
         width: 300px;
+        border-radius:6px;
+        right:0;
+        top:8%;
+        margin-right:5%;
+
     }
 
     .heading-section {

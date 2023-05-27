@@ -32,7 +32,7 @@ namespace AppleZone.Controllers
             }
             return total;
         }
-        public ActionResult ThemGioHang(int id)
+        public ActionResult ThemGioHang(int id, int quantity)
         {
             var item = data.Items.FirstOrDefault(m => m.ma == id);
             KhachHang kh = (KhachHang)Session["TaiKhoan"];
@@ -44,11 +44,11 @@ namespace AppleZone.Controllers
                     TempData["ErrorMessage"] = "Vui lòng đăng nhập để mua hàng";
                     return RedirectToAction("Product_Details", "Home", new { id = item.ma });
                 }
-                GioHang gh = data.GioHangs.FirstOrDefault(g => g.masp == id && g.makh==kh.makh);
+                GioHang gh = data.GioHangs.FirstOrDefault(g => g.masp == id && g.makh == kh.makh);
 
                 if (gh != null)
                 {
-                    gh.soluong += 1;
+                    gh.soluong += quantity;
                     gh.tongtien = gh.soluong * item.giaban;
                 }
                 else
@@ -60,17 +60,18 @@ namespace AppleZone.Controllers
                         ten = item.ten,
                         hinh = item.hinh,
                         giaban = item.giaban,
-                        soluong = 1,
-                        tongtien = item.giaban
+                        soluong = quantity,
+                        tongtien = item.giaban * quantity
                     };
 
                     data.GioHangs.InsertOnSubmit(gh);
                 }
-                item.soluongton -= 1;
+                item.soluongton -= quantity;
                 data.SubmitChanges();
             }
             return RedirectToAction("Store", "Home");
         }
+
 
 
         public ActionResult GioHang()

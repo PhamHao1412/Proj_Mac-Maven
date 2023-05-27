@@ -171,7 +171,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css_admin\style.css" />
     <Content Include="Content\custom.js" />
-    <Content Include="Content\footer_home.css" />
+    <Content Include="Content\footer_main.css" />
     <Content Include="Content\images\0008502_macbook-air-m2-2022-8gb-ram-256gb-ssd_415.png" />
     <Content Include="Content\images\about-img.jpg" />
     <Content Include="Content\images\airpodpro2022.jpg" />
