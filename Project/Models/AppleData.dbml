@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Apple" Class="AppleDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="ConnectionString" ConnectionString="Data Source=KhaiLe\SQLEXPRESS;Initial Catalog=Apple;Integrated Security=True" Provider="System.Data.SqlClient" />
+  <Connection Mode="ConnectionString" ConnectionString="Data Source=KHAILE\SQLEXPRESS;Initial Catalog=Apple;Integrated Security=True" Provider="System.Data.SqlClient" />
   <Table Name="dbo.ChiTietDonHang" Member="ChiTietDonHangs">
     <Type Name="ChiTietDonHang">
       <Column Name="madon" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />

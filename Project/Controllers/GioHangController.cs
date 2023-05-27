@@ -211,8 +211,6 @@ namespace AppleZone.Controllers
                          };
 
             var groupedResult = result.OrderBy(m => m.Madon).GroupBy(m => m.Madon).ToList();
-          
-
             return View(groupedResult);
         }
 

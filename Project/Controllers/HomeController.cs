@@ -79,7 +79,7 @@ namespace Project.Controllers
             string secondKeyword = keywords.Length > 1 ? keywords[1] : "";
 
             // Thực hiện tìm kiếm trong cơ sở dữ liệu dựa trên từ khóa đầu tiên và thứ hai
-            var results = db.Items
+            var queryResults = db.Items
                 .Where(item => item.ten.Contains(firstKeyword) && item.ten.Contains(secondKeyword))
                 .Select(item => new Store_Category
                 {
@@ -88,19 +88,20 @@ namespace Project.Controllers
                     Hinh = item.hinh,
                     GiaBan = (int)item.giaban,
                     GiamGia = (int)item.giamgia
-                })
+                });
+            var jsonResult = queryResults
                 .Take(4)
                 .ToList();
-
+            var viewResult = queryResults.ToList();
             ViewBag.SearchTerm = searchTerm; // Gửi searchTerm để hiển thị trong view
 
             if (Request.IsAjaxRequest())
             {
-                return Json(results, JsonRequestBehavior.AllowGet);
+                return Json(jsonResult, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                return View(results);
+                return View(viewResult);
             }
         }
 

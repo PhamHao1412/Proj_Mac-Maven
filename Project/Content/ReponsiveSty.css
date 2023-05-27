@@ -1,0 +1,35 @@
+﻿@media (max-width: 768px) {
+    .custom_nav2 .collapse {
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    .custom_nav2 .navbar-toggler {
+        display: block;
+    }
+
+    .custom_nav2 .navbar-collapse {
+        display: none;
+    }
+
+    .custom_nav2 .navbar-toggler-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-image: url('path_to_your_icon'); /* Thay đổi 'path_to_your_icon' bằng đường dẫn đến biểu tượng của bạn */
+        background-size: cover;
+    }
+
+    .custom_nav2 .navbar-toggler:focus,
+    .custom_nav2 .navbar-toggler:active {
+        outline: none;
+    }
+
+    .custom_nav2 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+        background-image: url('path_to_your_close_icon'); /* Thay đổi 'path_to_your_close_icon' bằng đường dẫn đến biểu tượng đóng của bạn */
+    }
+
+    .custom_nav2 .navbar-toggler[aria-expanded="true"] ~ .navbar-collapse {
+        display: block;
+    }
+}

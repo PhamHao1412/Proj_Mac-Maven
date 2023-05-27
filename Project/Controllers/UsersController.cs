@@ -43,22 +43,31 @@ namespace Project.Controllers
                 }
                 else
                 {
-                    kh.ho = ho;
-                    kh.Ten = ten;
-                    kh.tendangnhap = tendangnhap;
-                    kh.matkhau = matkhau;
-                    kh.email = email;
-                    kh.diachi = diachi;
-                    kh.dienthoai = dienthoai;
-                    kh.ngaysinh = DateTime.Parse(ngaysinh);
-                    data.KhachHangs.InsertOnSubmit(kh);
-                    data.SubmitChanges();
-                    return RedirectToAction("LogIn");
+                    bool check = data.KhachHangs.Any(m => m.tendangnhap == tendangnhap);
+                    if (check)
+                    {
+                        ViewData["TrungTenDangNhap"] = "Tên đăng nhập đã tồn tại";
+                    }
+                    else
+                    {
+                        kh.ho = ho;
+                        kh.Ten = ten;
+                        kh.tendangnhap = tendangnhap;
+                        kh.matkhau = matkhau;
+                        kh.email = email;
+                        kh.diachi = diachi;
+                        kh.dienthoai = dienthoai;
+                        kh.ngaysinh = DateTime.Parse(ngaysinh);
+                        data.KhachHangs.InsertOnSubmit(kh);
+                        data.SubmitChanges();
+                        return RedirectToAction("LogIn");
+                    }
                 }
             }
             return this.Register();
 
         }
+
         [HttpGet]
         public ActionResult LogIn()
         {
