@@ -9,6 +9,8 @@ namespace Project.Models
     {
         public DateTime NgayGiao { get; set; }
         public decimal TongTien { get; set; }
+        public List<BestSellingProduct> BestSellingProducts { get; set; }
+
     }
 
 }

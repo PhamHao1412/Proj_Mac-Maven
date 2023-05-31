@@ -1,4 +1,5 @@
-﻿using Project.Models;
+﻿using Microsoft.Ajax.Utilities;
+using Project.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,18 +19,31 @@ namespace Project.Controllers
         AppleDataDataContext db = new AppleDataDataContext();
         public ActionResult Index()
         {
-            var all_user = from s in db.KhachHangs select s;
-            ViewBag.User = all_user.ToList();
-            var result = (from nv in db.NhanViens
-                          join cv in db.ChucVus on nv.MaCV equals cv.MaCV
-                          select new StaffInfo { MaNV = nv.MaNV, Ten = nv.Ten, Ho = nv.Ho, TenCV = cv.TenCV }).ToList();
+            //check loai tai khoan dang nhap
+            if (Session["NhanVien"] != null)
+            {
+                
 
-            ViewBag.Staff = result;
-            ThongKeSoLuongTon();//gọi hàm để hiển thị sl sản phẩm có slton duoi 10
-            Show_DonHangMoi();
-            Show_DonHangDangXuLy();
-            Show_DonHangHoanTat();
-            return View();
+
+                //truy van hien thi cac tai khoan nhan vien
+                var all_user = from s in db.KhachHangs select s;
+                ViewBag.User = all_user.ToList();
+                var result = (from nv in db.NhanViens
+                              join cv in db.ChucVus on nv.MaCV equals cv.MaCV
+                              select new StaffInfo { MaNV = nv.MaNV, Ten = nv.Ten, Ho = nv.Ho, TenCV = cv.TenCV }).ToList();
+
+                ViewBag.Staff = result;
+                ThongKeSoLuongTon();//gọi hàm để hiển thị sl sản phẩm có slton duoi 10
+                Show_DonHangMoi();
+                Show_DonHangDangXuLy();
+                Show_DonHangHoanTat();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
            
         }
         
@@ -42,47 +57,342 @@ namespace Project.Controllers
             return firstMonday.AddDays(7 * (weekOfYear - 1));
         }
 
-        public ActionResult ThongKeDoanhThu(int? year, int? weekNum)
+        //public ActionResult ThongKeDoanhThu(int? year, int? weekNum)
+        //{
+        //    if (Session["NhanVien"] != null)
+        //    {
+        //        int currentYear = DateTime.Now.Year;
+        //        int currentWeekNum = GetIso8601WeekOfYear(DateTime.Now);
+
+        //        int selectedYear = year ?? currentYear;
+        //        int selectedWeekNum = weekNum ?? currentWeekNum;
+
+        //        DateTime selectedDate = FirstDateOfWeekISO8601(selectedYear, selectedWeekNum);
+        //        // Lấy danh sách doanh thu của các ngày trong tuần
+        //        DateTime monday = selectedDate.AddDays(-(int)selectedDate.DayOfWeek + (int)DayOfWeek.Monday);
+        //        DateTime sunday = monday.AddDays(6);
+
+        //        var viewModel = new ThongKeDoanhThuViewModel
+        //        {
+        //            Year = selectedYear,
+        //            WeekNum = selectedWeekNum
+        //        };
+
+        //        var revenueList = db.DonHangs
+        //            .Where(dh => dh.ngaygiao != null && dh.trangthai == "Hoàn tất" && dh.ngaygiao >= monday && dh.ngaygiao <= sunday)
+        //            .Join(db.ChiTietDonHangs, dh => dh.madon, ctdh => ctdh.madon, (dh, ctdh) => new { dh.ngaygiao, ctdh.tongtien })
+        //            .GroupBy(x => x.ngaygiao)
+        //            .Select(g => new RevenueStatistics
+        //            {
+        //                NgayGiao = (DateTime)g.Key,
+        //                TongTien = (decimal)g.Sum(ctdh => ctdh.tongtien)
+        //            })
+        //            .ToList();
+
+        //        // Tính tổng doanh thu của tuần
+        //        decimal tongDoanhThuTuan = revenueList.Sum(r => r.TongTien);
+
+        //        // Truyền danh sách doanh thu và tổng doanh thu của tuần vào view
+        //        ViewBag.RevenueStatistics = revenueList;
+        //        ViewBag.TongDoanhThuTuan = tongDoanhThuTuan;
+        //        ViewBag.SelectedYear = selectedYear;
+        //        ViewBag.SelectedWeekNum = selectedWeekNum;
+        //        ThongKeSoLuongTon();
+        //        return View(viewModel);
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+
+        //}
+        //public ActionResult ThongKeDoanhThu(int? year, int? weekNum, string startDate, string endDate)
+        //{
+        //    try
+        //    {
+        //        if (Session["NhanVien"] != null)
+        //        {
+        //            int currentYear = DateTime.Now.Year;
+        //            int currentWeekNum = GetIso8601WeekOfYear(DateTime.Now);
+
+        //            int selectedYear = year ?? currentYear;
+        //            int selectedWeekNum = weekNum ?? currentWeekNum;
+
+        //            DateTime selectedDate = FirstDateOfWeekISO8601(selectedYear, selectedWeekNum);
+        //            DateTime startDateOfWeek = selectedDate.AddDays(-(int)selectedDate.DayOfWeek + (int)DayOfWeek.Monday);
+        //            DateTime endDateOfWeek = startDateOfWeek.AddDays(6);
+
+        //            DateTime start = string.IsNullOrEmpty(startDate) ? startDateOfWeek.Date : DateTime.ParseExact(startDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        //            DateTime end = string.IsNullOrEmpty(endDate) ? endDateOfWeek.Date : DateTime.ParseExact(endDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+        //            var viewModel = new ThongKeDoanhThuViewModel
+        //            {
+        //                Year = selectedYear,
+        //                WeekNum = selectedWeekNum,
+        //                StartDate = start,
+        //                EndDate = end,
+        //                StartDateOfWeek = startDateOfWeek,
+        //                EndDateOfWeek = endDateOfWeek
+        //            };
+
+        //            var revenueList = db.DonHangs
+        //                .Where(dh => dh.ngaygiao != null && dh.trangthai == "Hoàn tất" && dh.ngaygiao >= start && dh.ngaygiao <= end)
+        //                .Join(db.ChiTietDonHangs, dh => dh.madon, ctdh => ctdh.madon, (dh, ctdh) => new { dh.ngaygiao, ctdh.tongtien })
+        //                .GroupBy(x => x.ngaygiao)
+        //                .Select(g => new RevenueStatistics
+        //                {
+        //                    NgayGiao = (DateTime)g.Key,
+        //                    TongTien = (decimal)g.Sum(ctdh => ctdh.tongtien)
+        //                })
+        //                .ToList();
+        //            var bestSellingProduct = db.ChiTietDonHangs
+        //                          .Where(ctdh => ctdh.DonHang.ngaygiao != null && ctdh.DonHang.trangthai == "Hoàn tất"
+        //                              && ctdh.DonHang.ngaygiao >= start && ctdh.DonHang.ngaygiao <= end)
+        //                          .GroupBy(ctdh => ctdh.ma)
+        //                          .Select(g => new
+        //                          {
+        //                              ProductID = g.Key,
+        //                              TotalQuantity = g.Sum(ctdh => ctdh.soluong)
+        //                          })
+        //                          .OrderByDescending(g => g.TotalQuantity)
+        //                          .Take(5) // Limit to top 5 best-selling products
+        //                          .ToList();
+
+        //            List<string> bestSellingProductNames = new List<string>();
+        //            List<int> bestSellingQuantities = new List<int>();
+
+        //            foreach (var product in bestSellingProduct)
+        //            {
+        //                int productID = product.ProductID;
+        //                int totalQuantity = (int)product.TotalQuantity;
+
+        //                var productInfo = db.Items.FirstOrDefault(item => item.ma == productID);
+
+        //                if (productInfo != null)
+        //                {
+        //                    string productName = productInfo.ten;
+
+        //                    bestSellingProductNames.Add(productName);
+        //                    bestSellingQuantities.Add(totalQuantity);
+        //                }
+        //            }
+
+        //            ViewBag.BestSellingProductNames = bestSellingProductNames;
+        //            ViewBag.BestSellingQuantities = bestSellingQuantities;
+
+        //            decimal tongDoanhThuTuan = revenueList.Sum(r => r.TongTien);
+        //            ViewBag.ViewModel = viewModel;
+        //            ViewBag.RevenueStatistics = revenueList;
+        //            ViewBag.TongDoanhThuTuan = tongDoanhThuTuan;
+        //            ViewBag.SelectedYear = selectedYear;
+        //            ViewBag.SelectedWeekNum = selectedWeekNum;
+        //            ThongKeSoLuongTon();
+        //            return View(viewModel);
+        //        }
+        //        else
+        //        {
+        //            return RedirectToAction("Index", "Home");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log the error message for debugging purposes
+        //        // You can use a logging framework like Serilog or log to a file or database
+        //        Console.WriteLine($"An error occurred: {ex.Message}");
+
+        //        // Return an error view or redirect to an error page
+        //        return View("Error");
+        //    }
+        //}
+
+        public ActionResult ThongKeDoanhThu(int? year, int? weekNum, string startDate, string endDate)
         {
-            int currentYear = DateTime.Now.Year;
-            int currentWeekNum = GetIso8601WeekOfYear(DateTime.Now);
-
-            int selectedYear = year ?? currentYear;
-            int selectedWeekNum = weekNum ?? currentWeekNum;
-
-            DateTime selectedDate = FirstDateOfWeekISO8601(selectedYear, selectedWeekNum);
-            // Lấy danh sách doanh thu của các ngày trong tuần
-            DateTime monday = selectedDate.AddDays(-(int)selectedDate.DayOfWeek + (int)DayOfWeek.Monday);
-            DateTime sunday = monday.AddDays(6);
-
-            var viewModel = new ThongKeDoanhThuViewModel
+            try
             {
-                Year = selectedYear,
-                WeekNum = selectedWeekNum
-            };
-
-            var revenueList = db.DonHangs
-                .Where(dh => dh.ngaygiao != null && dh.trangthai == "Hoàn tất" && dh.ngaygiao >= monday && dh.ngaygiao <= sunday)
-                .Join(db.ChiTietDonHangs, dh => dh.madon, ctdh => ctdh.madon, (dh, ctdh) => new { dh.ngaygiao, ctdh.tongtien })
-                .GroupBy(x => x.ngaygiao)
-                .Select(g => new RevenueStatistics
+                // Kiểm tra xem phiên làm việc của người dùng có tồn tại không
+                if (Session["NhanVien"] != null)
                 {
-                    NgayGiao = (DateTime)g.Key,
-                    TongTien = (decimal)g.Sum(ctdh => ctdh.tongtien)
-                })
-                .ToList();
+                    // Lấy năm và tuần hiện tại
+                    int currentYear = DateTime.Now.Year;
+                    int currentWeekNum = GetIso8601WeekOfYear(DateTime.Now);
 
-            // Tính tổng doanh thu của tuần
-            decimal tongDoanhThuTuan = revenueList.Sum(r => r.TongTien);
+                    // Lấy năm và tuần được chọn, nếu không có thì sử dụng năm và tuần hiện tại
+                    int selectedYear = year ?? currentYear;
+                    int selectedWeekNum = weekNum ?? currentWeekNum;
 
-            // Truyền danh sách doanh thu và tổng doanh thu của tuần vào view
-            ViewBag.RevenueStatistics = revenueList;
-            ViewBag.TongDoanhThuTuan = tongDoanhThuTuan;
-            ViewBag.SelectedYear = selectedYear;
-            ViewBag.SelectedWeekNum = selectedWeekNum;
-            ThongKeSoLuongTon();
-            return View(viewModel);
+                    // Tính toán ngày đầu tuần dựa trên năm và tuần được chọn
+                    DateTime selectedDate = FirstDateOfWeekISO8601(selectedYear, selectedWeekNum);
+                    DateTime startDateOfWeek = selectedDate.AddDays(-(int)selectedDate.DayOfWeek + (int)DayOfWeek.Monday);
+                    DateTime endDateOfWeek = startDateOfWeek.AddDays(6);
+
+                    // Chuyển đổi chuỗi ngày bắt đầu và ngày kết thúc thành kiểu DateTime, nếu không có thì sử dụng ngày đầu và cuối tuần
+                    DateTime start = string.IsNullOrEmpty(startDate) ? startDateOfWeek.Date : DateTime.ParseExact(startDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime end = string.IsNullOrEmpty(endDate) ? endDateOfWeek.Date : DateTime.ParseExact(endDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                    // Tạo ViewModel để lưu trữ thông tin về năm, tuần, ngày bắt đầu và ngày kết thúc
+                    var viewModel = new ThongKeDoanhThuViewModel
+                    {
+                        Year = selectedYear,
+                        WeekNum = selectedWeekNum,
+                        StartDate = start,
+                        EndDate = end,
+                        StartDateOfWeek = startDateOfWeek,
+                        EndDateOfWeek = endDateOfWeek
+                    };
+
+
+                    //var revenueList = db.DonHangs
+                    //.Where(dh => dh.ngaygiao != null && dh.trangthai == "Hoàn tất" && dh.ngaygiao >= start && dh.ngaygiao <= end)
+                    //.Join(db.ChiTietDonHangs, dh => dh.madon, ctdh => ctdh.madon, (dh, ctdh) => new { dh.ngaygiao, ctdh.tongtien })
+                    //.GroupBy(x => x.ngaygiao)
+                    //.Select(g => new RevenueStatistics
+                    //{
+                    //    NgayGiao = (DateTime)g.Key,
+                    //    TongTien = (decimal)g.Sum(ctdh => ctdh.tongtien),
+                    //    BestSellingProducts = db.Items
+                    //    // ...
+                    //})
+                    //.ToList();
+
+                    // Trong truy vấn này, bạn đã tạo một danh sách revenueList chứa các đối tượng RevenueStatistics.
+                    //Mỗi đối tượng RevenueStatistics đại diện cho một ngày bán hàng và bao gồm thông tin về tổng tiền và danh sách các sản phẩm bán chạy.
+
+                    //Tuy nhiên, khi bạn thêm các thông tin sản phẩm bán chạy vào đối tượng RevenueStatistics,
+                    //bạn đã sử dụng cùng một danh sách bestSellingProductNames và bestSellingQuantities cho tất cả các ngày trong vòng lặp.
+                    //    Điều này dẫn đến việc ghi đè dữ liệu và hiển thị sai kết quả.
+
+                    //Để khắc phục vấn đề này, chúng ta cần tạo danh sách bestSellingProductNames và bestSellingQuantities riêng biệt cho mỗi ngày trong vòng lặp.
+                    //    Điều này đảm bảo rằng mỗi ngày sẽ có danh sách sản phẩm bán chạy riêng của nó.
+
+
+                    //Vì vậy, trong phần controller, thay vì sử dụng danh sách bestSellingProductNames và bestSellingQuantities, 
+                    // chúng ta đã thay thế chúng bằng cách gán trực tiếp các danh sách tương ứng cho từng đối tượng RevenueStatistics như sau:
+
+                    //               var revenueList = db.DonHangs
+                    // ...
+                    //.Select(g => new RevenueStatistics
+                    //{
+                    //    NgayGiao = (DateTime)g.Key,
+                    //    TongTien = (decimal)g.Sum(ctdh => ctdh.tongtien),
+                    //    BestSellingProductNames = productList,
+                    //    BestSellingQuantities = quantityList
+                    //})
+                    //.ToList();
+
+                    //Bằng cách này, mỗi đối tượng RevenueStatistics trong danh sách revenueList sẽ chứa danh sách sản phẩm bán chạy riêng biệt cho từng ngày.
+
+                    //                    Sau khi đã cập nhật truy vấn dữ liệu, chúng ta cần cập nhật cả phần view để hiển thị đúng kết quả.
+                    //                        Trong phần view, chúng ta đã sử dụng các danh sách lồng nhau ViewBag.BestSellingProductNames và ViewBag.BestSellingQuantities để truy cập thông tin sản phẩm bán chạy của từng ngày.
+
+                    //Bên trong vòng lặp for, chúng ta đã sử dụng vòng lặp foreach để duyệt qua các phần tử tương ứng trong danh sách lồng nhau và hiển thị tên sản phẩm và số lượng bán ra.
+                    //                        Điều này đảm bảo rằng chúng ta sẽ hiển thị đúng thông tin sản phẩm bán chạy cho từng ngày.
+
+
+
+
+                    // Truy vấn các đơn hàng hoàn tất trong khoảng thời gian được chọn và tính tổng tiền
+                    var revenueList = db.DonHangs
+                        // Lọc các đơn hàng đã giao hàng và hoàn tất trong khoảng thời gian từ start đến end
+                        .Where(dh => dh.ngaygiao != null && dh.trangthai == "Hoàn tất" && dh.ngaygiao >= start && dh.ngaygiao <= end)
+                        // Kết hợp bảng DonHangs và ChiTietDonHangs dựa trên khóa ngoại madon
+                        .Join(db.ChiTietDonHangs, dh => dh.madon, ctdh => ctdh.madon, (dh, ctdh) => new { dh.ngaygiao, ctdh.tongtien })
+                        // Nhóm các đơn hàng theo ngày giao
+                        .GroupBy(x => x.ngaygiao)
+                        // Tạo danh sách RevenueStatistics từ các đơn hàng đã nhóm
+                        .Select(g => new RevenueStatistics
+                        {
+                            NgayGiao = (DateTime)g.Key, // Ngày giao
+                            TongTien = (decimal)g.Sum(ctdh => ctdh.tongtien), // Tổng tiền của các đơn hàng
+                            BestSellingProducts = db.Items
+                                // Kết hợp bảng Items và ChiTietDonHangs dựa trên khóa ngoại ma
+                                .Join(db.ChiTietDonHangs, i => i.ma, c => c.ma, (i, c) => new { Item = i, ChiTietDonHang = c })
+                                // Kết hợp bảng ChiTietDonHangs và DonHangs dựa trên khóa ngoại madon
+                                .Join(db.DonHangs, c => c.ChiTietDonHang.madon, d => d.madon, (c, d) => new { c.Item, c.ChiTietDonHang, DonHang = d })
+                                // Lọc các sản phẩm trong đơn hàng đã hoàn tất và có ngày giao trùng khớp với khóa nhóm g.Key
+                                .Where(x => x.DonHang.trangthai == "Hoàn tất" && x.DonHang.ngaygiao != null && x.DonHang.ngaygiao == g.Key)
+                                // Nhóm các sản phẩm theo mã và tên
+                                .GroupBy(x => new { x.Item.ma, x.Item.ten })
+                                // Sắp xếp giảm dần theo tổng số lượng sản phẩm đã bán
+                                .OrderByDescending(grp => grp.Sum(x => x.ChiTietDonHang.soluong))
+                                // Chọn 5 sản phẩm bán chạy nhất
+                                .Take(5)
+                                // Tạo danh sách BestSellingProduct từ các sản phẩm đã nhóm
+                                .Select(grp => new BestSellingProduct
+                                {
+                                    MaSP = grp.Key.ma.ToString(), // Mã sản phẩm
+                                    TenSP = grp.Key.ten, // Tên sản phẩm
+                                    TongSoLuong = (int)grp.Sum(x => x.ChiTietDonHang.soluong), // Tổng số lượng đã bán
+                                    TongTienSP = (decimal)grp.Sum(x => x.ChiTietDonHang.soluong * x.ChiTietDonHang.gia) // Tổng tiền của sản phẩm
+                                })
+                                .ToList() // Chuyển đổi thành danh sách
+                        })
+                        .ToList(); // Chuyển đổi thành danh sách
+
+
+                    // Khai báo danh sách tên sản phẩm bán chạy và số lượng bán chạy
+                    var bestSellingProductNames = new List<List<string>>();
+                    var bestSellingQuantities = new List<List<int>>();
+
+                    // Lặp qua danh sách doanh thu để lấy thông tin sản phẩm bán chạy cho mỗi ngày
+                    foreach (var revenue in revenueList)
+                    {
+                        var productList = new List<string>();
+                        var quantityList = new List<int>();
+
+                        // Lặp qua danh sách sản phẩm bán chạy và thêm thông tin vào danh sách tương ứng
+                        foreach (var product in revenue.BestSellingProducts)
+                        {
+                            var productInfo = db.Items.FirstOrDefault(item => item.ma == int.Parse(product.MaSP));
+
+                            if (productInfo != null)
+                            {
+                                productList.Add(productInfo.ten);
+                                quantityList.Add(product.TongSoLuong);
+                            }
+                        }
+
+                        // Thêm danh sách tên sản phẩm và số lượng vào danh sách lớn
+                        bestSellingProductNames.Add(productList);
+                        bestSellingQuantities.Add(quantityList);
+                    }
+
+
+                    // Tính tổng doanh thu trong tuần
+                    decimal tongDoanhThuTuan = revenueList.Sum(r => r.TongTien);
+
+                    // Gán các thông tin cần thiết vào ViewBag để truyền cho View
+                    ViewBag.ViewModel = viewModel;
+                    ViewBag.RevenueStatistics = revenueList;
+                    ViewBag.TongDoanhThuTuan = tongDoanhThuTuan;
+                    ViewBag.SelectedYear = selectedYear;
+                    ViewBag.SelectedWeekNum = selectedWeekNum;
+                    ViewBag.BestSellingProductNames = bestSellingProductNames;
+                    ViewBag.BestSellingQuantities = bestSellingQuantities;
+
+                    // Gọi phương thức ThongKeSoLuongTon để cập nhật số lượng tồn kho
+                    ThongKeSoLuongTon();
+
+                    // Trả về View và truyền vào ViewModel
+                    return View(viewModel);
+                }
+                else
+                {
+                    // Nếu phiên làm việc không tồn tại, chuyển hướng đến trang chủ
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Ghi log lỗi để kiểm tra
+                // Bạn có thể sử dụng một framework ghi log như Serilog hoặc ghi log vào file hoặc cơ sở dữ liệu.
+                // Ở đây, ta chỉ đơn giản ghi ra console.
+                Console.WriteLine(ex.ToString());
+
+                // Trả về một trang lỗi hoặc thông báo lỗi tùy thuộc vào yêu cầu của ứng dụng
+                return View("Error");
+            }
         }
+
 
         // Hàm tính ngày đầu tiên trong tuần theo số tuần và năm
         private int GetIso8601WeekOfYear(DateTime now)
@@ -90,26 +400,36 @@ namespace Project.Controllers
             var culture = CultureInfo.CurrentCulture;
             var calendar = culture.Calendar;
 
-            // Get the week number for the current date based on the current culture's calendar
+            // Lấy số tuần cho ngày hiện tại dựa trên lịch hiện tại của văn hóa
             int weekNum = calendar.GetWeekOfYear(now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
 
-            // Adjust the week number for ISO 8601, which defines the first week of the year as the week
-            // containing the first Thursday of the year
-            var jan1 = new DateTime(now.Year, 1, 1);
-            int jan1DayOfWeek = (int)jan1.DayOfWeek;
-            int daysToAdd = (int)DayOfWeek.Thursday - jan1DayOfWeek;
-            if (jan1DayOfWeek > 4)
+            // Điều chỉnh số tuần cho ISO 8601, mà xác định tuần đầu tiên của năm là tuần chứa Thứ Năm đầu tiên của năm
+            var jan1 = new DateTime(now.Year, 1, 1);//Dòng đầu tiên tạo một đối tượng DateTime với ngày 1 tháng 1 của năm hiện tại. Đây là ngày đầu tiên của năm.
+
+            int jan1DayOfWeek = (int)jan1.DayOfWeek;//Dòng thứ hai lấy giá trị ngày trong tuần của ngày 1 tháng 1 (jan1.DayOfWeek) và ép kiểu sang kiểu nguyên ((int)jan1.DayOfWeek).
+                                                    //Giá trị này biểu thị ngày trong tuần dưới dạng số, trong đó 0 tương đương với Chủ nhật và 6 tương đương với Thứ Bảy.
+
+            int daysToAdd = (int)DayOfWeek.Thursday - jan1DayOfWeek;//Dòng thứ ba tính toán số ngày cần thêm vào để đạt được Thứ Năm đầu tiên của năm.
+                                                                    //Nó lấy giá trị của ngày trong tuần của Thứ Năm ((int)DayOfWeek.Thursday) và trừ đi ngày trong tuần của ngày 1 tháng 1 (jan1DayOfWeek). Kết quả là số ngày cần thêm vào.
+
+
+            if (jan1DayOfWeek > 4)//Dòng thứ tư kiểm tra xem ngày trong tuần của ngày 1 tháng 1 có lớn hơn 4 hay không (đại diện cho Thứ Tư).
+                                  //Nếu có, tức là ngày 1 tháng 1 không nằm trong tuần đầu tiên của năm.
+                                  //Trong trường hợp này, chúng ta cần thêm 7 ngày để đảm bảo ngày Thứ Năm đầu tiên của năm nằm trong tuần đầu tiên.
+
+
                 daysToAdd += 7;
 
             var firstThursday = jan1.AddDays(daysToAdd);
             if (now < firstThursday)
             {
-                // The date is before the start of week 1
+                // Ngày hiện tại nằm trước tuần đầu tiên của năm
                 weekNum = calendar.GetWeekOfYear(firstThursday.AddDays(-7), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             }
 
             return weekNum;
         }
+
         public ActionResult EditKhachHang(int makh)
         {
 
@@ -120,36 +440,43 @@ namespace Project.Controllers
         [HttpPost]
         public ActionResult EditKhachHang(int makh, FormCollection collection)
         {
-            var E_user = db.KhachHangs.First(m => m.makh == makh);
-            var E_ho = collection["Ho"];
-            var E_ten = collection["Ten"];
-            var E_tendangnhap = collection["tendangnhap"];
-            var E_matkhau = collection["matkhau"];
-            var E_email = collection["email"];
-            var E_diachi = collection["diachi"];
-            var E_dienthoai = collection["dienthoai"];
-            var E_ngaysinh = Convert.ToDateTime(collection["ngaysinh"]);
-            E_user.makh = makh;
-            if (string.IsNullOrEmpty(E_ten))
+            if (Session["NhanVien"] != null)
             {
-                ViewData["Error"] = "Don't empty";
+                var E_user = db.KhachHangs.First(m => m.makh == makh);
+                var E_ho = collection["Ho"];
+                var E_ten = collection["Ten"];
+                var E_tendangnhap = collection["tendangnhap"];
+                var E_matkhau = collection["matkhau"];
+                var E_email = collection["email"];
+                var E_diachi = collection["diachi"];
+                var E_dienthoai = collection["dienthoai"];
+                var E_ngaysinh = Convert.ToDateTime(collection["ngaysinh"]);
+                E_user.makh = makh;
+                if (string.IsNullOrEmpty(E_ten))
+                {
+                    ViewData["Error"] = "Don't empty";
+                }
+                else
+                {
+                    E_user.ho = E_ho.ToString();
+
+                    E_user.Ten = E_ten;
+                    E_user.tendangnhap = E_tendangnhap.ToString();
+                    E_user.matkhau = E_matkhau;
+                    E_user.email = E_email;
+                    E_user.diachi = E_diachi;
+                    E_user.dienthoai = E_dienthoai;
+                    E_user.ngaysinh = E_ngaysinh;
+                    UpdateModel(E_user);
+                    db.SubmitChanges();
+                    return RedirectToAction("Index");
+                }
+                return this.EditKhachHang(makh);
             }
             else
             {
-                E_user.ho = E_ho.ToString();
-
-                E_user.Ten = E_ten;
-                E_user.tendangnhap = E_tendangnhap.ToString();
-                E_user.matkhau = E_matkhau;
-                E_user.email = E_email;
-                E_user.diachi = E_diachi;
-                E_user.dienthoai = E_dienthoai;
-                E_user.ngaysinh = E_ngaysinh;
-                UpdateModel(E_user);
-                db.SubmitChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
-            return this.EditKhachHang(makh);
         }
         public ActionResult DeleteKhachHang(int makh)
         {

@@ -111,6 +111,7 @@ namespace Project.Controllers
             if (TempData["ErrorMessage"] != null)
             {
                 ViewBag.ErrorMessage = TempData["ErrorMessage"];
+
             }
             var item = db.Items.FirstOrDefault(d => d.ma == id);
             ViewBag.HinhAnh = db.HinhAnhs.Where(s => s.ma == id).ToList();
@@ -132,8 +133,16 @@ namespace Project.Controllers
                                 },
                             }).ToList();
             ViewBag.Comments = comments;
+            //Đếm số lượt đánh giá tại mã sp
             ViewBag.countReview = db.DanhGias.Where(i => i.masp == id).Count();
-         
+            //Lấy sô lượt đánh giá gần đây
+            ViewBag.recentReview = (from dg in db.DanhGias
+                                    where dg.NgayTao == (from dg2 in db.DanhGias
+                                                         where dg2.masp == id
+                                                         select dg2.NgayTao).Max()
+                                    select dg.XepHang).FirstOrDefault();
+
+
             return View(item);
         }
 

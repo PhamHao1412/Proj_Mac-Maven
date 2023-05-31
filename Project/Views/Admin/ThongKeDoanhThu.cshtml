@@ -1,4 +1,5 @@
 ﻿@model Project.Models.ThongKeDoanhThuViewModel
+@using Project.Models
 @{
     ViewBag.Title = "Thống kê doanh thu";
 }
@@ -70,7 +71,7 @@
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Store Management
-                           
+
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
@@ -93,10 +94,6 @@
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading">Addons</div>
-                        @*<a class="nav-link" href="@Url.Action("QuanLyDonHang","Admin")">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Order Management
-                        </a>*@
                         <a class="nav-link" href="@Url.Action("Create_SanPham","Admin")">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Add Products
@@ -119,51 +116,86 @@
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active"></li>
                     </ol>
-
                     <div class="row">
-                        <div class="col-xl-6">
-
-                        </div>
-
                     </div>
                     <h2>Thống kê doanh thu</h2>
-                    @using (Html.BeginForm("ThongKeDoanhThu", "Admin", FormMethod.Get, new { @class = "filters" }))
+
+                    @using (Html.BeginForm("ThongKeDoanhThu", "Admin", FormMethod.Get))
                     {
-                        <div class="d-flex align-items-center">
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.Year)
-                                @Html.TextBoxFor(m => m.Year, new { type = "number", min = "1900", max = "2100", value = DateTime.Now.Year, @class = "form-control" })
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.WeekNum)
-                                @Html.TextBoxFor(m => m.WeekNum, new { type = "number", min = "1", max = "53", value = Model.WeekNum, @class = "form-control" })
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Xem</button>
+                        <div>
+                            <label>Year:</label>
+                            @Html.TextBoxFor(model => model.Year, new { @class = "form-control", @id = "Year" })
+                            <label>WeekNum:</label>
+                            @Html.TextBoxFor(model => model.WeekNum, new { @class = "form-control", @id = "WeekNum" })
+                            <label>Start Date:</label>
+                            @Html.TextBoxFor(model => model.StartDate, "{0:dd/MM/yyyy}", new { @class = "form-controls datepicker", @id = "StartDate" })
+                            <label>End Date:</label>
+                            @Html.TextBoxFor(model => model.EndDate, "{0:dd/MM/yyyy}", new { @class = "form-controls datepicker", @id = "EndDate" })
+                            <input type="submit" value="Submit" class="btn btn-primary" />
                         </div>
                     }
-                    @if (ViewBag.RevenueStatistics != null)
+
+                    <h3>Tuần @ViewBag.SelectedWeekNum, năm @ViewBag.SelectedYear:</h3>
+                    <p>Ngày bắt đầu: @ViewBag.ViewModel.StartDateOfWeek.ToString("dd/MM/yyyy")</p>
+                    <p>Ngày kết thúc: @ViewBag.ViewModel.EndDateOfWeek.ToString("dd/MM/yyyy")</p>
+
+                    @if (ViewBag.RevenueStatistics != null && ViewBag.BestSellingProductNames != null && ViewBag.BestSellingQuantities != null)
                     {
-                        <h3>Tổng doanh thu tuần @ViewBag.SelectedWeekNum, năm @ViewBag.SelectedYear: @ViewBag.TongDoanhThuTuan đồng</h3>
+                        <h3>@ViewBag.TongDoanhThuTuan.ToString("N0") đồng</h3>
 
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>Ngày bán</th>
                                     <th>Tổng tiền</th>
+                                    <th>Top 5 sản phẩm bán chạy</th>
+                                    <th>Tổng tiền bán</th> <!-- Thêm cột mới -->
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in ViewBag.RevenueStatistics)
+                                @for (int i = 0; i < ViewBag.RevenueStatistics.Count; i++)
                                 {
+                                    var item = ViewBag.RevenueStatistics[i] as RevenueStatistics;
+                                    var productNames = ViewBag.BestSellingProductNames[i] as List<string>;
+                                    var productQuantities = ViewBag.BestSellingQuantities[i] as List<int>;
+                                    var bestSellingProducts = item.BestSellingProducts;
+
+                                    bool isEnoughProducts = productNames != null && productQuantities != null && productNames.Count >= 5;
+
                                     <tr>
                                         <td>@item.NgayGiao.ToString("dd/MM/yyyy")</td>
                                         <td>@String.Format("{0:N0}", item.TongTien)</td>
+                                        <td>
+                                            @if (isEnoughProducts)
+                                            {
+                                                for (int j = 0; j < 5; j++)
+                                                {
+                                                    <div>@productNames[j] - @productQuantities[j]</div>
+                                                }
+                                            }
+                                            else if (productNames != null && productQuantities != null && productNames.Count > 0)
+                                            {
+                                                int numProducts = Math.Min(productNames.Count, 5);
+                                                for (int j = 0; j < numProducts; j++)
+                                                {
+                                                    <div>@productNames[j] - @productQuantities[j]</div>
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (bestSellingProducts != null)
+                                            {
+                                                foreach (var product in bestSellingProducts)
+                                                {
+                                                    <div>@product.TenSP - @product.TongTienSP.ToString("N0") đồng</div> <!-- Hiển thị tổng tiền bán của từng sản phẩm -->
+                                                }
+                                            }
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
+
                     }
 
                 </div>
@@ -188,14 +220,15 @@
 </body>
 </html>
 <style>
+   
     .filters {
         margin-bottom: 20px;
     }
-
     .form-group {
         margin-right: 10px;
     }
 
+   
     .form-control {
         width: 80px;
     }
@@ -213,13 +246,101 @@
         text-align: left;
         padding: 8px;
     }
+    .form-controls {
+        
+        width: auto;
+        text-align: center;
+        margin:5px;
+    }
 
     th {
         background-color: #4CAF50;
         color: black;
     }
-
+    
     tr:nth-child(even) {
         background-color: #f2f2f2;
     }
 </style>
+@*chúng ta đã sử dụng một thư viện JavaScript (trong đoạn mã được thêm vào cuối view) để tạo một datepicker cho các trường ngày.
+    Điều này giúp người dùng dễ dàng chọn ngày trong đúng định dạng và tránh nhập liệu không hợp lệ.*@
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+    <script>
+         // Khởi tạo datepicker khi trang web đã được tải xong (sử dụng jQuery)
+        $(function () {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true
+            });
+        });
+        //tinh năm nhuận
+        function isLeapYear(year) {
+            return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+        }
+         //Đây là một hàm JavaScript để chuyển đổi một đối tượng Date thành một chuỗi ngày tháng năm định dạng 'dd/mm/yyyy'.
+        //Hàm này lấy ngày, tháng và năm từ đối tượng Date và tạo một chuỗi ngày tháng năm theo định dạng mong muốn.
+        function getFormattedDate(date) {
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            return padNumber(day) + '/' + padNumber(month) + '/' + year;
+        }
+        //Đây là một hàm JavaScript để thêm số 0 vào trước một số nếu số đó nhỏ hơn 10.
+        //Hàm này được sử dụng để đảm bảo rằng các số ngày và tháng được hiển thị với hai chữ số.
+        function padNumber(number) {
+            return (number < 10 ? '0' : '') + number;
+        }
+        //tháng trong js bắt đầu từ 0
+        function calculateDateRange(weekNum, year) {
+            var startDate, endDate;
+            var januaryFirst = new Date(year, 0, 1);
+            var firstDayOfYear = januaryFirst.getDay();
+            var daysToAdd = (weekNum - 1) * 7 - firstDayOfYear + 2;
+            if (isLeapYear(year)) {
+                daysToAdd += 1; // Nếu là năm nhuận, thì thêm 1 ngày
+            }
+            var start = new Date(year, 0, daysToAdd);//Dòng này tạo một đối tượng Date đại diện cho ngày bắt đầu của khoảng thời gian được tính toán.
+//Đối tượng Date này được tạo bằng cách sử dụng năm và số ngày được tính toán từ tham số weekNum và year.
+
+            var end = new Date(start);
+            end.setDate(end.getDate() + 6);//Dòng này tạo một đối tượng Date đại diện cho ngày kết thúc của khoảng thời gian được tính toán.
+//Đối tượng Date này được tạo bằng cách sử dụng đối tượng start đã được tạo và tăng ngày lên 6 để đến ngày cuối cùng trong tuần.
+
+
+            startDate = getFormattedDate(start);//Dòng này sử dụng hàm getFormattedDate để chuyển đổi đối tượng start và end thành chuỗi ngày tháng năm định dạng 'dd/mm/yyyy'.
+//Kết quả được gán vào biến startDate và endDate.
+            endDate = getFormattedDate(end);
+
+            return {
+                startDate: startDate,
+                endDate: endDate
+            };
+        }
+//        Đây là một hàm để cập nhật ngày bắt đầu và ngày kết thúc dựa trên tuần và năm được chọn.
+//Hàm này lấy giá trị của các phần tử có id WeekNum và Year.
+//Sau đó, hàm gọi hàm calculateDateRange để tính toán khoảng thời gian dựa trên tuần và năm đã chọn.
+//Cuối cùng, hàm gán ngày bắt đầu và ngày kết thúc vào các phần tử có id StartDate và EndDate tương ứng.
+        function updateDateRange() {
+            var selectedWeekNum = $('#WeekNum').val();
+            var selectedYear = $('#Year').val();
+
+            var dateRange = calculateDateRange(selectedWeekNum, selectedYear);
+
+            $('#StartDate').val(dateRange.startDate);
+            $('#EndDate').val(dateRange.endDate);
+        }
+
+        // Update date range on page load
+        updateDateRange();
+
+//       Dòng này gắn một sự kiện "change" cho các phần tử có id WeekNum và Year.
+//Khi giá trị của các phần tử này thay đổi, hàm updateDateRange sẽ được gọi để cập nhật ngày bắt đầu và ngày kết thúc.
+        $('#WeekNum, #Year').on('change', function () {
+            updateDateRange();
+        });
+    </script>
+}
