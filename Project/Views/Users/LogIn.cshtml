@@ -1,7 +1,7 @@
-﻿@{ 
+﻿@{
     Layout = "~/Views/Shared/_LayoutGH.cshtml";
-
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +13,7 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/Content/login/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    @*<link rel="stylesheet" type="text/css" href="~/Content/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">*@
+    <link rel="stylesheet" type="text/css" href="~/Content/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/Content/login/vendor/animate/animate.css">
     <!--===============================================================================================-->
@@ -26,8 +26,10 @@
     <!--===============================================================================================-->
 </head>
 <body>
-   
+
+
     <div class="limiter">
+
         <div class="container-login100">
             <div class="wrap-login100">
                 <div class="login100-pic js-tilt" data-tilt>
@@ -39,21 +41,29 @@
                         Login Account
                     </span>
                     @Html.AntiForgeryToken()
+                    @if (TempData["ThongBao"] != null)
+                    {
+                        <div class="alert alert-info">
+                            @TempData["ThongBao"]
+                        </div>
+                    }
                     <div class="wrap-input100 validate-input" data-validate="Username is required">
-                        <input class="input100" type="text" name="tendangnhap" placeholder="Username" required="required">
+                        <input class="input100" type="text" id="tendangnhap" name="tendangnhap" placeholder="Username" required="required">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </span>
+                        <div class="error-message" id="usernameError"></div> <!-- HTML element to display error message for "Username" -->
                     </div>
 
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <input class="input100" type="password" name="matkhau" placeholder="Password" required="required">
+                        <input class="input100" type="password" id="matkhau" name="matkhau" placeholder="Password" required="required">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </span>
+                        <div class="error-message" id="passwordError"></div> <!-- HTML element to display error message for "Password" -->
                     </div>
                     <div class="container-login100-form-btn">
                         <button type="submit" class="login100-form-btn">Sign In</button>
@@ -95,7 +105,61 @@
         $('.js-tilt').tilt({
             scale: 1.1
         })
+
+        // Listen for input event on the "Username" field
+        document.getElementById("tendangnhap").addEventListener("input", function () {
+            var input = this.value;
+            var maxLength = 20; // Maximum length
+            var regex = /^[a-zA-Z0-9]+$/; // Regex to allow only letters, numbers (no special characters)
+            var errorElement = document.getElementById("usernameError");
+
+            if (input.length > maxLength) {
+                errorElement.textContent = "Tên đăng nhập không được vượt quá 20 ký tự";
+                errorElement.classList.add("text-danger"); // Add the "text-danger" class to display error message with appropriate color
+                this.value = input.slice(0, maxLength); // Remove extra characters if exceeding the maximum length
+            } else if (!regex.test(input)) {
+                errorElement.textContent = "Tên đăng nhập không hợp lệ";
+                errorElement.classList.add("text-danger");
+            } else {
+                errorElement.textContent = "";
+                errorElement.classList.remove("text-danger"); // Remove the "text-danger" class if there is no error
+            }
+        });
+
     </script>
+    <script>
+  // Lấy giá trị thời gian đếm ngược từ TempData
+  var remainingTime = parseInt('@TempData["ThongBaoKhoa"]'); // Giá trị thời gian tính bằng giây
+
+  // Tìm đến phần tử HTML để hiển thị thời gian đếm ngược
+  var countdownElement = document.getElementById("countdown");
+
+  // Hàm để cập nhật giá trị thời gian và hiển thị
+  function updateCountdown() {
+    // Kiểm tra nếu thời gian đếm ngược đã hết
+    if (remainingTime <= 0) {
+      clearInterval(countdownInterval); // Dừng việc cập nhật giá trị thời gian
+      return;
+    }
+
+    // Tính toán phút và giây từ giá trị thời gian còn lại
+    var minutes = Math.floor(remainingTime / 60);
+    var seconds = remainingTime % 60;
+
+    // Hiển thị thời gian đếm ngược trong phần tử HTML
+    countdownElement.textContent = minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+
+    // Giảm giá trị thời gian còn lại đi 1 giây
+    remainingTime--;
+  }
+
+  // Cập nhật giá trị thời gian ban đầu
+  updateCountdown();
+
+  // Cập nhật giá trị thời gian sau mỗi giây
+  var countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
+
     <!--===============================================================================================-->
     <script src="~/Content/login/js/main.js"></script>
 
@@ -103,6 +167,6 @@
 </html>
 <style>
     a {
-        font-size: 15px 
+        font-size: 15px;
     }
 </style>

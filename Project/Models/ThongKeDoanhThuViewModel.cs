@@ -11,12 +11,14 @@ namespace Project.Models
         public int ProductID { get; set; }
         public decimal TotalQuantity { get; set; }
         public int Year { get; set; }
+        public int Month { get; set; }
         public int WeekNum { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime StartDateOfWeek { get; set; }
         public DateTime EndDateOfWeek { get; set; }
-
+        public DateTime StartDateOfMonth { get; set; }
+        public DateTime EndDateOfMonth { get; set; }
         public ThongKeDoanhThuViewModel()
         {
             // Khởi tạo giá trị mặc định cho WeekNum
@@ -40,6 +42,7 @@ namespace Project.Models
         public List<RevenueStatistics> RevenueStatistics { get; set; }
         public List<List<BestSellingProduct>> BestSellingProducts { get; set; }
     }
+  
 
     public class BestSellingProduct
     {

@@ -39,38 +39,46 @@
                 </div>
                 <div class="card-body">
                     <form action="" method="POST">
+                        @Html.AntiForgeryToken()
+
                         <div class="form-row m-b-55">
                             <div class="name">Name</div>
                             <div class="value">
                                 <div class="row row-space">
                                     <div class="col-2">
                                         <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" id="Ten" name="Ten">
-                                            <label class="label--desc">first name</label>
+                                            <input class="input--style-5" type="text" id="Ten" name="Ten" required>
+                                            <label class="label--desc">First name</label>
+                                            <div class="error-message" id="firstNameError"></div> <!-- Phần tử HTML chứa thông báo lỗi cho "First name" -->
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" id="ho" name="ho">
-                                            <label class="label--desc asc">last name</label>
+                                            <input class="input--style-5" type="text" id="ho" name="ho" required>
+                                            <label class="label--desc asc">Last name</label>
+                                            <div class="error-message" id="lastNameError"></div> <!-- Phần tử HTML chứa thông báo lỗi cho "Last name" -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
                         <div class="form-row">
                             <div class="name">Username</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="text" id="tendangnhap" name="tendangnhap">
+                                    <input class="input--style-5" type="text" id="tendangnhap" name="tendangnhap" required>
                                 </div>
+                                <div id="tendangnhap-error" class="text-danger" style="display: none;">Username không hợp lệ. Chỉ cho phép chữ cái và số, tối đa 20 ký tự.</div>
                             </div>
                         </div>
+
                         <div class="form-row">
                             <div class="name">Password</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="password" id="matkhau" name="matkhau">
+                                    <input class="input--style-5" type="password" id="matkhau" name="matkhau" required>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +86,7 @@
                             <div class="name">Password Confirm</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="password" data-val="true" data-val-required="Phải nhập mật khẩu xác nhận!" id="matkhauxacnhan" name="matkhauxacnhan" value="" aria-describedby="matkhauxacnhan-error" aria-invalid="true">
+                                    <input class="input--style-5" type="password" data-val="true" data-val-required="Phải nhập mật khẩu xác nhận!" id="matkhauxacnhan" name="matkhauxacnhan" value="" aria-describedby="matkhauxacnhan-error" aria-invalid="true" required>
                                 </div>
                             </div>
                         </div>
@@ -86,15 +94,19 @@
                             <div class="name">Email</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="email" id="email" name="email">
+                                    <input class="input--style-5" type="email" id="email" name="email" required>
                                 </div>
+                                @if (ViewData["TrungEmail"] != null)
+                                {
+                                    <div class="text-danger">@ViewData["TrungEmail"]</div>
+                                }
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="name">Address</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="text" id="diachi" name="diachi">
+                                    <input class="input--style-5" type="text" id="diachi" name="diachi" required>
                                 </div>
                             </div>
                         </div>
@@ -102,15 +114,21 @@
                             <div class="name">Phone</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="text" id="dienthoai" name="dienthoai">
+                                    <input class="input--style-5" type="text" id="dienthoai" name="dienthoai" required>
                                 </div>
+                                @if (ViewData["TrungSDT"] != null)
+                                {
+                                    <div class="text-danger">@ViewData["TrungSDT"]</div>
+                                }
+                                <div id="phone-validation-error" class="text-danger"></div> <!-- Thẻ div để hiển thị thông báo lỗi -->
                             </div>
                         </div>
+
                         <div class="form-row m-b-55">
                             <div class="name">Birth</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="date" id="ngaysinh" name="ngaysinh">
+                                    <input class="input--style-5" type="date" id="ngaysinh" name="ngaysinh" required>
                                 </div>
                             </div>
                         </div>
@@ -119,6 +137,7 @@
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
@@ -154,11 +173,90 @@
             }
         });
     </script>
+    <script>
+        // Lắng nghe sự kiện khi người dùng rời khỏi trường số điện thoại
+        document.getElementById("dienthoai").addEventListener("blur", function () {
+            var input = this.value;
+            var regex = /^[0-9]{13}$/; // Regex để kiểm tra 10 ký tự số
 
+            if (!regex.test(input)) {
+                document.getElementById("phone-validation-error").textContent = "Số điện thoại phải gồm 10 ký tự số và không được chứa ký tự";
+                this.value = ""; // Xóa giá trị nhập vào
+            } else {
+                document.getElementById("phone-validation-error").textContent = ""; // Xóa thông báo lỗi nếu hợp lệ
+            }
+        });
+
+        // Lắng nghe sự kiện khi người dùng gõ vào trường số điện thoại
+        document.getElementById("dienthoai").addEventListener("input", function () {
+            var input = this.value;
+            var regex = /^[0-9]{0,13}$/; // Regex để chỉ cho phép nhập tối đa 10 ký tự số
+
+            if (!regex.test(input)) {
+                this.value = input.slice(0, -1); // Xóa ký tự cuối cùng nếu không hợp lệ
+            }
+        });
+    </script>
+    <script>
+        document.getElementById("tendangnhap").addEventListener("input", function () {
+            var input = this.value;
+            var regex = /^[a-zA-Z0-9]{0,20}$/; // Regex để chỉ cho phép nhập chữ cái và số, tối đa 20 ký tự
+            var errorElement = document.getElementById("tendangnhap-error");
+
+            if (!regex.test(input)) {
+                errorElement.style.display = "block";
+                this.value = input.replace(/[^a-zA-Z0-9]/g, ""); // Loại bỏ các ký tự đặc biệt khỏi giá trị nhập vào
+                this.value = input.slice(0, -1);
+            } else {
+                errorElement.style.display = "none";
+            }
+        });
+
+    </script>
+    <script>
+        // Lắng nghe sự kiện khi người dùng gõ vào trường "First name"
+        document.getElementById("Ten").addEventListener("input", function () {
+            var input = this.value;
+            var maxLength = 30; // Độ dài tối đa
+            var regex = /^[a-zA-Z]{0,30}$/; // Regex để chỉ cho phép nhập chữ cái, tối đa 30 ký tự
+            var errorElement = document.getElementById("firstNameError");
+
+            if (input.length > maxLength) {
+                this.value = input.slice(0, maxLength); // Xóa bớt ký tự nếu vượt quá độ dài tối đa
+            }
+
+            if (!regex.test(this.value)) {
+                errorElement.textContent = "Tên không hợp lệ";
+                errorElement.classList.add("text-danger"); // Thêm lớp "text-danger" để hiển thị văn bản thông báo lỗi với màu sắc tương ứng
+            } else {
+                errorElement.textContent = "";
+                errorElement.classList.remove("text-danger"); // Xóa lớp "text-danger" nếu không có lỗi
+            }
+        });
+
+        // Lắng nghe sự kiện khi người dùng gõ vào trường "Last name"
+        document.getElementById("ho").addEventListener("input", function () {
+            var input = this.value;
+            var maxLength = 30; // Độ dài tối đa
+            var regex = /^[a-zA-Z]{0,30}$/; // Regex để chỉ cho phép nhập chữ cái, tối đa 30 ký tự
+            var errorElement = document.getElementById("lastNameError");
+
+            if (input.length > maxLength) {
+                this.value = input.slice(0, maxLength); // Xóa bớt ký tự nếu vượt quá độ dài tối đa
+            }
+
+            if (!regex.test(this.value)) {
+                errorElement.textContent = "Họ không hợp lệ";
+                errorElement.classList.add("text-danger"); // Thêm lớp "text-danger" để hiển thị văn bản thông báo lỗi với màu sắc tương ứng
+            } else {
+                errorElement.textContent = "";
+                errorElement.classList.remove("text-danger"); // Xóa lớp "text-danger" nếu không có lỗi
+            }
+        });
+
+    </script>
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
 </html>
 <!-- end document-->
-<style>
-</style>

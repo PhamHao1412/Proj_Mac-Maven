@@ -3,6 +3,35 @@
 
 }
 <body>
+    @*dem thoi gian mo khoa dang nhap*@
+    @if (TempData["ThongBaoKhoa"] != null)
+    {
+        <div class="alert alert-info">
+            @TempData["ThongBaoKhoa"]
+            <br />
+            <span id="countdown"></span>
+        </div>
+    }
+    @{
+        var thongBao = Session["ThongBao"] as string;
+    }
+    <!-- thong bao dang nhap thanh cong -->
+    @if (!string.IsNullOrEmpty(thongBao))
+    {
+        <div id="alertContainer" class="alert alert-info">
+            @thongBao
+        </div>
+
+        <script>
+            setTimeout(function () {
+                var alertContainer = document.getElementById('alertContainer');
+                if (alertContainer) {
+                    alertContainer.style.display = 'none';
+                }
+            }, 2000);
+        </script>
+    }
+
     <div class="hero_area">
         <!-- header section strats -->
         <!-- end header section -->
@@ -344,6 +373,7 @@
             </div>
         </div>
     </section>
+
 </body>
 <!-- end contact section -->
 <style>
@@ -368,22 +398,21 @@
         background-color: #F5F5F7;
     }
 
-        .iPhone12 .titleIphone12, .iPhone12Pro .titleIphone12Pro, .titleGifts, .titleIPadAir, .titleAppleWatch, .titleAppleOne, .titleCard, .titleTVPlus {
-            padding-top: 20px;
-            position: absolute;
-            left: 0;
-            right: 0;
-            text-align: center;
-           
-        }
+    .iPhone12 .titleIphone12, .iPhone12Pro .titleIphone12Pro, .titleGifts, .titleIPadAir, .titleAppleWatch, .titleAppleOne, .titleCard, .titleTVPlus {
+        padding-top: 20px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
 
-        .iPhone12 .imgIphone12 {
-            background-color: #FBFBFD;
-        }
+    .iPhone12 .imgIphone12 {
+        background-color: #FBFBFD;
+    }
 
-        .iPhone12Pro .imgIphone12Pro {
-            background-color: #000000;
-        }
+    .iPhone12Pro .imgIphone12Pro {
+        background-color: #000000;
+    }
 
     .titleContent {
         color: #707070;
@@ -414,7 +443,7 @@
     .gifts .links, .iPadAir .links, .links, .appleOne .links, .appleCard .links {
         font-size: 17px;
     }
-  
+
 
     .gifts, .iPadAir {
         height: 534px;
@@ -463,8 +492,8 @@
         height: 545px;
         margin: 0px 0px 10px -10px;
         text-align: center;
-       
     }
+
     .appleTVPlus {
         background-color: #FBFBFD;
     }
@@ -489,7 +518,7 @@
         height: 100%;
         width: 100%;
     }
-   
+
     .imgCard {
         height: 100%;
         width: 100%;
@@ -505,8 +534,5 @@
             color: white;
         }
 </style>
-
-
-
 <script type="text/javascript" src="~/Content/bootstrap.js"></script>
 <script type="text/javascript" src="~/Content/custom.js"></script>

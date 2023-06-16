@@ -9,85 +9,107 @@ namespace Project.Controllers
 {
     public class UsersController : Controller
     {
-       AppleDataDataContext data = new AppleDataDataContext();
-
-
+        public AppleDataDataContext data = new AppleDataDataContext();
 
         [HttpGet]
         public ActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
-        public ActionResult Register(FormCollection collection, KhachHang kh)
+        [ValidateAntiForgeryToken] // Add this attribute to use CSRF token
+        public ActionResult Register(KhachHang kh)
         {
-            var ho = collection["ho"];
-            var ten = collection["ten"];
-            var tendangnhap = collection["tendangnhap"];
-            var matkhau = collection["matkhau"];
-            var MatKhauXacNhan = collection["MatKhauXacNhan"];
-            var email = collection["email"];
-            var diachi = collection["diachi"];
-            var dienthoai = collection["dienthoai"];
-            var ngaysinh = String.Format("{0:MM/dd/yyyy}", collection["ngaysinh"]);
+            var MatKhauXacNhan = Request.Form["MatKhauXacNhan"];
 
             if (String.IsNullOrEmpty(MatKhauXacNhan))
             {
-                ViewData["NhapMKXN"] = "Phải nhâp mật khẩu xác nhận";
+                ViewData["NhapMKXN"] = "Phải nhập mật khẩu xác nhận";
             }
             else
             {
-                if (!matkhau.Equals(MatKhauXacNhan))
+                if (!kh.matkhau.Equals(MatKhauXacNhan))
                 {
                     ViewData["MatKhauGiongNhau"] = "Mật khẩu và mật khẩu xác nhận phải giống nhau";
                 }
                 else
                 {
-                    bool check = data.KhachHangs.Any(m => m.tendangnhap == tendangnhap);
-                    if (check)
+                    bool checkUsername = data.KhachHangs.Any(m => m.tendangnhap == kh.tendangnhap);
+                    bool checkEmail = data.KhachHangs.Any(m => m.email == kh.email);
+                    bool checkPhoneNumber = data.KhachHangs.Any(m => m.dienthoai == kh.dienthoai);
+
+                    if (checkUsername)
                     {
                         ViewData["TrungTenDangNhap"] = "Tên đăng nhập đã tồn tại";
                     }
+                    else if (checkEmail)
+                    {
+                        ViewData["TrungEmail"] = "Email đã tồn tại";
+                    }
+                    else if (checkPhoneNumber)
+                    {
+                        ViewData["TrungSDT"] = "Số điện thoại đã tồn tại";
+                    }
                     else
                     {
-                        kh.ho = ho;
-                        kh.Ten = ten;
-                        kh.tendangnhap = tendangnhap;
-                        kh.matkhau = matkhau;
-                        kh.email = email;
-                        kh.diachi = diachi;
-                        kh.dienthoai = dienthoai;
-                        kh.ngaysinh = DateTime.Parse(ngaysinh);
+                        kh.ngaysinh = kh.ngaysinh.GetValueOrDefault().Date;
+
+                        // Use kh object directly in the query
                         data.KhachHangs.InsertOnSubmit(kh);
                         data.SubmitChanges();
+
                         return RedirectToAction("LogIn");
                     }
                 }
             }
-            return this.Register();
 
+            return View();
         }
 
         [HttpGet]
         public ActionResult LogIn()
         {
+            if (Session["IsLoginFormLocked"] != null && (bool)Session["IsLoginFormLocked"])
+            {
+                DateTime loginCooldownEndTime = (DateTime)Session["LoginCooldownEndTime"];
+
+                if (loginCooldownEndTime > DateTime.Now)
+                {
+                    TimeSpan remainingTime = loginCooldownEndTime - DateTime.Now;
+                    TempData["ThongBaoKhoa"] = $"Form đăng nhập đã bị khóa. Vui lòng thử lại sau {remainingTime.TotalSeconds} giây.";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    Session.Remove("IsLoginFormLocked");
+                    Session.Remove("LoginCooldownEndTime");
+                }
+            }
+
             return View();
         }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult LogIn(LoginViewModel model)
         {
             var tendangnhap = model.tendangnhap;
             var matkhau = model.matkhau;
+
             KhachHang kh = data.KhachHangs.SingleOrDefault(n => n.tendangnhap == tendangnhap && n.matkhau == matkhau);
             NhanVien nv = data.NhanViens.SingleOrDefault(n => n.tendangnhap == tendangnhap && n.matkhau == matkhau);
 
-
             if (kh != null || nv != null)
             {
+                Session.Remove("FailedLoginAttempts");
+                Session.Remove("LoginCooldownEndTime");
+                Session.Remove("IsLoginFormLocked");
+
                 Session["TaiKhoan"] = kh;
                 Session["NhanVien"] = nv;
-
                 Session["ThongBao"] = "Chúc mừng đăng nhập thành công";
+
                 if (nv != null && nv.MaCV == 1)
                 {
                     return RedirectToAction("Index", "Admin");
@@ -99,34 +121,75 @@ namespace Project.Controllers
                 else
                 {
                     return RedirectToAction("Index", "Home");
-
                 }
             }
             else
             {
-                TempData["ThongBao"] = "Tên đăng nhập hoặc mật khẩu không đúng ";
-                return RedirectToAction("LogIn", "Users");
+                int failedLoginAttempts = 0;
+                DateTime? loginCooldownEndTime = null;
 
+                if (Session["FailedLoginAttempts"] != null)
+                {
+                    failedLoginAttempts = (int)Session["FailedLoginAttempts"];
+                }
+
+                if (Session["LoginCooldownEndTime"] != null)
+                {
+                    loginCooldownEndTime = (DateTime)Session["LoginCooldownEndTime"];
+                }
+
+                if (failedLoginAttempts >= 5)
+                {
+                    if (loginCooldownEndTime != null && loginCooldownEndTime > DateTime.Now)
+                    {
+                        var remainingTime = loginCooldownEndTime.Value - DateTime.Now;
+                        TempData["ThongBaoKhoa"] = $"Bạn đã vượt quá số lần đăng nhập không thành công. Vui lòng thử lại sau {remainingTime.TotalSeconds} giây.";
+                        return RedirectToAction("LogIn", "Users");
+                    }
+                    else
+                    {
+                        failedLoginAttempts = 1;
+                        loginCooldownEndTime = DateTime.Now.AddSeconds(15);
+
+                        Session["IsLoginFormLocked"] = true;
+                        Session["FailedLoginAttempts"] = failedLoginAttempts;
+                        Session["LoginCooldownEndTime"] = loginCooldownEndTime;
+
+                        TempData["ThongBaoKhoa"] = "Bạn đã vượt quá số lần đăng nhập không thành công. Vui lòng thử lại sau 15 giây.";
+                        return RedirectToAction("LogIn", "Users");
+                    }
+                }
+                else
+                {
+                    failedLoginAttempts++;
+                    Session["FailedLoginAttempts"] = failedLoginAttempts;
+
+                    TempData["ThongBao"] = "Tên đăng nhập hoặc mật khẩu không đúng";
+                    return RedirectToAction("LogIn", "Users");
+                }
             }
-
         }
+
         public ActionResult LogOff()
         {
-            Session.Abandon();
+            // Check if the user is logged in
+            if (Session["TaiKhoan"] != null || Session["NhanVien"] != null)
+            {
+                // End the session
+                Session.Abandon();
+            }
+
+            // Redirect the user to the login page
             return RedirectToAction("LogIn", "Users");
         }
+
         public ActionResult ThongTinKhachHang()
         {
-            // Lấy thông tin khách hàng từ biến Session
+            // Get customer information from the Session variable
             var kh = (KhachHang)Session["TaiKhoan"];
             return View(kh);
         }
 
-        public ActionResult QuanLyUser()
-        {
-            var all_user = from user in data.KhachHangs select user;
-            return View(all_user);
-        }
         public ActionResult DonHang()
         {
             KhachHang kh = (KhachHang)Session["TaiKhoan"];
