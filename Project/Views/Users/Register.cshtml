@@ -132,6 +132,29 @@
 
     <!-- Main JS-->
     <script src="~/Content/register/js/global.js"></script>
+    <script>
+        // Lấy phần tử ngày sinh
+        var ngaySinhInput = document.getElementById("ngaysinh");
+
+        // Lấy ngày hiện tại
+        var ngayHienTai = new Date();
+
+        // Đặt ngày hết hạn là năm 1900
+        var ngayHetHan = new Date("1900-01-01");
+
+        // Lắng nghe sự kiện khi người dùng thay đổi ngày sinh
+        ngaySinhInput.addEventListener("change", function () {
+            // Lấy giá trị ngày sinh được nhập vào
+            var ngaySinh = new Date(this.value);
+
+            // Kiểm tra nếu ngày sinh lớn hơn ngày hiện tại hoặc nhỏ hơn năm 1900
+            if (ngaySinh > ngayHienTai || ngaySinh < ngayHetHan) {
+                alert("Ngày sinh không hợp lệ!");
+                this.value = ""; // Xóa giá trị ngày sinh
+            }
+        });
+    </script>
+
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
